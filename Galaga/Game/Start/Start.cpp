@@ -57,6 +57,15 @@ namespace dae
 
 	}
 
+	void Start::OnExit()
+	{
+		m_pGameModes.clear();
+		m_pHighScores.clear();
+		InputManager::GetInstance().ResetCommands();
+
+		m_pGame->GetOwner()->RemoveAllChilderen();
+	}
+
 	void Start::SelectButton(int direction)
 	{
 		m_pGameModes[m_SelectedButton]->GetComponent<Text>()->SetColor(SDL_Color{ 255, 0, 0, 255 });
@@ -72,10 +81,6 @@ namespace dae
 
 	void Start::GameModeSelected()
 	{
-		m_pGameModes.clear();
-		m_pHighScores.clear();
-		InputManager::GetInstance().ResetCommands();
-
 		m_pGame->GoToNextStage();
 	}
 

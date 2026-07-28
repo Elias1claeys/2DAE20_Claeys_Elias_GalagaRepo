@@ -28,7 +28,7 @@ namespace dae
 
 		void OnEnter() override;
 		void Update(float ) override{}
-		void OnExit() override {};
+		void OnExit() override;
 
 		std::unique_ptr<GameState> GoToNextState() override;
 	};

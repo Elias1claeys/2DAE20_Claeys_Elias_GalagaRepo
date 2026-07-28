@@ -11,6 +11,7 @@
 #include "Core/Scene.h"
 #include "Audio/SoundSystem.h"
 #include "Audio/SDLSoundSystem.h"
+#include "BackGround/BackGround.h"
 #include "Game/Game.h"
 
 
@@ -21,11 +22,15 @@ static void load()
 {
 	dae::SoundLocator::RegisterAudio(std::make_unique<dae::SDLSoundSystem>());
 	
-	auto& scene = dae::SceneManager::GetInstance().CreateScene();
+	auto& scene = dae::SceneManager::GetInstance().CreateScene(); 
+
+	auto backGround = std::make_unique<dae::GameObject>();
+	backGround->AddComponent<dae::BackGround>();
 
 	auto game = std::make_unique<dae::GameObject>();
 	game->AddComponent<dae::Game>();
-	
+
+	scene.Add(std::move(backGround));
 	scene.Add(std::move(game));
 }
 

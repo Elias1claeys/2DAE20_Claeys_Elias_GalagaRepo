@@ -21,5 +21,6 @@ namespace dae
 
 	private:
 		std::unique_ptr<GameState> m_pGameState;
+		std::vector<std::unique_ptr<GameObject>> m_pGameObjects;
 	};
 }

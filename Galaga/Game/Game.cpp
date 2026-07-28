@@ -1,6 +1,5 @@
 #include "Game.h"
 #include "Start/Start.h"
-#include "BackGround/BackGround.h"
 #include "Core/DeltaTime.h"
 
 namespace dae
@@ -8,8 +7,6 @@ namespace dae
 	Game::Game(GameObject* owner)
 		: Component(owner)
 	{
-		GetOwner()->AddComponent<BackGround>();
-
 		m_pGameState = std::make_unique<Start>(this);
 		m_pGameState->OnEnter();
 	}
