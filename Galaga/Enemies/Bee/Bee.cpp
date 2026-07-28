@@ -8,7 +8,6 @@ namespace dae
 		: Component(owner)
 	{
 		GetOwner()->AddComponent<Texture>();
-		GetOwner()->GetComponent<Transform>()->SetLocalPosition(100, 100, 0);
 		GetOwner()->GetComponent<Texture>()->SetTexture("Galaga2.png");
 
 		float y = 19.5;
