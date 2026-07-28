@@ -11,6 +11,7 @@ namespace dae
 		float m_rotationAngle{ 0.f };
 		glm::vec2 m_size{ 0, 0 };
 		SDL_FlipMode m_FlipMode{SDL_FLIP_NONE};
+		SDL_FRect* m_srcRect{};
 
 	public:
 		const void Render() override;
@@ -18,6 +19,7 @@ namespace dae
 		void SetTexture(SDL_Texture* texture);
 		void SetRotation(float angle) { m_rotationAngle = angle; }
 		void SetSize(const glm::vec2& size) { m_size = size; }
+		void SetSourceRect(float x, float y, float width, float height);
 		void FlipTexture();
 
 		glm::vec2 GetSize();

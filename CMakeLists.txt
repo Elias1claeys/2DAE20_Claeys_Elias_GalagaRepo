@@ -205,6 +205,10 @@ target_link_libraries(Minigin PUBLIC
 add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Galaga/Main.cpp
   Galaga/BackGround/BackGround.cpp
+  Galaga/Enemies/Enemy.cpp
+  Galaga/Enemies/Bee/Bee.cpp
+  Galaga/Enemies/Boss/Boss.cpp
+  Galaga/Enemies/Flie/Flie.cpp
   Galaga/Game/Game.cpp
   Galaga/Game/Start/Start.cpp 
   Galaga/Game/Start/StartControls.cpp

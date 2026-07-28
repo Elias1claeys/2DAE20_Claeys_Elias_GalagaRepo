@@ -1,10 +1,12 @@
 #include "Level.h"
+#include "Enemies/Bee/Bee.h"
+#include "Game/Game.h"
 
 namespace dae
 {
 	void Level::OnEnter()
 	{
-
+		m_pGame->GetOwner()->AddComponent<Bee>();
 	}
 
 	void Level::Update(float)

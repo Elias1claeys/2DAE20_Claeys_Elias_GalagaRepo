@@ -16,7 +16,7 @@ const void dae::Texture::Render()
 	if (m_texture != nullptr)
 	{
 		auto pos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
-		Renderer::GetInstance().Texture(*m_texture, pos, m_size, m_rotationAngle, m_FlipMode);
+		Renderer::GetInstance().Texture(*m_texture, pos, m_size, m_rotationAngle, m_FlipMode, m_srcRect);
 	}
 }
 
@@ -42,6 +42,19 @@ void dae::Texture::FlipTexture()
 	{
 		m_FlipMode = SDL_FLIP_NONE;
 	}
+}
+
+void dae::Texture::SetSourceRect(float x, float y, float width, float height)
+{
+	if (m_srcRect == nullptr)
+	{
+		m_srcRect = new SDL_FRect();
+	}
+
+	m_srcRect->x = x;
+	m_srcRect->y = y;
+	m_srcRect->w = width;
+	m_srcRect->h = height;
 }
 
 glm::vec2 dae::Texture::GetSize()
