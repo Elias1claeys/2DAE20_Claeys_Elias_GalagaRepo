@@ -1,0 +1,26 @@
+#include "Core/GameObject.h"
+#include "GameState.h"
+
+namespace dae
+{
+	class State : public Component
+	{
+	public:
+
+		State(GameObject* owner, std::unique_ptr<GameState> gameState);
+		virtual ~State() = default;
+		State(const State& other) = delete;
+		State(State&& other) = delete;
+		State& operator=(const State& other) = delete;
+		State& operator=(State&& other) = delete;
+
+		GameObject* GetOwner() const { return Component::GetOwner(); }
+
+		void Update() override;
+		void GoToNextStage();
+
+	private:
+		std::unique_ptr<GameState> m_pGameState;
+		std::vector<std::unique_ptr<GameObject>> m_pGameObjects;
+	};
+}

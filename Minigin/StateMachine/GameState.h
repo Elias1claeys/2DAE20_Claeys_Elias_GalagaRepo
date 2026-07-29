@@ -4,19 +4,21 @@
 
 namespace dae
 {
-	class Game;
+	class State;
 	class GameObject;
 
 	class GameState
 	{
 	public:
-		explicit GameState(Game* game) : m_pGame(game) {}
+		explicit GameState(State* state) : m_pState(state) {}
 		virtual ~GameState() = default;
 		GameState(const GameState& other) = delete;
 		GameState(GameState&& other) = delete;
 		GameState& operator=(const GameState& other) = delete;
 		GameState& operator=(GameState&& other) = delete;
 		
+		void SetState(State* state) { m_pState = state; }
+
 		virtual void OnEnter() = 0;
 		virtual void Update(float deltaTime) = 0;
 		virtual void OnExit() = 0;
@@ -24,6 +26,6 @@ namespace dae
 		virtual std::unique_ptr<GameState> GoToNextState() = 0;
 
 	protected:
-		Game* m_pGame;
+		State* m_pState;
 	};
 }

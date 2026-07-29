@@ -3,7 +3,7 @@
 #include "Components/Text.h"
 #include "Components/Transform.h"
 #include "Resources/ResourceManager.h"
-#include "Game/Game.h"
+#include "StateMachine/State.h"
 #include "Game/Level/Level.h"
 #include "StartControls.h"
 #include "Input/InputManager.h"
@@ -34,21 +34,21 @@ namespace dae
 		singlePlayer->AddComponent<Text>("SinglePlayer", font);
 		singlePlayer->GetComponent<Text>()->SetColor(SDL_Color{255, 255, 0, 255});
 		singlePlayer->GetComponent<Transform>()->SetLocalPosition(350, 50, 0);
-		singlePlayer->SetParent(m_pGame->GetOwner(), false);
+		singlePlayer->SetParent(m_pState->GetOwner(), false);
 		m_pGameModes.push_back(std::move(singlePlayer));
 		
 		auto multiPlayer = std::make_unique<GameObject>();
 		multiPlayer->AddComponent<Text>("MultiPlayer", font);
 		multiPlayer->GetComponent<Text>()->SetColor(SDL_Color{255, 0, 0, 255});
 		multiPlayer->GetComponent<Transform>()->SetLocalPosition(350, 100, 0);
-		multiPlayer->SetParent(m_pGame->GetOwner(), false);
+		multiPlayer->SetParent(m_pState->GetOwner(), false);
 		m_pGameModes.push_back(std::move(multiPlayer));
 		
 		auto versus = std::make_unique<GameObject>();
 		versus->AddComponent<Text>("Versus", font);
 		versus->GetComponent<Text>()->SetColor(SDL_Color{255, 0, 0, 255});
 		versus->GetComponent<Transform>()->SetLocalPosition(350, 150, 0);
-		versus->SetParent(m_pGame->GetOwner(), false);
+		versus->SetParent(m_pState->GetOwner(), false);
 		m_pGameModes.push_back(std::move(versus));
 	}
 
@@ -63,7 +63,7 @@ namespace dae
 		m_pHighScores.clear();
 		InputManager::GetInstance().ResetCommands();
 
-		m_pGame->GetOwner()->RemoveAllChilderen();
+		m_pState->GetOwner()->RemoveAllChilderen();
 	}
 
 	void Start::SelectButton(int direction)
@@ -81,7 +81,7 @@ namespace dae
 
 	void Start::GameModeSelected()
 	{
-		m_pGame->GoToNextStage();
+		m_pState->GoToNextStage();
 	}
 
 	std::unique_ptr<GameState> Start::GoToNextState()
@@ -93,6 +93,6 @@ namespace dae
 		//else
 		//	return std::make_unique<Level>(m_pGame, Level::Versus);
 
-		return std::make_unique<Level>(m_pGame);
+		return std::make_unique<Level>(m_pState);
 	}
 }

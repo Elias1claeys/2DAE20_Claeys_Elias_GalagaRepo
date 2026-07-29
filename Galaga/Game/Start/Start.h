@@ -1,4 +1,4 @@
-#include "Core/GameState.h"
+#include "StateMachine/GameState.h"
 #include "Core/GameObject.h"
 
 namespace dae
@@ -16,7 +16,7 @@ namespace dae
 
 	public:
 		
-		explicit Start(Game* game) : GameState(game) {}
+		explicit Start(State* state) : GameState(state) {}
 		virtual ~Start() = default;
 		Start(const Start& other) = delete;
 		Start(Start&& other) = delete;

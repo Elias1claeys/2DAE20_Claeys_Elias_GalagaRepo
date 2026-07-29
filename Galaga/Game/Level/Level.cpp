@@ -1,6 +1,6 @@
 #include "Level.h"
 #include "Enemies/Bee/Bee.h"
-#include "Game/Game.h"
+#include "StateMachine/State.h"
 #include "Components/Transform.h"
 #include <fstream>
 
@@ -17,7 +17,7 @@ namespace dae
 			auto bee = std::make_unique<dae::GameObject>();
 			bee->AddComponent<dae::Bee>();
 			bee->GetComponent<dae::Transform>()->SetLocalPosition(pos.x - 75, pos.y, 0.0f);
-			bee->SetParent(m_pGame->GetOwner(), false);
+			bee->SetParent(m_pState->GetOwner(), false);
 			m_pBees.push_back(std::move(bee));
 		}
 	}

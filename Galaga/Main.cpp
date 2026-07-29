@@ -12,7 +12,8 @@
 #include "Audio/SoundSystem.h"
 #include "Audio/SDLSoundSystem.h"
 #include "BackGround/BackGround.h"
-#include "Game/Game.h"
+#include "StateMachine/State.h"
+#include "Game/Start/Start.h"
 
 
 #include <filesystem>
@@ -28,7 +29,7 @@ static void load()
 	backGround->AddComponent<dae::BackGround>();
 
 	auto game = std::make_unique<dae::GameObject>();
-	game->AddComponent<dae::Game>();
+	game->AddComponent<dae::State>(std::make_unique<dae::Start>(nullptr));
 
 	scene.Add(std::move(backGround));
 	scene.Add(std::move(game));

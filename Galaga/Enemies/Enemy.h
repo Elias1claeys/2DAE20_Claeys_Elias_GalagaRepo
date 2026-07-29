@@ -1,5 +1,6 @@
 #pragma once
 #include "Core/GameObject.h"
+#include "StateMachine/GameState.h"
 
 namespace dae
 {
@@ -14,5 +15,8 @@ namespace dae
 		Enemy(Enemy&& other) = delete;
 		Enemy& operator=(const Enemy& other) = delete;
 		Enemy& operator=(Enemy&& other) = delete;
+
+	private:
+		std::unique_ptr<GameState> m_pEnemyState;
 	};
 }

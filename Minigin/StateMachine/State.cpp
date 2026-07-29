@@ -1,22 +1,22 @@
-#include "Game.h"
-#include "Start/Start.h"
+#include "State.h"
 #include "Core/DeltaTime.h"
 
 namespace dae
 {
-	Game::Game(GameObject* owner)
+	State::State(GameObject* owner, std::unique_ptr<GameState> gameState)
 		: Component(owner)
 	{
-		m_pGameState = std::make_unique<Start>(this);
+		m_pGameState = std::move(gameState);
+		m_pGameState->SetState(this);
 		m_pGameState->OnEnter();
 	}
 
-	void Game::Update()
+	void State::Update()
 	{
 		m_pGameState->Update(Time::GetInstance().GetDeltaTime());
 	}
 
-	void Game::GoToNextStage()
+	void State::GoToNextStage()
 	{
 		auto nextstage = m_pGameState->GoToNextState();
 

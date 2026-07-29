@@ -1,4 +1,4 @@
-#include "Core/GameState.h"
+#include "StateMachine/GameState.h"
 #include <string>
 
 
@@ -8,7 +8,7 @@ namespace dae
 	{
 	public:
 
-		explicit Level(Game* game) : GameState(game) {}
+		explicit Level(State* state) : GameState(state) {}
 		virtual ~Level() = default;
 		Level(const Level& other) = delete;
 		Level(Level&& other) = delete;
