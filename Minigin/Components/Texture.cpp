@@ -16,7 +16,7 @@ const void dae::Texture::Render()
 	if (m_texture != nullptr)
 	{
 		auto pos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
-		Renderer::GetInstance().Texture(*m_texture, pos, m_size, m_rotationAngle, m_FlipMode, m_srcRect);
+		Renderer::GetInstance().Texture(*m_texture, pos, m_size, m_rotationAngle, m_FlipMode, m_srcRect.get());
 	}
 }
 
@@ -48,7 +48,7 @@ void dae::Texture::SetSourceRect(float x, float y, float width, float height)
 {
 	if (m_srcRect == nullptr)
 	{
-		m_srcRect = new SDL_FRect();
+		m_srcRect = std::make_unique<SDL_FRect>();
 	}
 
 	m_srcRect->x = x;

@@ -11,7 +11,7 @@ namespace dae
 		float m_rotationAngle{ 0.f };
 		glm::vec2 m_size{ 0, 0 };
 		SDL_FlipMode m_FlipMode{SDL_FLIP_NONE};
-		SDL_FRect* m_srcRect{};
+		std::unique_ptr<SDL_FRect> m_srcRect{};
 
 	public:
 		const void Render() override;
