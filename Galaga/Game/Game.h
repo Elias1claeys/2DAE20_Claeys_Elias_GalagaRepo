@@ -1,5 +1,5 @@
 #include "Core/GameObject.h"
-#include "GameState.h"
+#include "Core/GameState.h"
 
 namespace dae
 {

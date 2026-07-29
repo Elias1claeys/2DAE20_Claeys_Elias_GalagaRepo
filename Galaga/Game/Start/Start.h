@@ -1,4 +1,4 @@
-#include "Game/GameState.h"
+#include "Core/GameState.h"
 #include "Core/GameObject.h"
 
 namespace dae
