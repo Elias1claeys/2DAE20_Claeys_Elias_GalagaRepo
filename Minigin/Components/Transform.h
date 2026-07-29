@@ -7,8 +7,8 @@ namespace dae
 	class Transform : public Component
 	{
 	private:
-		glm::vec3 m_LocalPosition{ 0, 0, 0 };
-		glm::vec3 m_WorldPosition{ 0, 0, 0 };
+		glm::vec2 m_LocalPosition{ 0, 0 };
+		glm::vec2 m_WorldPosition{ 0, 0 };
 		bool m_PositionIsDirty{ false };
 
 		void UpdateWorldPosition();
@@ -16,8 +16,8 @@ namespace dae
 	public:
 		void SetPositionDirty();
 		void SetLocalPosition(float x, float y, float z = 0);
-		void SetLocalPosition(const glm::vec3& position);
-		const glm::vec3& GetWorldPosition();
+		void SetLocalPosition(const glm::vec2& position);
+		const glm::vec2& GetWorldPosition();
 
 
 		Transform(GameObject* owner);

@@ -2,6 +2,7 @@
 #include "Enemies/Bee/Bee.h"
 #include "StateMachine/State.h"
 #include "Components/Transform.h"
+#include "Enemies/Formation.h"
 #include <fstream>
 
 namespace dae
@@ -12,14 +13,20 @@ namespace dae
 		m_SpawnPosBosses = ReadPositionsFromFile("Data/Formations/Formation1Boss.txt");
 		m_SpawnPosFlies = ReadPositionsFromFile("Data/Formations/Formation1Butterflies.txt");
 
-		for (auto & pos: m_SpawnPosBees)
-		{
-			auto bee = std::make_unique<dae::GameObject>();
-			bee->AddComponent<dae::Bee>();
-			bee->GetComponent<dae::Transform>()->SetLocalPosition(pos.x - 75, pos.y, 0.0f);
-			bee->SetParent(m_pState->GetOwner(), false);
-			m_pBees.push_back(std::move(bee));
-		}
+		//for (auto & pos: m_SpawnPosBees)
+		//{
+		//	auto bee = std::make_unique<dae::GameObject>();
+		//	bee->AddComponent<dae::Bee>();
+		//	bee->GetComponent<dae::Transform>()->SetLocalPosition(pos.x - 75, pos.y, 0.0f);
+		//	bee->SetParent(m_pState->GetOwner(), false);
+		//	m_pBees.push_back(std::move(bee));
+		//}
+
+		auto bee = std::make_unique<dae::GameObject>();
+		bee->AddComponent<dae::Bee>();
+		bee->AddComponent<dae::State>(std::make_unique<dae::Formation>(nullptr, glm::vec2(0, 512), m_SpawnPosBees[0], glm::vec2(0, 212)));
+		bee->SetParent(m_pState->GetOwner(), false);
+		m_pBees.push_back(std::move(bee));
 	}
 
 	std::vector<glm::vec2> Level::ReadPositionsFromFile(const std::string& filePath)

@@ -8,7 +8,7 @@ namespace dae
 	private:
 		float m_RotationSpeed;
 		float m_CurrentAngle{ 0.f };
-		glm::vec3 m_RotationCenter{};
+		glm::vec2 m_RotationCenter{};
 
 	public:
 		void Update() override;

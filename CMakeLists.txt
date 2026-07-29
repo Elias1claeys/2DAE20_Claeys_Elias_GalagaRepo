@@ -179,6 +179,7 @@ add_library(Minigin STATIC
   Minigin/Rendering/Font.cpp
   Minigin/Rendering/Texture2D.cpp
   Minigin/Resources/ResourceManager.cpp
+  Minigin/StateMachine/State.cpp
   Minigin/Audio/SoundSystem.cpp
   Minigin/Audio/SDLSoundSystem.cpp
 )
@@ -205,11 +206,10 @@ target_link_libraries(Minigin PUBLIC
 add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Galaga/Main.cpp
   Galaga/BackGround/BackGround.cpp
-  Galaga/Enemies/Enemy.cpp
   Galaga/Enemies/Bee/Bee.cpp
   Galaga/Enemies/Boss/Boss.cpp
   Galaga/Enemies/Flie/Flie.cpp
-  "Minigin/StateMachine/State.cpp"
+  "Galaga/Enemies/Formation.cpp"
   Galaga/Game/Start/Start.cpp 
   Galaga/Game/Start/StartControls.cpp
   Galaga/Game/Level/Level.cpp

@@ -9,17 +9,16 @@ void dae::Transform::SetLocalPosition(float x, float y, float z)
 {
 	m_LocalPosition.x = x;
 	m_LocalPosition.y = y;
-	m_LocalPosition.z = z;
 	SetPositionDirty();
 }
 
-void dae::Transform::SetLocalPosition(const glm::vec3& position)
+void dae::Transform::SetLocalPosition(const glm::vec2& position)
 {
 	m_LocalPosition = position;
 	SetPositionDirty();
 }
 
-const glm::vec3& dae::Transform::GetWorldPosition()
+const glm::vec2& dae::Transform::GetWorldPosition()
 {
 	if (m_PositionIsDirty)
 		UpdateWorldPosition();

@@ -22,7 +22,6 @@ void dae::Rotator::Update()
 
 	transform->SetLocalPosition(
 		m_RotationCenter.x + std::cos(m_CurrentAngle) * 50.f,
-		m_RotationCenter.y + std::sin(m_CurrentAngle) * 50.f,
-		m_RotationCenter.z
+		m_RotationCenter.y + std::sin(m_CurrentAngle) * 50.f
 	);
 }

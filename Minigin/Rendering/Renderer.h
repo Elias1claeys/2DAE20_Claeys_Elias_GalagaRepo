@@ -25,7 +25,7 @@ namespace dae
 
 		void Texture(const Texture2D& texture, float x, float y, SDL_FRect* srcRect = nullptr) const;
 		void Texture(const Texture2D& texture, float x, float y, float width, float height, SDL_FRect* srcRect = nullptr) const;
-		void Texture(const Texture2D& texture, glm::vec3 pos, glm::vec2 size, float angle, SDL_FlipMode flip, SDL_FRect* srcRect = nullptr) const;
+		void Texture(const Texture2D& texture, glm::vec2 pos, glm::vec2 size, float angle, SDL_FlipMode flip, SDL_FRect* srcRect = nullptr) const;
 
 		void DrawRect(const SDL_Color& color, SDL_FRect rect) const; 
 		void FillRect(const SDL_Color& color, SDL_FRect rect) const;
