@@ -1,4 +1,5 @@
 #include "Bee.h"
+#include "Enemies/Enemie.h"
 #include "Components/Texture.h"
 #include "Components/Transform.h"
 
@@ -7,15 +8,7 @@ namespace dae
 	Bee::Bee(GameObject* owner)
 		: Component(owner)
 	{
-		GetOwner()->AddComponent<Texture>();
-		GetOwner()->GetComponent<Texture>()->SetTexture("Galaga2.png");
-
-		float y = 19.5;
-		float x = 1.5; //always + 18
-		float size = 15;
-
-		GetOwner()->GetComponent<Texture>()->SetSize({ 40, 40 });
-		GetOwner()->GetComponent<Texture>()->SetSourceRect(x, y, size, size);
+		GetOwner()->AddComponent<Enemie>(18.f);
 	}
 
 	void Bee::Update()

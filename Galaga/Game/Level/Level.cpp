@@ -1,5 +1,7 @@
 #include "Level.h"
 #include "Enemies/Bee/Bee.h"
+#include "Enemies/Boss/Boss.h"
+#include "Enemies/Flie/Flie.h"
 #include "StateMachine/State.h"
 #include "Components/Transform.h"
 #include "Enemies/Flying.h"
@@ -24,9 +26,7 @@ namespace dae
 
 		auto bee = std::make_unique<dae::GameObject>();
 		bee->AddComponent<dae::Bee>();
-		
-		Flying::BezierSegment segment{ glm::vec2(0, 512), m_SpawnPosBees[0], glm::vec2(0, 212)};
-		
+		Flying::BezierSegment segment{ glm::vec2(0, 562), m_SpawnPosBees[0], glm::vec2(0, 212) };
 		bee->AddComponent<dae::State>(std::make_unique<dae::Flying>(nullptr, segment, 0.5f));
 		bee->SetParent(m_pState->GetOwner(), false);
 		m_pBees.push_back(std::move(bee));
