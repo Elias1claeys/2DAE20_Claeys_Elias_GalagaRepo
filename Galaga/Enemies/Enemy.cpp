@@ -1,11 +1,11 @@
-#include "Enemie.h"
+#include "Enemy.h"
 #include "Components/Texture.h"
 #include "Components/Transform.h"
 #include <glm/gtc/constants.hpp>
 
 namespace dae
 {
-	Enemie::Enemie(GameObject* owner, float yPosEnmie)
+	Enemy::Enemy(GameObject* owner, float yPosEnmie)
 		: Component(owner)
 	{
 		GetOwner()->AddComponent<Texture>();
@@ -19,10 +19,10 @@ namespace dae
 		GetOwner()->GetComponent<Texture>()->SetSourceRect(x, m_SourceRectY, size, size);
 	}
 
-	void Enemie::Update()
+	void Enemy::Update()
 	{}
 
-	void Enemie::SetEnemieTexture(glm::vec2 prevPos)
+	void Enemy::SetEnemieTexture(glm::vec2 prevPos)
 	{
 		glm::vec2 currentpos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
 		glm::vec2 dir = currentpos - prevPos;
@@ -45,7 +45,7 @@ namespace dae
 		GetOwner()->GetComponent<Texture>()->SetSourceRect(x, m_SourceRectY, 15.f, 15.f);
 	}
 
-	void Enemie::SetEnemieTexture(float x)
+	void Enemy::SetEnemieTexture(float x)
 	{
 		GetOwner()->GetComponent<Texture>()->SetSourceRect(x, m_SourceRectY, 15.f, 15.f);
 	}

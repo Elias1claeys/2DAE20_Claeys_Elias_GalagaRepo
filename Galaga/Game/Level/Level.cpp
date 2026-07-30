@@ -4,7 +4,7 @@
 #include "Enemies/Flie/Flie.h"
 #include "StateMachine/State.h"
 #include "Components/Transform.h"
-#include "Enemies/Flying.h"
+#include "Enemies/EnemyStates/Flying.h"
 #include <fstream>
 
 namespace dae

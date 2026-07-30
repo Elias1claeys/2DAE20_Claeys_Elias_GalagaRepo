@@ -1,7 +1,8 @@
 #include "Flying.h"
 #include "StateMachine/State.h"
 #include <glm/gtc/constants.hpp>
-#include "Enemie.h"
+#include "Enemies/Enemy.h"
+#include "Formation.h"
 
 namespace dae
 {
@@ -24,7 +25,7 @@ namespace dae
 
 		if (m_T >= 1.f)
 		{
-			m_pState->GetOwner()->GetComponent<dae::Enemie>()->SetEnemieTexture(1.5f);
+			m_pState->GoToNextStage();
 			return;
 		}
 
@@ -54,7 +55,7 @@ namespace dae
 			break;
 		}
 
-		m_pState->GetOwner()->GetComponent<dae::Enemie>()->SetEnemieTexture(previousPos);
+		m_pState->GetOwner()->GetComponent<dae::Enemy>()->SetEnemieTexture(previousPos);
 	}
 
 	void Flying::OnExit()
@@ -64,7 +65,7 @@ namespace dae
 
 	std::unique_ptr<GameState> Flying::GoToNextState()
 	{
-		return nullptr;
+		return std::make_unique<Formation>(m_pState);
 	}
 }
 
