@@ -1,6 +1,7 @@
 #include "Flying.h"
 #include "StateMachine/State.h"
 #include <glm/gtc/constants.hpp>
+#include "Enemie.h"
 
 namespace dae
 {
@@ -18,13 +19,14 @@ namespace dae
 
 	void Flying::Update(float deltaTime)
 	{
+		auto transform = m_pState->GetOwner()->GetComponent<dae::Transform>();
+		glm::vec2 previousPos = transform->GetWorldPosition();
+
 		if (m_T >= 1.f)
 		{
-			//m_pState->GoToNextStage();
+			m_pState->GetOwner()->GetComponent<dae::Enemie>()->SetEnemieTexture(1.5f);
 			return;
 		}
-
-		auto transform = m_pState->GetOwner()->GetComponent<dae::Transform>();
 
 		switch (m_Phase)
 		{
@@ -52,7 +54,7 @@ namespace dae
 			break;
 		}
 
-		
+		m_pState->GetOwner()->GetComponent<dae::Enemie>()->SetEnemieTexture(previousPos);
 	}
 
 	void Flying::OnExit()
@@ -68,7 +70,7 @@ namespace dae
 
 void dae::Flying::BezierMovement(float deltaTime, Transform* transform)
 {
-	m_T += 0.7f * deltaTime;
+	m_T += 0.5f * deltaTime;
 
 	glm::vec2 newPos = ((1 - m_T) * (1 - m_T) * m_BezierSegment.startPoint) +
 		2 * (1 - m_T) * m_T * m_BezierSegment.curvePoint +
@@ -79,7 +81,7 @@ void dae::Flying::BezierMovement(float deltaTime, Transform* transform)
 
 void dae::Flying::Looping(float deltaTime, Transform* transform)
 {
-	m_LoopAngle -= 7.f * deltaTime;
+	m_LoopAngle -= 5.f * deltaTime;
 
 	glm::vec2 newPos = m_RotationCenter +
 		glm::vec2(std::cos(m_LoopAngle), std::sin(m_LoopAngle)) * 50.f;
