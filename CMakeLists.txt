@@ -210,7 +210,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Galaga/Enemies/Boss/Boss.cpp
   Galaga/Enemies/Flie/Flie.cpp
   Galaga/Enemies/Enemy.cpp
-  Galaga/Enemies/EnemyStates/Flying.cpp
+  "Galaga/Enemies/Path/BezierPath.cpp"
   Galaga/Enemies/EnemyStates/Formation.cpp
   Galaga/Game/Start/Start.cpp 
   Galaga/Game/Start/StartControls.cpp

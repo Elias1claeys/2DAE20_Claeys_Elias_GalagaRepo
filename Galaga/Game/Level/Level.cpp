@@ -4,7 +4,7 @@
 #include "Enemies/Flie/Flie.h"
 #include "StateMachine/State.h"
 #include "Components/Transform.h"
-#include "Enemies/EnemyStates/Flying.h"
+#include "Enemies/Path/BezierPath.h"
 #include <fstream>
 
 namespace dae
@@ -15,19 +15,10 @@ namespace dae
 		m_SpawnPosBosses = ReadPositionsFromFile("Data/Formations/Formation1Boss.txt");
 		m_SpawnPosFlies = ReadPositionsFromFile("Data/Formations/Formation1Butterflies.txt");
 
-		//for (auto & pos: m_SpawnPosBees)
-		//{
-		//	auto bee = std::make_unique<dae::GameObject>();
-		//	bee->AddComponent<dae::Bee>();
-		//	bee->GetComponent<dae::Transform>()->SetLocalPosition(pos.x - 75, pos.y, 0.0f);
-		//	bee->SetParent(m_pState->GetOwner(), false);
-		//	m_pBees.push_back(std::move(bee));
-		//}
-
 		auto bee = std::make_unique<dae::GameObject>();
 		bee->AddComponent<dae::Bee>();
-		Flying::BezierSegment segment{ glm::vec2(0, 562), m_SpawnPosBees[0], glm::vec2(0, 212) };
-		bee->AddComponent<dae::State>(std::make_unique<dae::Flying>(nullptr, segment, 0.5f));
+		BezierPath::BezierSegment segment{ glm::vec2(0, 562), m_SpawnPosBees[0], glm::vec2(0, 212) };
+		bee->AddComponent<dae::BezierPath>(segment, 0.5f);
 		bee->SetParent(m_pState->GetOwner(), false);
 		m_pBees.push_back(std::move(bee));
 	}
