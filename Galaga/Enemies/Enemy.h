@@ -18,7 +18,10 @@ namespace dae
 		void SetEnemieTexture(float x);
 
 	private:
+		bool m_Flying{false};
+		float m_SourceRectX{};
 		float m_SourceRectY{};
-
+		float m_Time{};
+		float m_Size{};
 	};
 }

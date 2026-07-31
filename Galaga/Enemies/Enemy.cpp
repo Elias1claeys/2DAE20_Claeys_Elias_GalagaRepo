@@ -2,6 +2,7 @@
 #include "Components/Texture.h"
 #include "Components/Transform.h"
 #include <glm/gtc/constants.hpp>
+#include "Core/DeltaTime.h"
 
 namespace dae
 {
@@ -12,15 +13,34 @@ namespace dae
 		GetOwner()->GetComponent<Texture>()->SetTexture("Galaga2.png");
 
 		m_SourceRectY = 1.5f + yPosEnmie;
-		float x = 1.5f;
-		float size = 15.f;
+		m_SourceRectX = 1.5f;
+		m_Size = 15.f;
 
 		GetOwner()->GetComponent<Texture>()->SetSize({ 40, 40 });
-		GetOwner()->GetComponent<Texture>()->SetSourceRect(x, m_SourceRectY, size, size);
+		GetOwner()->GetComponent<Texture>()->SetSourceRect(m_SourceRectX, m_SourceRectY, m_Size, m_Size);
 	}
 
 	void Enemy::Update()
-	{}
+	{
+		m_Time += Time::GetInstance().GetDeltaTime();
+
+		if (m_Time >= 0.5f)
+		{
+			if (!m_Flying)
+			{
+				m_SourceRectY += 18;
+			}
+			else
+			{
+				m_SourceRectY -= 18;
+			}
+			
+			m_Flying = !m_Flying;
+			m_Time = 0.f;
+		}
+
+		GetOwner()->GetComponent<Texture>()->SetSourceRect(m_SourceRectX, m_SourceRectY, m_Size, m_Size);
+	}
 
 	void Enemy::SetEnemieTexture(glm::vec2 prevPos)
 	{
@@ -41,12 +61,11 @@ namespace dae
 		if (index > 15)
 			index -= 15;
 
-		float x = 1.5f + 18.f * index;
-		GetOwner()->GetComponent<Texture>()->SetSourceRect(x, m_SourceRectY, 15.f, 15.f);
+		m_SourceRectX = 1.5f + 18.f * index;
 	}
 
 	void Enemy::SetEnemieTexture(float x)
 	{
-		GetOwner()->GetComponent<Texture>()->SetSourceRect(x, m_SourceRectY, 15.f, 15.f);
+		m_SourceRectX = x;
 	}
 }
