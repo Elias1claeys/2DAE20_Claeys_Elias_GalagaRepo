@@ -77,6 +77,20 @@ namespace dae
 		}
 	}
 
+	void BezierPath::SetNewPath(BezierSegment bezier, float loopPoint)
+	{
+		m_BezierSegment = bezier;
+		m_LoopPoint = loopPoint;
+		m_T = 0.f;
+	}
+
+	void BezierPath::SetNewPath(BezierSegment bezier)
+	{
+		m_BezierSegment = bezier;
+		m_LoopPoint = 0.f;
+		m_T = 0.f;
+	}
+
 	bool BezierPath::ReachedEnd()
 	{
 		return m_T >= 1.f;

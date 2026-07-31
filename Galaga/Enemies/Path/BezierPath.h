@@ -42,6 +42,8 @@ namespace dae
 
 		void BezierMovement(Transform* transform);
 		void Looping(Transform* transform);
+		void SetNewPath(BezierSegment bezier, float loopPoint);
+		void SetNewPath(BezierSegment bezier);
 		bool ReachedEnd();
 	};
 }
