@@ -5,6 +5,7 @@
 #include "StateMachine/State.h"
 #include "Components/Transform.h"
 #include "Enemies/Path/BezierPath.h"
+#include "Enemies/EnemySpawner/EnemySpawner.h"
 #include <fstream>
 
 namespace dae
@@ -15,12 +16,19 @@ namespace dae
 		m_SpawnPosBosses = ReadPositionsFromFile("Data/Formations/Formation1Boss.txt");
 		m_SpawnPosFlies = ReadPositionsFromFile("Data/Formations/Formation1Butterflies.txt");
 
-		auto bee = std::make_unique<dae::GameObject>();
-		bee->AddComponent<dae::Bee>();
-		BezierPath::BezierSegment segment{ glm::vec2(0, 562), m_SpawnPosBees[0], glm::vec2(0, 212) };
-		bee->AddComponent<dae::BezierPath>(segment, 0.5f);
-		bee->SetParent(m_pState->GetOwner(), false);
-		m_pBees.push_back(std::move(bee));
+		m_pState->GetOwner()->AddComponent<EnemySpawner>();
+		SpawnEnemies();
+
+
+		//for (int i = 0; i < m_SpawnPosBees.size(); i++)
+		//{
+		//	auto bee = std::make_unique<dae::GameObject>();
+		//	bee->AddComponent<dae::Bee>();
+		//	BezierPath::BezierSegment segment{ glm::vec2(256, -50), m_SpawnPosBees[i], glm::vec2(-200, 500) };
+		//	bee->AddComponent<dae::BezierPath>(segment);
+		//	bee->SetParent(m_pState->GetOwner(), false);
+		//	m_pBees.push_back(std::move(bee));
+		//}
 	}
 
 	std::vector<glm::vec2> Level::ReadPositionsFromFile(const std::string& filePath)
@@ -46,12 +54,50 @@ namespace dae
 				{
 					float x = std::stof(xStr);
 					float y = std::stof(yStr);
+					x -= 75.f;
 					positions.emplace_back(x, y);
 				}
 			}
 		}
 
 		return positions;
+	}
+
+	void Level::SpawnEnemies()
+	{
+		auto enemySpawner = m_pState->GetOwner()->GetComponent<EnemySpawner>();
+		std::vector<EnemySpawner::EnemyInfo> enemies;
+
+		for (int i = 0; i < 4; i++) { 
+			enemies.push_back({ EnemySpawner::EnemyType::Bee, m_SpawnPosBees[i] }); }
+		enemySpawner->AddWave({ enemies, glm::vec2(156, -50), glm::vec2(-200, 500) });
+		enemies.clear();
+
+		for (int i = 0; i < 4; i++) { 
+			enemies.push_back({ EnemySpawner::EnemyType::Flie, m_SpawnPosFlies[i] }); }
+		enemySpawner->AddWave({ enemies, glm::vec2(356, -50), glm::vec2(712, 500) });
+		enemies.clear();
+
+		for (int i = 0; i < 4; i++) {
+			enemies.push_back({ EnemySpawner::EnemyType::Flie, m_SpawnPosFlies[i + 4] });
+			enemies.push_back({ EnemySpawner::EnemyType::Boss, m_SpawnPosBosses[i] });}
+		enemySpawner->AddWave({ enemies, glm::vec2(0, 512), glm::vec2(0, 212), 0.5f });
+		enemies.clear();
+
+		for (int i = 8; i < 16; i++) {
+			enemies.push_back({ EnemySpawner::EnemyType::Flie, m_SpawnPosFlies[i] });}
+		enemySpawner->AddWave({ enemies, glm::vec2(512, 512), glm::vec2({512, 212}), 0.5f });
+		enemies.clear();
+
+		for (int i = 4; i < 12; i++) {
+			enemies.push_back({ EnemySpawner::EnemyType::Bee, m_SpawnPosBees[i] }); }
+		enemySpawner->AddWave({ enemies, glm::vec2(156, -50), glm::vec2(-200, 500) });
+		enemies.clear();
+
+		for (int i = 12; i < 20; i++) {
+			enemies.push_back({ EnemySpawner::EnemyType::Bee, m_SpawnPosBees[i] });}
+		enemySpawner->AddWave({ enemies, glm::vec2(356, -50), glm::vec2(-712, 500) });
+		enemies.clear();
 	}
 
 	void Level::Update(float)

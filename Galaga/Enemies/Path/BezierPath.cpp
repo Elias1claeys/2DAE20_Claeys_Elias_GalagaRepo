@@ -17,7 +17,11 @@ namespace dae
 	void BezierPath::Update()
 	{
 		if (m_T >= 1.f)
+		{
+			GetOwner()->GetComponent<dae::Transform>()->SetLocalPosition(m_BezierSegment.endPoint);
+			GetOwner()->GetComponent<dae::Enemy>()->SetEnemieTexture(1.5f);
 			return;
+		}
 
 		auto transform = GetOwner()->GetComponent<dae::Transform>();
 		glm::vec2 previousPos = transform->GetWorldPosition();
@@ -53,7 +57,7 @@ namespace dae
 
 	void BezierPath::BezierMovement(Transform* transform)
 	{
-		m_T += 0.5f * Time::GetInstance().GetDeltaTime();
+		m_T += 0.4f * Time::GetInstance().GetDeltaTime();
 
 		glm::vec2 newPos = ((1 - m_T) * (1 - m_T) * m_BezierSegment.startPoint) +
 			2 * (1 - m_T) * m_T * m_BezierSegment.curvePoint +
@@ -64,7 +68,7 @@ namespace dae
 
 	void BezierPath::Looping(Transform* transform)
 	{
-		m_LoopAngle -= 5.f * Time::GetInstance().GetDeltaTime();
+		m_LoopAngle -= 4.f * Time::GetInstance().GetDeltaTime();
 
 		glm::vec2 newPos = m_RotationCenter +
 			glm::vec2(std::cos(m_LoopAngle), std::sin(m_LoopAngle)) * 50.f;

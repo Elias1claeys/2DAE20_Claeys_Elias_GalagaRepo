@@ -24,6 +24,8 @@ namespace dae
 	private:
 
 		std::vector<glm::vec2> ReadPositionsFromFile(const std::string& filePath);
+		void SpawnEnemies();
+		
 
 		std::vector<glm::vec2> m_SpawnPosBees;
 		std::vector<glm::vec2> m_SpawnPosFlies;
