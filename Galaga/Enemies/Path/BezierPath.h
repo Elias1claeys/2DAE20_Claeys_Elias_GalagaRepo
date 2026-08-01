@@ -39,6 +39,7 @@ namespace dae
 		float m_LoopAngle{};
 		float m_LoopPoint{};
 		float m_T = 0.f;
+		float m_Time = 0.f;
 
 		void BezierMovement(Transform* transform);
 		void Looping(Transform* transform);

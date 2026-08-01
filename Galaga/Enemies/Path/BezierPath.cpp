@@ -57,7 +57,17 @@ namespace dae
 
 	void BezierPath::BezierMovement(Transform* transform)
 	{
-		m_T += 0.4f * Time::GetInstance().GetDeltaTime();
+		float deltaTime = Time::GetInstance().GetDeltaTime();
+
+		glm::vec2 derivative =
+			2.0f * (1 - m_T) * (m_BezierSegment.curvePoint - m_BezierSegment.startPoint) +
+			2.0f * m_T * (m_BezierSegment.endPoint - m_BezierSegment.curvePoint);
+
+		float curveSpeed = glm::length(derivative);
+
+		float movementSpeed = 300.0f; 
+
+		m_T += (movementSpeed / curveSpeed) * deltaTime;
 
 		glm::vec2 newPos = ((1 - m_T) * (1 - m_T) * m_BezierSegment.startPoint) +
 			2 * (1 - m_T) * m_T * m_BezierSegment.curvePoint +
