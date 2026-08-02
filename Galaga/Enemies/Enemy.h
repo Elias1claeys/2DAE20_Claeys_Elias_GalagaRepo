@@ -1,11 +1,13 @@
 #include "Core/GameObject.h"
+#include "Event/Subject.h"
 
 namespace dae
 {
-	class Enemy : public Component
+	class Enemy : public Component, public Subject
 	{
 
 	public:
+		
 		Enemy(GameObject* owner, glm::vec2 formationPos, float yPosEnemie);
 		virtual ~Enemy() = default;
 		Enemy(const Enemy& other) = delete;
@@ -14,6 +16,7 @@ namespace dae
 		Enemy& operator=(Enemy&& other) = delete;
 
 		void Update() override;
+		void Notify(Event event, GameObject* gameObject);
 		void SetEnemieTexture(glm::vec2 prevPos);
 		void SetEnemieTexture(float x);
 		glm::vec2 GetFormationPos() const { return m_FormationPos; }

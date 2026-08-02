@@ -3,6 +3,9 @@
 #include <glm/gtc/constants.hpp>
 #include "Enemies/Enemy.h"
 #include "Core/DeltaTime.h"
+#include "Enemies/EnemyObserver.h"
+#include "GameEvents.h"
+#include "StateMachine/GameState.h"
 
 namespace dae
 {
@@ -44,7 +47,15 @@ namespace dae
 			break;
 		}
 
-		GetOwner()->GetComponent<dae::Enemy>()->SetEnemieTexture(previousPos);
+		if (m_T < 1.f)
+		{
+			GetOwner()->GetComponent<dae::Enemy>()->SetEnemieTexture(previousPos);
+		}
+		else
+		{
+			GetOwner()->GetComponent<dae::Transform>()->SetLocalPosition(m_BezierSegment.endPoint);
+			GetOwner()->GetComponent<dae::State>()->GoToNextStage();
+		}
 	}
 
 	void BezierPath::BezierMovement(Transform* transform)
