@@ -6,22 +6,14 @@
 
 namespace dae
 {
-	BezierPath::BezierPath(GameObject* owner, BezierSegment bezierSegment, float loopPoint)
-		: Component(owner), m_BezierSegment(bezierSegment), m_LoopPoint(loopPoint)
-	{}
-
-	BezierPath::BezierPath(GameObject* owner, BezierSegment bezierSegment)
-		: Component(owner), m_BezierSegment(bezierSegment)
+	BezierPath::BezierPath(GameObject* owner)
+		: Component(owner)
 	{}
 
 	void BezierPath::Update()
 	{
 		if (m_T >= 1.f)
-		{
-			GetOwner()->GetComponent<dae::Transform>()->SetLocalPosition(m_BezierSegment.endPoint);
-			GetOwner()->GetComponent<dae::Enemy>()->SetEnemieTexture(1.5f);
 			return;
-		}
 
 		auto transform = GetOwner()->GetComponent<dae::Transform>();
 		glm::vec2 previousPos = transform->GetWorldPosition();
@@ -31,7 +23,7 @@ namespace dae
 		case Phase::preLoop:
 			BezierMovement(transform);
 
-			if (m_T >= m_LoopPoint && m_LoopPoint != 0.f)
+			if (m_T >= m_BezierSegment.loopPoint && m_BezierSegment.loopPoint != 0.f)
 			{
 				m_RotationCenter = glm::vec2(transform->GetWorldPosition().x, transform->GetWorldPosition().y - 50.f);
 				glm::vec2 toCurrent = transform->GetWorldPosition() - m_RotationCenter;
@@ -91,23 +83,14 @@ namespace dae
 		}
 	}
 
-	void BezierPath::SetNewPath(BezierSegment bezier, float loopPoint)
+	void BezierPath::SetNewPath(glm::vec2 curvePoint, glm::vec2 endPoint, float loopPoint)
 	{
-		m_BezierSegment = bezier;
-		m_LoopPoint = loopPoint;
+		m_BezierSegment.startPoint = GetOwner()->GetComponent<dae::Transform>()->GetWorldPosition();
+		m_BezierSegment.curvePoint = curvePoint;
+		m_BezierSegment.endPoint = endPoint;
+		m_BezierSegment.loopPoint = loopPoint;
 		m_T = 0.f;
 	}
 
-	void BezierPath::SetNewPath(BezierSegment bezier)
-	{
-		m_BezierSegment = bezier;
-		m_LoopPoint = 0.f;
-		m_T = 0.f;
-	}
-
-	bool BezierPath::ReachedEnd()
-	{
-		return m_T >= 1.f;
-	}
 }
 

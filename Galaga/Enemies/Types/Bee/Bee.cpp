@@ -8,7 +8,7 @@ namespace dae
 	Bee::Bee(GameObject* owner)
 		: Component(owner)
 	{
-		GetOwner()->AddComponent<Enemy>(18.f);
+		//GetOwner()->AddComponent<Enemy>(18.f);
 	}
 
 	void Bee::Update()

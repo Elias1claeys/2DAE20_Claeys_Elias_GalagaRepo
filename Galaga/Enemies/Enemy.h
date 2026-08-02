@@ -6,7 +6,7 @@ namespace dae
 	{
 
 	public:
-		Enemy(GameObject* owner, float yPosEnemie);
+		Enemy(GameObject* owner, glm::vec2 formationPos, float yPosEnemie);
 		virtual ~Enemy() = default;
 		Enemy(const Enemy& other) = delete;
 		Enemy(Enemy&& other) = delete;
@@ -16,8 +16,10 @@ namespace dae
 		void Update() override;
 		void SetEnemieTexture(glm::vec2 prevPos);
 		void SetEnemieTexture(float x);
+		glm::vec2 GetFormationPos() const { return m_FormationPos; }
 
 	private:
+		glm::vec2 m_FormationPos{};
 		bool m_Flying{false};
 		float m_SourceRectX{};
 		float m_SourceRectY{};

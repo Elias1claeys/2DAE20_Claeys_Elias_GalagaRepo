@@ -8,7 +8,7 @@ namespace dae
 	Flie::Flie(GameObject* owner)
 		: Component(owner)
 	{
-		GetOwner()->AddComponent<Enemy>(54.f);
+		//GetOwner()->AddComponent<Enemy>(54.f);
 	}
 
 	void Flie::Update()

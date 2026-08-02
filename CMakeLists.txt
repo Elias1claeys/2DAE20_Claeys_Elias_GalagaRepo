@@ -207,12 +207,14 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Galaga/Main.cpp
   Galaga/BackGround/BackGround.cpp
   Galaga/Enemies/EnemySpawner/EnemySpawner.cpp
-  Galaga/Enemies/EnemyStates/Formation.cpp
+  Galaga/Enemies/EnemyStates/FlyingToFormation.cpp
+  Galaga/Enemies/EnemyStates/InFormation.cpp
+  Galaga/Enemies/Path/BezierPath.cpp
   Galaga/Enemies/Types/Bee/Bee.cpp
   Galaga/Enemies/Types/Boss/Boss.cpp
   Galaga/Enemies/Types/Flie/Flie.cpp
-  Galaga/Enemies/Path/BezierPath.cpp
   Galaga/Enemies/Enemy.cpp
+  Galaga/Enemies/EnemyObserver.cpp
   Galaga/Game/Start/Start.cpp 
   Galaga/Game/Start/StartControls.cpp
   Galaga/Game/Level/Level.cpp

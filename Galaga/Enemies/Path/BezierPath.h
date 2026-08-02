@@ -12,6 +12,7 @@ namespace dae
 			glm::vec2 startPoint;
 			glm::vec2 endPoint;
 			glm::vec2 curvePoint;
+			float loopPoint = 0.f;
 		};
 
 		enum class Phase
@@ -21,30 +22,27 @@ namespace dae
 			postLoop
 		};
 
-		BezierPath(GameObject* owner, BezierSegment bezier, float loopPoint);
-		BezierPath(GameObject* owner, BezierSegment bezier);
+		BezierPath(GameObject* owner);
 		virtual ~BezierPath() = default;
 		BezierPath(const BezierPath& other) = delete;
 		BezierPath(BezierPath&& other) = delete;
 		BezierPath& operator=(const BezierPath& other) = delete;
 		BezierPath& operator=(BezierPath&& other) = delete;
 
+		void SetNewPath(glm::vec2 curvePoint, glm::vec2 endPoint, float loopPoint = 0.f);
 		void Update() override;
 
 	private:
 		Phase m_Phase = Phase::preLoop;
 		BezierSegment m_BezierSegment{};
 		glm::vec2 m_RotationCenter{};
+
 		float m_LoopStartAngle{};
 		float m_LoopAngle{};
-		float m_LoopPoint{};
-		float m_T = 0.f;
-		float m_Time = 0.f;
+		float m_T = 1.f;
 
 		void BezierMovement(Transform* transform);
 		void Looping(Transform* transform);
-		void SetNewPath(BezierSegment bezier, float loopPoint);
-		void SetNewPath(BezierSegment bezier);
 		bool ReachedEnd();
 	};
 }

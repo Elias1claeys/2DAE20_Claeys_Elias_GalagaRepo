@@ -8,7 +8,7 @@ namespace dae
 	Boss::Boss(GameObject* owner)
 		: Component(owner)
 	{
-		GetOwner()->AddComponent<Enemy>(90.f);
+		//GetOwner()->AddComponent<Enemy>(90.f);
 	}
 
 	void Boss::Update()

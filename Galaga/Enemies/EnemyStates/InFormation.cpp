@@ -1,15 +1,15 @@
-#include "Formation.h"
+#include "InFormation.h"
 #include "StateMachine/State.h"
 #include "Enemies/Enemy.h"
 
 namespace dae
 {
-	Formation::Formation(State* state)
+	InFormation::InFormation(State* state)
 		: GameState(state)
 	{
 	}
 
-	void Formation::OnEnter()
+	void InFormation::OnEnter()
 	{
 		m_pState->GetOwner()->GetComponent<Enemy>()->SetEnemieTexture(1.5f);
 	}

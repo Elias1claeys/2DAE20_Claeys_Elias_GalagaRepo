@@ -3,7 +3,10 @@
 #include "Enemies/Types/Bee/Bee.h"
 #include "Enemies/Types/Boss/Boss.h"
 #include "Enemies/Types/Flie/Flie.h"
+#include "Enemies/Enemy.h"
 #include "Enemies/Path/BezierPath.h"
+#include "StateMachine/State.h"
+#include "Enemies/EnemyStates/FlyingToFormation.h"
 
 namespace dae
 {
@@ -46,18 +49,19 @@ namespace dae
 		switch (currentWave.enemies[enemyIndex].type)
 		{
 			case EnemyType::Bee:
-				enemy->AddComponent<Bee>();
+				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 18.f);
 				break;
 			case EnemyType::Flie:
-				enemy->AddComponent<Flie>();
+				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 54.f);
 				break;
 			case EnemyType::Boss:
-				enemy->AddComponent<Boss>();
+				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 90.f);
 				break;
 		}
-
-		BezierPath::BezierSegment bezierSegment{currentWave.startPoint, currentWave.enemies[enemyIndex].endPoint, currentWave.curvePoint};
-		enemy->AddComponent<BezierPath>(bezierSegment, currentWave.rotationPoint);
+		
+		enemy->GetComponent<Transform>()->SetLocalPosition(currentWave.startPoint);
+		enemy->AddComponent<BezierPath>();
+		enemy->AddComponent<State>(std::make_unique<dae::FlyingToFormation>(nullptr, currentWave.curvePoint, currentWave.rotationPoint));
 		enemy->SetParent(GetOwner(), false);
 
 		m_Enemies.push_back(std::move(enemy));
