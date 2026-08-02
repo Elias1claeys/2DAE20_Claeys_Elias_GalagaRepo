@@ -1,8 +1,8 @@
 #include "EnemySpawner.h"
 #include "Core/DeltaTime.h"
-#include "Enemies/Bee/Bee.h"
-#include "Enemies/Boss/Boss.h"
-#include "Enemies/Flie/Flie.h"
+#include "Enemies/Types/Bee/Bee.h"
+#include "Enemies/Types/Boss/Boss.h"
+#include "Enemies/Types/Flie/Flie.h"
 #include "Enemies/Path/BezierPath.h"
 
 namespace dae

@@ -78,7 +78,7 @@ namespace dae
 
 	void BezierPath::Looping(Transform* transform)
 	{
-		m_LoopAngle -= 4.f * Time::GetInstance().GetDeltaTime();
+		m_LoopAngle -= 3.f * Time::GetInstance().GetDeltaTime();
 
 		glm::vec2 newPos = m_RotationCenter +
 			glm::vec2(std::cos(m_LoopAngle), std::sin(m_LoopAngle)) * 50.f;
