@@ -6,6 +6,7 @@
 #include "Components/Transform.h"
 #include "Enemies/Path/BezierPath.h"
 #include "Enemies/EnemySpawner/EnemySpawner.h"
+#include "Player/Player.h"
 #include <fstream>
 
 namespace dae
@@ -19,16 +20,11 @@ namespace dae
 		m_pState->GetOwner()->AddComponent<EnemySpawner>();
 		SpawnEnemies();
 
+		auto player = std::make_unique<GameObject>();
+		player->AddComponent<Player>();
+		player->SetParent(m_pState->GetOwner(), false);
+		m_GameObjects.push_back(std::move(player));
 
-		//for (int i = 0; i < m_SpawnPosBees.size(); i++)
-		//{
-		//	auto bee = std::make_unique<dae::GameObject>();
-		//	bee->AddComponent<dae::Bee>();
-		//	BezierPath::BezierSegment segment{ glm::vec2(256, -50), m_SpawnPosBees[i], glm::vec2(-200, 500) };
-		//	bee->AddComponent<dae::BezierPath>(segment);
-		//	bee->SetParent(m_pState->GetOwner(), false);
-		//	m_pBees.push_back(std::move(bee));
-		//}
 	}
 
 	std::vector<glm::vec2> Level::ReadPositionsFromFile(const std::string& filePath)
