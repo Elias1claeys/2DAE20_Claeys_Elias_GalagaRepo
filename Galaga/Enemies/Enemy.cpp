@@ -3,16 +3,12 @@
 #include "Components/Transform.h"
 #include <glm/gtc/constants.hpp>
 #include "Core/DeltaTime.h"
-#include "EnemyObserver.h"
 
 namespace dae
 {
 	Enemy::Enemy(GameObject* owner, glm::vec2 formationPos, float yPosEnmie)
 		: Component(owner), m_FormationPos(formationPos)
 	{
-		auto enemyObserver = std::make_unique<EnemyObserver>();
-		AddObserver(std::move(enemyObserver));
-
 		GetOwner()->AddComponent<Texture>();
 		GetOwner()->GetComponent<Texture>()->SetTexture("Galaga2.png");
 
@@ -20,7 +16,7 @@ namespace dae
 		m_SourceRectX = 1.5f;
 		m_Size = 15.f;
 
-		GetOwner()->GetComponent<Texture>()->SetSize({ 40, 40 });
+		GetOwner()->GetComponent<Texture>()->SetSize({ 30, 30 });
 		GetOwner()->GetComponent<Texture>()->SetSourceRect(m_SourceRectX, m_SourceRectY, m_Size, m_Size);
 	}
 
@@ -73,8 +69,8 @@ namespace dae
 		m_SourceRectX = x;
 	}
 
-	void Enemy::Notify(Event event, GameObject* gameObject)
+	void Enemy::Notify(Event event)
 	{
-		Subject::Notify(event, gameObject);
+		Subject::Notify(event, GetOwner());
 	}
 }

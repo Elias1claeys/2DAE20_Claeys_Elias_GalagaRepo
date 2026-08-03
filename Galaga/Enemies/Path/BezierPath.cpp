@@ -68,7 +68,7 @@ namespace dae
 
 		float curveSpeed = glm::length(derivative);
 
-		float movementSpeed = 300.0f; 
+		float movementSpeed = 200.0f; 
 
 		m_T += (movementSpeed / curveSpeed) * deltaTime;
 

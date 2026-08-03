@@ -1,4 +1,5 @@
 #include "Core/GameObject.h"
+#include "Enemies/EnemyObserver.h"
 
 namespace dae
 {
@@ -36,15 +37,17 @@ namespace dae
 
 		void Update() override;
 		void AddWave(Wave wave);
+		void EnemyBackInFormation();
 		
 	private:
 		void SpawnEnemy(int waveIndex, int enemieIndex);
 
 		std::vector<std::unique_ptr<GameObject>> m_Enemies;
-
 		std::vector<Wave> m_Waves;
 		float m_Time{ 1.f };
 		int m_EnemyIndex{0};
 		int m_WaveIndex{0};
+		int m_EnemiesSpawned{ 0 };
+		int m_EnemiesInFormation{ 0 };
 	};
 }

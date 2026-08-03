@@ -16,7 +16,7 @@ namespace dae
 		Enemy& operator=(Enemy&& other) = delete;
 
 		void Update() override;
-		void Notify(Event event, GameObject* gameObject);
+		void Notify(Event event);
 		void SetEnemieTexture(glm::vec2 prevPos);
 		void SetEnemieTexture(float x);
 		glm::vec2 GetFormationPos() const { return m_FormationPos; }
