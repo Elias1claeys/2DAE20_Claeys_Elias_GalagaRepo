@@ -12,8 +12,20 @@ namespace dae
 
 	void FlyingToFormation::OnEnter()
 	{
-		glm::vec2 formationPos = m_pState->GetOwner()->GetComponent<dae::Enemy>()->GetFormationPos();
-		m_pState->GetOwner()->GetComponent<BezierPath>()->SetNewPath(m_CurvePoint, formationPos, m_LoopPoint);
+		glm::vec2 start = { 256.f, 256.f };
+		glm::vec2 end = m_pState->GetOwner()->GetComponent<dae::Enemy>()->GetFormationPos();;
+
+		glm::vec2 midpoint = (start + end) * 0.5f;
+
+		glm::vec2 direction = glm::normalize(end - start);
+		glm::vec2 perpendicular = { -direction.y, direction.x };
+
+		float curveAmount = 50.f;
+
+		glm::vec2 curvePoint = midpoint + perpendicular * curveAmount;
+
+		m_pState->GetOwner()->GetComponent<BezierPath>()->SetNewPath(m_CurvePoint, start, m_LoopPoint);
+		m_pState->GetOwner()->GetComponent<BezierPath>()->SetNewPath(curvePoint, end, 0);
 	}
 
 	std::unique_ptr<GameState> FlyingToFormation::GoToNextState()

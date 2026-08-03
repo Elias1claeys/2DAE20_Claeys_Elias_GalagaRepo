@@ -66,33 +66,33 @@ namespace dae
 
 		for (int i = 0; i < 4; i++) { 
 			enemies.push_back({ EnemySpawner::EnemyType::Bee, m_SpawnPosBees[i] }); }
-		enemySpawner->AddWave({ enemies, glm::vec2(156, -50), glm::vec2(-200, 500) });
+		enemySpawner->AddWave({ enemies, glm::vec2(156, -50), glm::vec2(-100, 500) });
 		enemies.clear();
 
 		for (int i = 0; i < 4; i++) { 
 			enemies.push_back({ EnemySpawner::EnemyType::Flie, m_SpawnPosFlies[i] }); }
-		enemySpawner->AddWave({ enemies, glm::vec2(356, -50), glm::vec2(712, 500) });
+		enemySpawner->AddWave({ enemies, glm::vec2(356, -50), glm::vec2(612, 500) });
 		enemies.clear();
 
 		for (int i = 0; i < 4; i++) {
 			enemies.push_back({ EnemySpawner::EnemyType::Flie, m_SpawnPosFlies[i + 4] });
 			enemies.push_back({ EnemySpawner::EnemyType::Boss, m_SpawnPosBosses[i] });}
-		enemySpawner->AddWave({ enemies, glm::vec2(0, 512), glm::vec2(0, 212), 0.5f });
+		enemySpawner->AddWave({ enemies, glm::vec2(0, 512), glm::vec2(100, 200), 0.5f });
 		enemies.clear();
 
 		for (int i = 8; i < 16; i++) {
 			enemies.push_back({ EnemySpawner::EnemyType::Flie, m_SpawnPosFlies[i] });}
-		enemySpawner->AddWave({ enemies, glm::vec2(512, 512), glm::vec2({512, 212}), 0.5f });
+		enemySpawner->AddWave({ enemies, glm::vec2(512, 512), glm::vec2({412, 200}), 0.5f });
 		enemies.clear();
 
 		for (int i = 4; i < 12; i++) {
 			enemies.push_back({ EnemySpawner::EnemyType::Bee, m_SpawnPosBees[i] }); }
-		enemySpawner->AddWave({ enemies, glm::vec2(156, -50), glm::vec2(-200, 500) });
+		enemySpawner->AddWave({ enemies, glm::vec2(156, -50), glm::vec2(-100, 500) });
 		enemies.clear();
 
 		for (int i = 12; i < 20; i++) {
 			enemies.push_back({ EnemySpawner::EnemyType::Bee, m_SpawnPosBees[i] });}
-		enemySpawner->AddWave({ enemies, glm::vec2(356, -50), glm::vec2(-712, 500) });
+		enemySpawner->AddWave({ enemies, glm::vec2(356, -50), glm::vec2(612, 500) });
 		enemies.clear();
 	}
 

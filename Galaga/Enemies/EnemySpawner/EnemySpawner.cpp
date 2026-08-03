@@ -47,6 +47,9 @@ namespace dae
 		{
 			if (m_EnemiesSpawned != 40)
 			{
+				if (m_Waves[m_WaveIndex].enemies.size() == 4)
+					m_WaveIndex++;
+
 				m_WaveIndex++;
 				m_EnemyIndex = 0;
 			}

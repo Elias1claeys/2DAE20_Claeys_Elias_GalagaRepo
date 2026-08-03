@@ -34,12 +34,14 @@ namespace dae
 
 	private:
 		Phase m_Phase = Phase::preLoop;
-		BezierSegment m_BezierSegment{};
+		std::vector<BezierSegment> m_BezierSegment{};
 		glm::vec2 m_RotationCenter{};
 
 		float m_LoopStartAngle{};
 		float m_LoopAngle{};
 		float m_T = 1.f;
+		float m_loopDirection = 1.f;
+		int m_PathIndex = 0;
 
 		void BezierMovement(Transform* transform);
 		void Looping(Transform* transform);
