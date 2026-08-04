@@ -4,6 +4,7 @@
 #include "Core/DeltaTime.h"
 #include "Input/InputManager.h"
 #include "PlayerControls.h"
+#include "Bullet/Bullet.h"
 
 namespace dae
 {
@@ -43,6 +44,12 @@ namespace dae
 
 	void Player::Shoot()
 	{
-		
+		auto bullet = std::make_unique<GameObject>();
+		bullet->AddComponent<Bullet>(glm::vec2{ 0.0f, -1.0f });
+
+		glm::vec2 playerPos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
+		bullet->GetComponent<Transform>()->SetLocalPosition(playerPos + glm::vec2{ 0.f, -40.f });
+		bullet->SetParent(GetOwner()->GetParent(), false);
+		m_Bullets.push_back(std::move(bullet));
 	}
 }

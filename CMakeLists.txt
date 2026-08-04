@@ -206,6 +206,9 @@ target_link_libraries(Minigin PUBLIC
 add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Galaga/Main.cpp
   Galaga/BackGround/BackGround.cpp
+  Galaga/Bullet/Bullet.cpp
+  Galaga/Collider/Collider.cpp
+  Galaga/Collider/CollisionObserver.cpp
   Galaga/Enemies/EnemySpawner/EnemySpawner.cpp
   Galaga/Enemies/EnemyStates/FlyingToFormation.cpp
   Galaga/Enemies/EnemyStates/InFormation.cpp
