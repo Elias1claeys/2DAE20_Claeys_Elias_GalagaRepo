@@ -5,6 +5,9 @@
 #include "Input/InputManager.h"
 #include "PlayerControls.h"
 #include "Bullet/Bullet.h"
+#include "Enemies/EnemySpawner/EnemySpawner.h"
+#include "Collider/Collider.h"
+#include "GameEvents.h"
 
 namespace dae
 {
@@ -49,6 +52,12 @@ namespace dae
 
 		glm::vec2 playerPos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
 		bullet->GetComponent<Transform>()->SetLocalPosition(playerPos + glm::vec2{ 0.f, -40.f });
+
+		bullet->AddComponent<Collider>(glm::vec2{ 14.f, 7.f }, glm::vec2{ 10.f, 25.f });
+
+		Event hitEvent{ ENEMY_HIT };
+		GetOwner()->GetParent()->GetComponent<EnemySpawner>()->AddEnemyCollisions(bullet.get(), hitEvent);
+
 		bullet->SetParent(GetOwner()->GetParent(), false);
 		m_Bullets.push_back(std::move(bullet));
 	}

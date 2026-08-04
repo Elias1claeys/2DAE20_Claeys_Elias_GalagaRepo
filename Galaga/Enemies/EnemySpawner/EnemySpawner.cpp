@@ -8,6 +8,8 @@
 #include "StateMachine/State.h"
 #include "Enemies/EnemyStates/FlyingToFormation.h"
 #include "GameEvents.h"
+#include "Components/Texture.h"
+#include "Collider/Collider.h"
 
 namespace dae
 {
@@ -92,5 +94,15 @@ namespace dae
 	void EnemySpawner::AddWave(Wave wave)
 	{
 		m_Waves.push_back(wave);
+	}
+
+	void EnemySpawner::AddEnemyCollisions(GameObject* object, Event event)
+	{
+		for (auto& enemy : m_Enemies)
+		{
+			auto enemySize = enemy->GetComponent<Texture>()->GetSize();
+
+			object->GetComponent<Collider>()->AddTrigger(Collider::Trigger{enemy.get(), event, enemySize, {0.f, 0.f}, true});
+		}
 	}
 }

@@ -38,6 +38,7 @@ namespace dae
 		void Update() override;
 		void AddWave(Wave wave);
 		void EnemyBackInFormation();
+		void AddEnemyCollisions(GameObject* object, Event event);
 		
 	private:
 		void SpawnEnemy(int waveIndex, int enemieIndex);
