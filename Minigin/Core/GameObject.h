@@ -29,6 +29,8 @@ namespace dae
 		void Render();
 
 		void RemoveAllChilderen();
+		void RemoveAllComponents();
+
 		void SetParent(GameObject* parent, bool keepWorldPosition);
 		GameObject* GetParent() const { return m_pParent; }
 		const std::vector<GameObject*>& GetChildren() const { return m_pChildren; }

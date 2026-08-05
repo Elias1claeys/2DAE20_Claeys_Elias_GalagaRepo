@@ -26,6 +26,7 @@ namespace dae
 		Collider& operator=(Collider&& other) = delete;
 
 		void AddTrigger(Trigger trigger);
+		void RemoveTrigger(GameObject* triggerObject);
 		void Update() override;
 		const void Render() override;
 

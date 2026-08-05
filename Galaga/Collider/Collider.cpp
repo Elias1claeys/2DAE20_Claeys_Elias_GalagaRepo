@@ -1,17 +1,27 @@
 #include "Collider.h"
 #include "Components/Transform.h"
 #include "Components/Texture.h"
+#include "CollisionObserver.h"
 
 namespace dae
 {
 	Collider::Collider(GameObject* owner, glm::vec2 offset, glm::vec2 size)
 		: Component(owner), m_Offset(offset), m_ColliderSize(size)
 	{
+		auto collisionObserver = std::make_unique<Collision>();
+		AddObserver(std::move(collisionObserver));
 	}
 
 	void Collider::AddTrigger(Trigger trigger)
 	{
 		m_Triggers.emplace_back(trigger);
+	}
+
+	void Collider::RemoveTrigger(GameObject* triggerObject)
+	{
+		auto it = std::remove_if(m_Triggers.begin(), m_Triggers.end(),
+			[triggerObject](const Trigger& trigger) { return trigger.triggerObject == triggerObject; });
+		m_Triggers.erase(it, m_Triggers.end());
 	}
 
 	void Collider::Update()
@@ -46,6 +56,9 @@ namespace dae
 		
 		for (auto& trigger: m_Triggers)
 		{
+			if (!trigger.triggerObject->GetComponent<Transform>())
+				return;
+
 			auto triggerPos = trigger.triggerObject->GetComponent<Transform>()->GetWorldPosition();
 			rect.x = triggerPos.x + trigger.offset.x;
 			rect.y = triggerPos.y + trigger.offset.y;
@@ -57,6 +70,9 @@ namespace dae
 
 	bool Collider::Overlaps(Trigger trigger)
 	{
+		if(!trigger.triggerObject->GetComponent<Transform>())
+			return false;
+
 		auto objectPos = GetOwner()->GetComponent<Transform>()->GetWorldPosition() + m_Offset;
 		auto triggerPos = trigger.triggerObject->GetComponent<Transform>()->GetWorldPosition() + trigger.offset;
 
