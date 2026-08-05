@@ -98,7 +98,7 @@ namespace dae
 	{
 		for (auto& comp : m_pComponents)
 		{
-			if (comp)
+			if (comp && !dynamic_cast<Transform*>(comp.get()))
 				comp->MarkForDelete();
 		}
 	}

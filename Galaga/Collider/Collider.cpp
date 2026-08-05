@@ -17,12 +17,6 @@ namespace dae
 		m_Triggers.emplace_back(trigger);
 	}
 
-	void Collider::RemoveTrigger(GameObject* triggerObject)
-	{
-		auto it = std::remove_if(m_Triggers.begin(), m_Triggers.end(),
-			[triggerObject](const Trigger& trigger) { return trigger.triggerObject == triggerObject; });
-		m_Triggers.erase(it, m_Triggers.end());
-	}
 
 	void Collider::Update()
 	{
@@ -44,33 +38,30 @@ namespace dae
 
 	const void Collider::Render()
 	{
-		auto pos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
-		
-		SDL_FRect rect{};
-		rect.x = pos.x + m_Offset.x;
-		rect.y = pos.y + m_Offset.y;
-		rect.w = m_ColliderSize.x;
-		rect.h = m_ColliderSize.y;
-		
-		Renderer::GetInstance().DrawRect({255, 0, 255, 255}, rect);
-		
-		for (auto& trigger: m_Triggers)
-		{
-			if (!trigger.triggerObject->GetComponent<Transform>())
-				return;
-
-			auto triggerPos = trigger.triggerObject->GetComponent<Transform>()->GetWorldPosition();
-			rect.x = triggerPos.x + trigger.offset.x;
-			rect.y = triggerPos.y + trigger.offset.y;
-			rect.w = trigger.size.x;
-			rect.h = trigger.size.y;
-			Renderer::GetInstance().DrawRect({ 255, 0, 0, 255 }, rect);
-		}
+		//auto pos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
+		//
+		//SDL_FRect rect{};
+		//rect.x = pos.x + m_Offset.x;
+		//rect.y = pos.y + m_Offset.y;
+		//rect.w = m_ColliderSize.x;
+		//rect.h = m_ColliderSize.y;
+		//
+		//Renderer::GetInstance().DrawRect({255, 0, 255, 255}, rect);
+		//
+		//for (auto& trigger: m_Triggers)
+		//{
+		//	auto triggerPos = trigger.triggerObject->GetComponent<Transform>()->GetWorldPosition();
+		//	rect.x = triggerPos.x + trigger.offset.x;
+		//	rect.y = triggerPos.y + trigger.offset.y;
+		//	rect.w = trigger.size.x;
+		//	rect.h = trigger.size.y;
+		//	Renderer::GetInstance().DrawRect({ 255, 0, 0, 255 }, rect);
+		//}
 	}
 
 	bool Collider::Overlaps(Trigger trigger)
 	{
-		if(!trigger.triggerObject->GetComponent<Transform>())
+		if (trigger.markedForDelete)
 			return false;
 
 		auto objectPos = GetOwner()->GetComponent<Transform>()->GetWorldPosition() + m_Offset;

@@ -37,7 +37,7 @@ namespace dae
 
 		void Update() override;
 		void AddWave(Wave wave);
-		void EnemyBackInFormation();
+		void CheckForNextWave();
 		void AddEnemyCollisions(GameObject* object, Event event);
 		
 	private:
@@ -48,7 +48,6 @@ namespace dae
 		float m_Time{ 1.f };
 		int m_EnemyIndex{0};
 		int m_WaveIndex{0};
-		int m_EnemiesSpawned{ 0 };
-		int m_EnemiesInFormation{ 0 };
+		int m_RemainingEnemies{ 8 };
 	};
 }

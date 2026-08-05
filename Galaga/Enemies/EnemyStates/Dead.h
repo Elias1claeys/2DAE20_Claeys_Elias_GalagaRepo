@@ -1,21 +1,21 @@
-#include "StateMachine/GameState.h"
+#include "Core/GameObject.h"
 
 namespace dae
 {
-	class Dead : public GameState
+	class Dead : public Component
 	{
 	public:
-		explicit Dead(State* state);
+		Dead(GameObject* owner);
 		virtual ~Dead() = default;
 		Dead(const Dead& other) = delete;
 		Dead(Dead&& other) = delete;
 		Dead& operator=(const Dead& other) = delete;
 		Dead& operator=(Dead&& other) = delete;
 
-		void OnEnter() override;
-		void Update(float) override;
-		void OnExit() override {};
+		void Update() override;
 
-		std::unique_ptr<GameState> GoToNextState() override { return nullptr; };
+	private:
+		float m_Time = 0;
+		int m_Index = 0;
 	};
 }

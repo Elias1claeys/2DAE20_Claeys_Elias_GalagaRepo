@@ -41,19 +41,20 @@ namespace dae
 		}
 	}
 
-	void EnemySpawner::EnemyBackInFormation()
+	void EnemySpawner::CheckForNextWave()
 	{
-		m_EnemiesInFormation++;
+		m_RemainingEnemies--;
 
-		if (m_EnemiesSpawned == m_EnemiesInFormation)
+		if (m_RemainingEnemies == 0)
 		{
-			if (m_EnemiesSpawned != 40)
+			if (m_WaveIndex < m_Waves.size() - 1)
 			{
 				if (m_Waves[m_WaveIndex].enemies.size() == 4)
 					m_WaveIndex++;
 
 				m_WaveIndex++;
 				m_EnemyIndex = 0;
+				m_RemainingEnemies = 8;
 			}
 		}
 	}
@@ -88,7 +89,6 @@ namespace dae
 		enemy->SetParent(GetOwner(), false);
 
 		m_Enemies.push_back(std::move(enemy));
-		m_EnemiesSpawned++;
 	}
 
 	void EnemySpawner::AddWave(Wave wave)
@@ -106,7 +106,7 @@ namespace dae
 			event.args[0].go = enemy.get();
 			auto enemySize = enemy->GetComponent<Texture>()->GetSize();
 
-			object->GetComponent<Collider>()->AddTrigger(Collider::Trigger{enemy.get(), event, enemySize, {0.f, 0.f}, true});
+			object->GetComponent<Collider>()->AddTrigger(Collider::Trigger{enemy.get(), event, enemySize, {0.f, 0.f}, false});
 		}
 	}
 }

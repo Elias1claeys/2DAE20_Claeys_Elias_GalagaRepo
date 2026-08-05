@@ -4,6 +4,8 @@
 #include "GameEvents.h"
 #include "Enemies/EnemySpawner/EnemySpawner.h"
 #include "Collider/Collider.h"
+#include "Enemies/EnemyStates/Dead.h"
+#include "Enemies/Enemy.h"
 
 namespace dae
 {
@@ -11,7 +13,7 @@ namespace dae
 	{
 		if (event.id == ENEMY_HIT)
 		{
-			bullet->GetParent()->GetComponent<EnemySpawner>()->EnemyBackInFormation();
+			event.args[0].go->GetComponent<Enemy>()->Notify(event);
 			bullet->RemoveAllComponents();
 			event.args[0].go->RemoveAllComponents();
 		}
