@@ -210,7 +210,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Galaga/Collider/Collider.cpp
   Galaga/Collider/CollisionObserver.cpp
   Galaga/Enemies/EnemiesController/EnemiesController.cpp
-  Galaga/Enemies/EnemyStates/Dead.cpp
+  Galaga/Explosion/ExplosionAnimation.cpp
   Galaga/Enemies/EnemyStates/FlyingToFormation.cpp
   Galaga/Enemies/EnemyStates/InFormation.cpp
   Galaga/Enemies/Path/BezierPath.cpp

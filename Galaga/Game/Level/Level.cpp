@@ -6,6 +6,7 @@
 #include "Components/Transform.h"
 #include "Enemies/Path/BezierPath.h"
 #include "Enemies/EnemiesController/EnemiesController.h"
+#include "Explosion/ExplosionAnimation.h"
 #include "Player/Player.h"
 #include <fstream>
 
@@ -24,7 +25,6 @@ namespace dae
 		player->AddComponent<Player>();
 		player->SetParent(m_pState->GetOwner(), false);
 		m_GameObjects.push_back(std::move(player));
-
 	}
 
 	std::vector<glm::vec2> Level::ReadPositionsFromFile(const std::string& filePath)

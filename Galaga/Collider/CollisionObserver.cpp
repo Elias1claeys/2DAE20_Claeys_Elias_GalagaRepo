@@ -4,10 +4,11 @@
 #include "GameEvents.h"
 #include "Enemies/EnemiesController/EnemiesController.h"
 #include "Collider/Collider.h"
-#include "Enemies/EnemyStates/Dead.h"
 #include "Enemies/Enemy.h"
 #include "StateMachine/State.h"
 #include "Enemies/EnemyStates/EnemyState.h"
+#include "Enemies/Path/BezierPath.h"
+#include "Explosion/ExplosionAnimation.h"
 
 namespace dae
 {
@@ -24,7 +25,12 @@ namespace dae
 			}
 
 			bullet->RemoveAllComponents();
-			event.args[0].go->RemoveAllComponents();
+			event.args[0].go->RemoveComponent<Enemy>();
+			event.args[0].go->RemoveComponent<State>();
+			event.args[0].go->RemoveComponent<BezierPath>();
+
+
+			event.args[0].go->AddComponent<ExplosionAnimation>();
 		}
 	}
 }
