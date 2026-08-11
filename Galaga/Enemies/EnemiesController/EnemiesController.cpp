@@ -1,4 +1,4 @@
-#include "EnemySpawner.h"
+#include "EnemiesController.h"
 #include "Core/DeltaTime.h"
 #include "Enemies/Types/Bee/Bee.h"
 #include "Enemies/Types/Boss/Boss.h"
@@ -13,35 +13,59 @@
 
 namespace dae
 {
-	EnemySpawner::EnemySpawner(GameObject* Owner) :
+	EnemiesController::EnemiesController(GameObject* Owner) :
 		Component(Owner)
 	{
 		
 	}
 
-	void EnemySpawner::Update()
+	void EnemiesController::Update()
 	{
 		m_Time += Time::GetInstance().GetDeltaTime();
 
-		if (m_Time > 0.1f)
+		if (!m_AllEnemiesSpawned)
 		{
-			if(m_EnemyIndex != m_Waves[m_WaveIndex].enemies.size())
+			if (m_Time > 0.1f)
 			{
-				SpawnEnemy(m_WaveIndex, m_EnemyIndex);
-
-				if (m_Waves[m_WaveIndex].enemies.size() == 4)
+				if (m_EnemyIndex != m_Waves[m_WaveIndex].enemies.size())
 				{
-					SpawnEnemy(m_WaveIndex + 1, m_EnemyIndex);
+					SpawnEnemy(m_WaveIndex, m_EnemyIndex);
+
+					if (m_Waves[m_WaveIndex].enemies.size() == 4)
+					{
+						SpawnEnemy(m_WaveIndex + 1, m_EnemyIndex);
+					}
+
+					m_EnemyIndex++;
 				}
 
-				m_EnemyIndex++;
+				m_Time = 0.f;
+			}
+		}
+		else
+		{
+			for (auto& enemy : m_Enemies)
+			{
+				glm::vec2 currentPos = enemy->GetComponent<Transform>()->GetWorldPosition();
+				
+				if (currentPos.x < 0 || currentPos.x > 482)
+				{
+					m_Direction.x *= -1;
+					break;
+				}
 			}
 
-			m_Time = 0.f;
+			for (auto& enemy : m_Enemies)
+			{
+				glm::vec2 currentPos = enemy->GetComponent<Transform>()->GetWorldPosition();
+
+				currentPos += m_Direction * m_Speed * Time::GetInstance().GetDeltaTime();
+				enemy->GetComponent<Transform>()->SetLocalPosition(currentPos);
+			}
 		}
 	}
 
-	void EnemySpawner::CheckForNextWave()
+	void EnemiesController::CheckForNextWave()
 	{
 		m_RemainingEnemies--;
 
@@ -56,10 +80,14 @@ namespace dae
 				m_EnemyIndex = 0;
 				m_RemainingEnemies = 8;
 			}
+			else
+			{
+				m_AllEnemiesSpawned = true;
+			}
 		}
 	}
 
-	void EnemySpawner::SpawnEnemy(int waveIndex, int enemyIndex)
+	void EnemiesController::SpawnEnemy(int waveIndex, int enemyIndex)
 	{
 		auto enemy = std::make_unique<GameObject>();
 		auto currentWave = m_Waves[waveIndex];
@@ -91,12 +119,12 @@ namespace dae
 		m_Enemies.push_back(std::move(enemy));
 	}
 
-	void EnemySpawner::AddWave(Wave wave)
+	void EnemiesController::AddWave(Wave wave)
 	{
 		m_Waves.push_back(wave);
 	}
 
-	void EnemySpawner::AddEnemyCollisions(GameObject* object, Event event)
+	void EnemiesController::AddEnemyCollisions(GameObject* object, Event event)
 	{
 		for (auto& enemy : m_Enemies)
 		{

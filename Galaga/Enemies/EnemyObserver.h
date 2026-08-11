@@ -5,13 +5,13 @@
 
 namespace dae
 {
-	class EnemySpawner; // forward declaration
+	class EnemiesController; // forward declaration
 
 	class EnemyObserver : public Observer
 	{
 	public:
 
-		EnemyObserver(EnemySpawner* enemySpawner);
+		EnemyObserver(EnemiesController* enemySpawner);
 		virtual ~EnemyObserver() = default;
 		EnemyObserver(const EnemyObserver& other) = delete;
 		EnemyObserver(EnemyObserver&& other) = delete;
@@ -21,6 +21,6 @@ namespace dae
 		void OnNotify(GameObject* entity, const Event& event) override;
 
 	private:
-		EnemySpawner* m_EnemySpawner;
+		EnemiesController* m_EnemySpawner;
 	};
 }

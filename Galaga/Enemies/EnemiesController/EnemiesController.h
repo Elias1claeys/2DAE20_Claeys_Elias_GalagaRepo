@@ -3,7 +3,7 @@
 
 namespace dae
 {
-	class EnemySpawner : public Component
+	class EnemiesController : public Component
 	{
 	public:
 
@@ -28,12 +28,12 @@ namespace dae
 			float rotationPoint = 0.f;
 		};
 
-		EnemySpawner(GameObject* owner);
-		virtual ~EnemySpawner() = default;
-		EnemySpawner(const EnemySpawner& other) = delete;
-		EnemySpawner(EnemySpawner&& other) = delete;
-		EnemySpawner& operator=(const EnemySpawner& other) = delete;
-		EnemySpawner& operator=(EnemySpawner&& other) = delete;
+		EnemiesController(GameObject* owner);
+		virtual ~EnemiesController() = default;
+		EnemiesController(const EnemiesController& other) = delete;
+		EnemiesController(EnemiesController&& other) = delete;
+		EnemiesController& operator=(const EnemiesController& other) = delete;
+		EnemiesController& operator=(EnemiesController&& other) = delete;
 
 		void Update() override;
 		void AddWave(Wave wave);
@@ -49,5 +49,8 @@ namespace dae
 		int m_EnemyIndex{0};
 		int m_WaveIndex{0};
 		int m_RemainingEnemies{ 8 };
+		bool m_AllEnemiesSpawned{ false };
+		glm::vec2 m_Direction{ -1, 0 };
+		float m_Speed = 50.f;
 	};
 }

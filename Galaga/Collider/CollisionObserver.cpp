@@ -2,7 +2,7 @@
 #include "Components/Transform.h"
 #include "Event/Event.h"
 #include "GameEvents.h"
-#include "Enemies/EnemySpawner/EnemySpawner.h"
+#include "Enemies/EnemiesController/EnemiesController.h"
 #include "Collider/Collider.h"
 #include "Enemies/EnemyStates/Dead.h"
 #include "Enemies/Enemy.h"

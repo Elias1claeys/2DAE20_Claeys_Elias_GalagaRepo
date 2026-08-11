@@ -1,11 +1,11 @@
 #include "Enemies/EnemyObserver.h"
-#include "Enemies/EnemySpawner/EnemySpawner.h"
+#include "Enemies/EnemiesController/EnemiesController.h"
 #include "GameEvents.h"
 #include "StateMachine/State.h"
 
 namespace dae
 {
-	EnemyObserver::EnemyObserver(EnemySpawner* enemySpawner)
+	EnemyObserver::EnemyObserver(EnemiesController* enemySpawner)
 		: m_EnemySpawner(enemySpawner)
 	{}
 
