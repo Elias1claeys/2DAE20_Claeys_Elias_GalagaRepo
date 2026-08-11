@@ -10,6 +10,7 @@
 #include "Player/Player.h"
 #include "Game/Start/Start.h"
 #include "Health/HealthDisplay.h"
+#include "GameEvents.h"
 #include <fstream>
 
 namespace dae
@@ -28,6 +29,10 @@ namespace dae
 		player->AddComponent<Player>();
 		player->SetParent(m_pState->GetOwner(), false);
 		m_GameObjects.push_back(std::move(player));
+
+		m_SoundObserver = std::make_unique<SoundObserver>();
+		Event e{ GAME_STARTED };
+		m_SoundObserver->OnNotify(m_pState->GetOwner(), e);
 	}
 
 	std::vector<glm::vec2> Level::ReadPositionsFromFile(const std::string& filePath)

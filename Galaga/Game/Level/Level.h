@@ -1,4 +1,5 @@
 #include "StateMachine/GameState.h"
+#include "Audio/SoundObserver.h"
 #include <string>
 
 
@@ -29,6 +30,8 @@ namespace dae
 		std::vector<glm::vec2> m_FormationPosBees;
 		std::vector<glm::vec2> m_FormationPosFlies;
 		std::vector<glm::vec2> m_FormationPosBosses;
+
+		std::unique_ptr<SoundObserver> m_SoundObserver;
 
 		std::vector<std::unique_ptr<GameObject>> m_GameObjects;
 	};

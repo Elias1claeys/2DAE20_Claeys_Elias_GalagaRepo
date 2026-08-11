@@ -205,6 +205,7 @@ target_link_libraries(Minigin PUBLIC
 
 add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Galaga/Main.cpp
+  Galaga/Audio/SoundObserver.cpp
   Galaga/BackGround/BackGround.cpp
   Galaga/Bullet/Bullet.cpp
   Galaga/Collider/Collider.cpp
