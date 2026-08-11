@@ -3,6 +3,7 @@
 #include "Enemies/Enemy.h"
 #include "Enemies/EnemyStates/InFormation.h"
 #include "StateMachine/State.h"
+#include "GameEvents.h"
 
 namespace dae
 {
@@ -31,5 +32,10 @@ namespace dae
 	std::unique_ptr<GameState> FlyingToFormation::GoToNextState()
 	{
 		return std::make_unique<InFormation>(m_pState);
+	}
+
+	void FlyingToFormation::EnemyHit()
+	{
+		m_pState->GetOwner()->GetComponent<Enemy>()->Notify(Event{ ENEMY_HIT_BEFORE_FORMATION });
 	}
 }

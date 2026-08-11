@@ -17,7 +17,7 @@ namespace dae
 		void Update(float) override {};
 		void OnExit() override {};
 
-		void EnemyHit() override {};
+		void EnemyHit() override;
 
 		std::unique_ptr<GameState> GoToNextState() override;
 

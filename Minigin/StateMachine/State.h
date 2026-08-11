@@ -18,6 +18,7 @@ namespace dae
 
 		void Update() override;
 		void GoToNextStage();
+		GameState* GetGameState() const { return m_pGameState.get(); }
 
 	private:
 		std::unique_ptr<GameState> m_pGameState;

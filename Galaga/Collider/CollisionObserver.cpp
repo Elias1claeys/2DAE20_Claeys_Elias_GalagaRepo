@@ -6,6 +6,8 @@
 #include "Collider/Collider.h"
 #include "Enemies/EnemyStates/Dead.h"
 #include "Enemies/Enemy.h"
+#include "StateMachine/State.h"
+#include "Enemies/EnemyStates/EnemyState.h"
 
 namespace dae
 {
@@ -13,7 +15,14 @@ namespace dae
 	{
 		if (event.id == ENEMY_HIT)
 		{
-			event.args[0].go->GetComponent<Enemy>()->Notify(event);
+			if (auto stateComp = event.args[0].go->GetComponent<State>())
+			{
+				if (auto enemyState = dynamic_cast<EnemyState*>(stateComp->GetGameState()))
+				{
+					enemyState->EnemyHit();
+				}
+			}
+
 			bullet->RemoveAllComponents();
 			event.args[0].go->RemoveAllComponents();
 		}
