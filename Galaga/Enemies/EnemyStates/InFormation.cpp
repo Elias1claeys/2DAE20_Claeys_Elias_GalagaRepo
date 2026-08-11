@@ -6,7 +6,7 @@
 namespace dae
 {
 	InFormation::InFormation(State* state)
-		: GameState(state)
+		: EnemyState(state)
 	{
 		m_pState->GetOwner()->GetComponent<Enemy>()->Notify(Event{ ENEMY_IN_FORMATION });
 	}

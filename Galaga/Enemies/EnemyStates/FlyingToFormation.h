@@ -1,8 +1,9 @@
 #include "StateMachine/GameState.h"
+#include "EnemyState.h"
 
 namespace dae
 {
-	class FlyingToFormation : public GameState
+	class FlyingToFormation : public EnemyState
 	{
 	public:
 		explicit FlyingToFormation(State* state, glm::vec2 curvePoint, float loopPoint = 0.f);
@@ -15,6 +16,8 @@ namespace dae
 		void OnEnter() override;
 		void Update(float) override {};
 		void OnExit() override {};
+
+		void EnemyHit() override {};
 
 		std::unique_ptr<GameState> GoToNextState() override;
 

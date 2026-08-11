@@ -1,8 +1,9 @@
 #include "StateMachine/GameState.h"
+#include "EnemyState.h"
 
 namespace dae
 {
-	class InFormation : public GameState
+	class InFormation : public EnemyState
 	{
 	public:
 		explicit InFormation(State* state);
@@ -15,6 +16,8 @@ namespace dae
 		void OnEnter() override;
 		void Update(float) override {};
 		void OnExit() override {};
+
+		void EnemyHit() override {};
 
 		std::unique_ptr<GameState> GoToNextState() override { return nullptr; };
 	};

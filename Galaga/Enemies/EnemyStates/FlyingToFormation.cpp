@@ -7,7 +7,7 @@
 namespace dae
 {
 	FlyingToFormation::FlyingToFormation(State* state, glm::vec2 curvePoint, float loopPoint)
-		: GameState(state), m_CurvePoint(curvePoint), m_LoopPoint(loopPoint)
+		: EnemyState(state), m_CurvePoint(curvePoint), m_LoopPoint(loopPoint)
 	{}
 
 	void FlyingToFormation::OnEnter()
