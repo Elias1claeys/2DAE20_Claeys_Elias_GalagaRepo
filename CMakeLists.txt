@@ -222,6 +222,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Galaga/Game/Start/Start.cpp 
   Galaga/Game/Start/StartControls.cpp
   Galaga/Game/Level/Level.cpp
+  Galaga/Health/HealthDisplay.cpp
   Galaga/Player/Player.cpp
   Galaga/Player/PlayerControls.cpp
 )

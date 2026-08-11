@@ -8,6 +8,8 @@
 #include "Enemies/EnemiesController/EnemiesController.h"
 #include "Explosion/ExplosionAnimation.h"
 #include "Player/Player.h"
+#include "Game/Start/Start.h"
+#include "Health/HealthDisplay.h"
 #include <fstream>
 
 namespace dae
@@ -19,6 +21,7 @@ namespace dae
 		m_FormationPosFlies = ReadPositionsFromFile("Data/Formations/Formation1Butterflies.txt");
 
 		m_pState->GetOwner()->AddComponent<EnemiesController>();
+		m_pState->GetOwner()->AddComponent<HealthDisplay>();
 		SpawnEnemies();
 
 		auto player = std::make_unique<GameObject>();
@@ -108,6 +111,6 @@ namespace dae
 
 	std::unique_ptr<GameState> Level::GoToNextState()
 	{
-		return nullptr;
+		return std::make_unique<Start>(m_pState);
 	}
 }
