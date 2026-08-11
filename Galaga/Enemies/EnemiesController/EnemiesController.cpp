@@ -25,7 +25,7 @@ namespace dae
 
 		if (!m_AllEnemiesSpawned)
 		{
-			if (m_Time > 0.1f)
+			if (m_Time > 0.2f)
 			{
 				if (m_EnemyIndex != m_Waves[m_WaveIndex].enemies.size())
 				{
@@ -46,6 +46,9 @@ namespace dae
 		{
 			for (auto& enemy : m_Enemies)
 			{
+				if (!enemy->HasComponent<Enemy>())
+					continue;
+
 				glm::vec2 currentPos = enemy->GetComponent<Enemy>()->GetFormationPos();
 				
 				if (currentPos.x < 0 || currentPos.x > 482)
@@ -57,6 +60,9 @@ namespace dae
 
 			for (auto& enemy : m_Enemies)
 			{
+				if (!enemy->HasComponent<Enemy>())
+					continue;
+
 				glm::vec2 moveDir = m_Direction * m_Speed * Time::GetInstance().GetDeltaTime();
 				enemy->GetComponent<Enemy>()->AddToFormationPos(moveDir);
 			}

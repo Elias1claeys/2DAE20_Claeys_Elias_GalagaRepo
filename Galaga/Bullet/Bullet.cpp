@@ -21,6 +21,4 @@ namespace dae
 		pos += m_Direction * m_Speed * Time::GetInstance().GetDeltaTime();
 		GetOwner()->GetComponent<Transform>()->SetLocalPosition(pos);
 	}
-
-	
 }
