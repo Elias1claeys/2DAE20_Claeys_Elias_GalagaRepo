@@ -84,7 +84,7 @@ namespace dae
 
 		float curveSpeed = glm::length(derivative);
 
-		float movementSpeed = 200.0f; 
+		float movementSpeed = 250.0f; 
 
 		m_T += (movementSpeed / curveSpeed) * deltaTime;
 
@@ -97,7 +97,7 @@ namespace dae
 
 	void BezierPath::Looping(Transform* transform)
 	{
-		m_LoopAngle += m_loopDirection * 3.f * Time::GetInstance().GetDeltaTime();
+		m_LoopAngle += m_loopDirection * 4.f * Time::GetInstance().GetDeltaTime();
 
 		glm::vec2 newPos = m_RotationCenter +
 			glm::vec2(std::cos(m_LoopAngle), std::sin(m_LoopAngle)) * 50.f;

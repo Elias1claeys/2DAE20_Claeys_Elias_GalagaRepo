@@ -16,6 +16,9 @@ namespace dae
 	{
 		if (event.id == ENEMY_HIT)
 		{
+			if (!event.args[0].go->HasComponent<Enemy>())
+				return;
+
 			if (auto stateComp = event.args[0].go->GetComponent<State>())
 			{
 				if (auto enemyState = dynamic_cast<EnemyState*>(stateComp->GetGameState()))
