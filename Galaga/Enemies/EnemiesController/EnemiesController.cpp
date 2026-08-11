@@ -46,7 +46,7 @@ namespace dae
 		{
 			for (auto& enemy : m_Enemies)
 			{
-				glm::vec2 currentPos = enemy->GetComponent<Transform>()->GetWorldPosition();
+				glm::vec2 currentPos = enemy->GetComponent<Enemy>()->GetFormationPos();
 				
 				if (currentPos.x < 0 || currentPos.x > 482)
 				{
@@ -57,10 +57,8 @@ namespace dae
 
 			for (auto& enemy : m_Enemies)
 			{
-				glm::vec2 currentPos = enemy->GetComponent<Transform>()->GetWorldPosition();
-
-				currentPos += m_Direction * m_Speed * Time::GetInstance().GetDeltaTime();
-				enemy->GetComponent<Transform>()->SetLocalPosition(currentPos);
+				glm::vec2 moveDir = m_Direction * m_Speed * Time::GetInstance().GetDeltaTime();
+				enemy->GetComponent<Enemy>()->AddToFormationPos(moveDir);
 			}
 		}
 	}

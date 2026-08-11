@@ -19,6 +19,7 @@ namespace dae
 		void Notify(Event event);
 		void SetEnemieTexture(glm::vec2 prevPos);
 		void SetEnemieTexture(float x);
+		void AddToFormationPos(glm::vec2 dir);
 		glm::vec2 GetFormationPos() const { return m_FormationPos; }
 
 	private:

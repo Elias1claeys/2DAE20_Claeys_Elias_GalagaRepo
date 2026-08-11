@@ -69,6 +69,11 @@ namespace dae
 		m_SourceRectX = x;
 	}
 
+	void Enemy::AddToFormationPos(glm::vec2 pos)
+	{
+		m_FormationPos += pos;
+	}
+
 	void Enemy::Notify(Event event)
 	{
 		Subject::Notify(event, GetOwner());

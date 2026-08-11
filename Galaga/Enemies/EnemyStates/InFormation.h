@@ -14,7 +14,7 @@ namespace dae
 		InFormation& operator=(InFormation&& other) = delete;
 
 		void OnEnter() override;
-		void Update(float) override {};
+		void Update(float) override;
 		void OnExit() override {};
 
 		void EnemyHit() override {};

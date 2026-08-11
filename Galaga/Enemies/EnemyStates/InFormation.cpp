@@ -2,6 +2,7 @@
 #include "StateMachine/State.h"
 #include "Enemies/Enemy.h"
 #include "GameEvents.h"
+#include "Components/Transform.h"
 
 namespace dae
 {
@@ -14,5 +15,11 @@ namespace dae
 	void InFormation::OnEnter()
 	{
 		m_pState->GetOwner()->GetComponent<Enemy>()->SetEnemieTexture(1.5f);
+	}
+
+	void InFormation::Update(float)
+	{
+		glm::vec2 formationPos = m_pState->GetOwner()->GetComponent<Enemy>()->GetFormationPos();
+		m_pState->GetOwner()->GetComponent<Transform>()->SetLocalPosition(formationPos);
 	}
 }
