@@ -38,6 +38,13 @@ namespace dae
 		{
 			transform->SetLocalPosition(pos);
 		}
+
+		m_Time += Time::GetInstance().GetDeltaTime();
+		if (m_Time > 0.5f)
+		{
+			m_Time = 0.f;
+			m_CanShoot = true;
+		}
 	}
 
 	void Player::SetDirection(const glm::vec2& direction)
@@ -47,18 +54,23 @@ namespace dae
 
 	void Player::Shoot()
 	{
-		auto bullet = std::make_unique<GameObject>();
-		bullet->AddComponent<Bullet>(glm::vec2{ 0.0f, -1.0f });
+		if (m_CanShoot)
+		{
+			auto bullet = std::make_unique<GameObject>();
+			bullet->AddComponent<Bullet>(glm::vec2{ 0.0f, -1.0f });
 
-		glm::vec2 playerPos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
-		bullet->GetComponent<Transform>()->SetLocalPosition(playerPos + glm::vec2{ 0.f, -40.f });
+			glm::vec2 playerPos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
+			bullet->GetComponent<Transform>()->SetLocalPosition(playerPos + glm::vec2{ 0.f, -40.f });
 
-		bullet->AddComponent<Collider>(glm::vec2{ 14.f, 7.f }, glm::vec2{ 10.f, 25.f });
+			bullet->AddComponent<Collider>(glm::vec2{ 14.f, 7.f }, glm::vec2{ 10.f, 25.f });
 
-		Event hitEvent{ ENEMY_HIT };
-		GetOwner()->GetParent()->GetComponent<EnemySpawner>()->AddEnemyCollisions(bullet.get(), hitEvent);
+			Event hitEvent{ ENEMY_HIT };
+			GetOwner()->GetParent()->GetComponent<EnemySpawner>()->AddEnemyCollisions(bullet.get(), hitEvent);
 
-		bullet->SetParent(GetOwner()->GetParent(), false);
-		m_Bullets.push_back(std::move(bullet));
+			bullet->SetParent(GetOwner()->GetParent(), false);
+			m_Bullets.push_back(std::move(bullet));
+
+			m_CanShoot = false;
+		}
 	}
 }
