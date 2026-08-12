@@ -2,6 +2,8 @@
 #include "StateMachine/State.h"
 #include "Components/Transform.h"
 #include "Enemies/Path/BezierPath.h"
+#include "Enemies/Enemy.h"
+#include "GameEvents.h"
 
 namespace dae
 {
@@ -27,8 +29,13 @@ namespace dae
 		m_pState->GetOwner()->GetComponent<BezierPath>()->SetNewPath(curvePoint, { 256, 256 }, 0.f);
 	}
 
-	std::unique_ptr<GameState> GoToNextStage()
+	std::unique_ptr<GameState> Bombing::GoToNextState()
 	{
+		return nullptr;
+	}
 
+	void Bombing::EnemyHit()
+	{
+		m_pState->GetOwner()->GetComponent<Enemy>()->Notify(Event{ ENEMY_HIT_BEFORE_FORMATION });
 	}
 }

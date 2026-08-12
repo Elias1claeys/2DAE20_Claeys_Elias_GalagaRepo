@@ -125,5 +125,15 @@ namespace dae
 		m_BezierSegment.push_back(segment);
 		m_T = 0.f;
 	}
+
+	glm::vec2 BezierPath::CalculateCurvePoint(glm::vec2 start, glm::vec2 end, float curveAmount)
+	{
+		glm::vec2 midpoint = (start + end) * 0.5f;
+
+		glm::vec2 direction = glm::normalize(end - start);
+		glm::vec2 perpendicular = { -direction.y, direction.x };
+
+		return midpoint + perpendicular * curveAmount;
+	}
 }
 

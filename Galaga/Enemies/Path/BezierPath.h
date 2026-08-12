@@ -31,6 +31,7 @@ namespace dae
 
 		void SetNewPath(glm::vec2 curvePoint, glm::vec2 endPoint, float loopPoint = 0.f);
 		void Update() override;
+		glm::vec2 CalculateCurvePoint(glm::vec2 start, glm::vec2 end, float curveAmount);
 
 	private:
 		Phase m_Phase = Phase::preLoop;

@@ -16,14 +16,7 @@ namespace dae
 		glm::vec2 start = { 256.f, 256.f };
 		glm::vec2 end = m_pState->GetOwner()->GetComponent<dae::Enemy>()->GetFormationPos();;
 
-		glm::vec2 midpoint = (start + end) * 0.5f;
-
-		glm::vec2 direction = glm::normalize(end - start);
-		glm::vec2 perpendicular = { -direction.y, direction.x };
-
-		float curveAmount = 50.f;
-
-		glm::vec2 curvePoint = midpoint + perpendicular * curveAmount;
+		glm::vec2 curvePoint = m_pState->GetOwner()->GetComponent<dae::BezierPath>()->CalculateCurvePoint(start, end, 50.f);
 
 		m_pState->GetOwner()->GetComponent<BezierPath>()->SetNewPath(m_CurvePoint, start, m_LoopPoint);
 		m_pState->GetOwner()->GetComponent<BezierPath>()->SetNewPath(curvePoint, end, 0);
