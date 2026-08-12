@@ -33,10 +33,10 @@ namespace dae
 				}
 			}
 
+			bullet->RemoveAllComponents();
 			event.args[0].go->RemoveComponent<Enemy>();
 			event.args[0].go->RemoveComponent<State>();
 			event.args[0].go->RemoveComponent<BezierPath>();
-
 
 			event.args[0].go->AddComponent<ExplosionAnimation>();
 		}

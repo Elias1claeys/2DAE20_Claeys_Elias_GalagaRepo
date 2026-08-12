@@ -40,7 +40,7 @@ namespace dae
 		}
 
 		m_Time += Time::GetInstance().GetDeltaTime();
-		if (m_Time > 0.5f)
+		if (m_Time > 0.75f)
 		{
 			m_Time = 0.f;
 			m_CanShoot = true;
