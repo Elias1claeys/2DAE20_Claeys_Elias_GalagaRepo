@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Core/GameObject.h"
 #include "Event/Subject.h"
 #include "Enemies/EnemyTypes.h"

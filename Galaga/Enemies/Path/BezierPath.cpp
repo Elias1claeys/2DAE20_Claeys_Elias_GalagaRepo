@@ -15,7 +15,7 @@ namespace dae
 
 	void BezierPath::Update()
 	{
-		if (m_BezierSegment.empty())
+		if (m_T > 1.f)
 			return;
 
 		auto transform = GetOwner()->GetComponent<dae::Transform>();
@@ -26,7 +26,7 @@ namespace dae
 		case Phase::preLoop:
 			BezierMovement(transform);
 
-			if (m_T >= m_BezierSegment[m_PathIndex].loopPoint && m_BezierSegment[m_PathIndex].loopPoint != 0.f)
+			if (m_T >= m_BezierSegment.loopPoint && m_BezierSegment.loopPoint != 0.f)
 			{
 				m_RotationCenter = glm::vec2(transform->GetWorldPosition().x, transform->GetWorldPosition().y - 50.f);
 				glm::vec2 toCurrent = transform->GetWorldPosition() - m_RotationCenter;
@@ -52,25 +52,14 @@ namespace dae
 			break;
 		}
 
-		if (m_T < 1.f)
+		if (m_T > 1.f)
 		{
-			GetOwner()->GetComponent<dae::Enemy>()->SetEnemieTexture(previousPos);
+			transform->SetLocalPosition(m_BezierSegment.endPoint);
+			GetOwner()->GetComponent<dae::State>()->GoToNextStage();
 		}
 		else
 		{
-			if (m_PathIndex < m_BezierSegment.size() - 1)
-			{
-				m_PathIndex++;
-				m_T = 0.f;
-				m_Phase = Phase::preLoop;
-				m_BezierSegment[m_PathIndex].startPoint = transform->GetWorldPosition();
-			}
-			else
-			{
-				GetOwner()->GetComponent<dae::Transform>()->SetLocalPosition(m_BezierSegment[m_PathIndex].endPoint);
-				GetOwner()->GetComponent<dae::State>()->GoToNextStage();
-				m_BezierSegment.clear();
-			}
+			GetOwner()->GetComponent<dae::Enemy>()->SetEnemieTexture(previousPos);
 		}
 	}
 
@@ -79,8 +68,8 @@ namespace dae
 		float deltaTime = Time::GetInstance().GetDeltaTime();
 
 		glm::vec2 derivative =
-			2.0f * (1 - m_T) * (m_BezierSegment[m_PathIndex].curvePoint - m_BezierSegment[m_PathIndex].startPoint) +
-			2.0f * m_T * (m_BezierSegment[m_PathIndex].endPoint - m_BezierSegment[m_PathIndex].curvePoint);
+			2.0f * (1 - m_T) * (m_BezierSegment.curvePoint - m_BezierSegment.startPoint) +
+			2.0f * m_T * (m_BezierSegment.endPoint - m_BezierSegment.curvePoint);
 
 		float curveSpeed = glm::length(derivative);
 
@@ -88,9 +77,9 @@ namespace dae
 
 		m_T += (movementSpeed / curveSpeed) * deltaTime;
 
-		glm::vec2 newPos = ((1 - m_T) * (1 - m_T) * m_BezierSegment[m_PathIndex].startPoint) +
-			2 * (1 - m_T) * m_T * m_BezierSegment[m_PathIndex].curvePoint +
-			m_T * m_T * m_BezierSegment[m_PathIndex].endPoint;
+		glm::vec2 newPos = ((1 - m_T) * (1 - m_T) * m_BezierSegment.startPoint) +
+			2 * (1 - m_T) * m_T * m_BezierSegment.curvePoint +
+			m_T * m_T * m_BezierSegment.endPoint;
 
 		transform->SetLocalPosition(newPos);
 	}
@@ -122,7 +111,7 @@ namespace dae
 		segment.endPoint = endPoint;
 		segment.loopPoint = loopPoint;
 
-		m_BezierSegment.push_back(segment);
+		m_BezierSegment = segment;
 		m_T = 0.f;
 	}
 

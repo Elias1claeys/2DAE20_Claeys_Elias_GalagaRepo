@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Core/GameObject.h"
 #include "Components/Transform.h"
 
@@ -35,7 +37,7 @@ namespace dae
 
 	private:
 		Phase m_Phase = Phase::preLoop;
-		std::vector<BezierSegment> m_BezierSegment{};
+		BezierSegment m_BezierSegment{};
 		glm::vec2 m_RotationCenter{};
 
 		float m_LoopStartAngle{};

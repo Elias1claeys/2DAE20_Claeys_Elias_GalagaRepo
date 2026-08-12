@@ -3,7 +3,7 @@
 #include "Enemies/Enemy.h"
 #include "Enemies/Path/BezierPath.h"
 #include "StateMachine/State.h"
-#include "Enemies/EnemyStates/FlyingToFormation.h"
+#include "Enemies/EnemyStates/Flying.h"
 #include "GameEvents.h"
 #include "Components/Texture.h"
 #include "Collider/Collider.h"
@@ -136,7 +136,7 @@ namespace dae
 
 		enemy->GetComponent<Transform>()->SetLocalPosition(currentWave.startPoint);
 		enemy->AddComponent<BezierPath>();
-		enemy->AddComponent<State>(std::make_unique<dae::FlyingToFormation>(nullptr, currentWave.curvePoint, currentWave.rotationPoint));
+		enemy->AddComponent<State>(std::make_unique<dae::Flying>(nullptr, currentWave.curvePoint, glm::vec2{256, 256}, currentWave.rotationPoint));
 		enemy->SetParent(GetOwner(), false);
 
 		m_Enemies.push_back(std::move(enemy));

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Core/GameObject.h"
 #include "Enemies/EnemyObserver.h"
 #include "Enemies/EnemyTypes.h"
