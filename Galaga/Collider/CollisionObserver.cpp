@@ -21,7 +21,7 @@ namespace dae
 
 			if (!event.args[0].go->GetComponent<Enemy>()->IsEnemyKilled())
 			{
-				bullet->RemoveAllComponents();
+				bullet->GetComponent<Transform>()->SetLocalPosition({ -100, 0 });
 				return;
 			}
 
@@ -33,7 +33,7 @@ namespace dae
 				}
 			}
 
-			bullet->RemoveAllComponents();
+			bullet->GetComponent<Transform>()->SetLocalPosition({ -100, 0 });
 			event.args[0].go->RemoveComponent<Enemy>();
 			event.args[0].go->RemoveComponent<State>();
 			event.args[0].go->RemoveComponent<BezierPath>();

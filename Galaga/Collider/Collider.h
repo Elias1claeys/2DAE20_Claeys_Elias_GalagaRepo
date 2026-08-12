@@ -25,6 +25,7 @@ namespace dae
 		Collider& operator=(const Collider& other) = delete;
 		Collider& operator=(Collider&& other) = delete;
 
+		void ResetAllTriggers() { m_Triggers.clear(); }
 		void AddTrigger(Trigger trigger);
 		void Update() override;
 		const void Render() override;

@@ -54,7 +54,7 @@ namespace dae
 
 	void Player::Shoot()
 	{
-		if (m_CanShoot)
+		if (m_Bullets.size() < 2 && m_CanShoot)
 		{
 			auto bullet = std::make_unique<GameObject>();
 			bullet->AddComponent<Bullet>(glm::vec2{ 0.0f, -1.0f });
@@ -69,8 +69,23 @@ namespace dae
 
 			bullet->SetParent(GetOwner()->GetParent(), false);
 			m_Bullets.push_back(std::move(bullet));
+		}
+		else if (m_CanShoot)
+		{
+			for (auto& bullet: m_Bullets)
+			{
+				if (bullet->GetComponent<Transform>()->GetWorldPosition().x <= -100.f ||
+					bullet->GetComponent<Transform>()->GetWorldPosition().y <= 0.f ||
+					bullet->GetComponent<Transform>()->GetWorldPosition().y >= 512.f)
+				{
+					Event hitEvent{ ENEMY_HIT };
+					GetOwner()->GetParent()->GetComponent<EnemiesController>()->AddEnemyCollisions(bullet.get(), hitEvent);
 
-			m_CanShoot = false;
+					glm::vec2 playerPos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
+					bullet->GetComponent<Transform>()->SetLocalPosition(playerPos + glm::vec2{ 0.f, -40.f });
+					break;
+				}
+			}
 		}
 	}
 }

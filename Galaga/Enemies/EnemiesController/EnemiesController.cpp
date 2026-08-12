@@ -149,6 +149,8 @@ namespace dae
 
 	void EnemiesController::AddEnemyCollisions(GameObject* object, Event event)
 	{
+		object->GetComponent<Collider>()->ResetAllTriggers();
+
 		for (auto& enemy : m_Enemies)
 		{
 			if (!enemy->GetComponent<Enemy>())
