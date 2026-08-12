@@ -1,8 +1,5 @@
 #include "EnemiesController.h"
 #include "Core/DeltaTime.h"
-#include "Enemies/Types/Bee/Bee.h"
-#include "Enemies/Types/Boss/Boss.h"
-#include "Enemies/Types/Flie/Flie.h"
 #include "Enemies/Enemy.h"
 #include "Enemies/Path/BezierPath.h"
 #include "StateMachine/State.h"
@@ -121,13 +118,13 @@ namespace dae
 		switch (currentWave.enemies[enemyIndex].type)
 		{
 			case EnemyType::Bee:
-				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 18.f);
+				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 18.f, EnemyType::Bee);
 				break;
 			case EnemyType::Flie:
-				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 54.f);
+				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 54.f, EnemyType::Flie);
 				break;
 			case EnemyType::Boss:
-				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 90.f);
+				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 90.f, EnemyType::Boss);
 				break;
 		}
 		

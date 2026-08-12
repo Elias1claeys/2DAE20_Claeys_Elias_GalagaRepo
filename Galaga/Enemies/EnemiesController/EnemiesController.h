@@ -1,5 +1,6 @@
 #include "Core/GameObject.h"
 #include "Enemies/EnemyObserver.h"
+#include "Enemies/EnemyTypes.h"
 
 namespace dae
 {
@@ -7,11 +8,9 @@ namespace dae
 	{
 	public:
 
-		enum class EnemyType
+		enum class Attacks
 		{
-			Bee,
-			Flie,
-			Boss
+			BossCapture
 		};
 
 		struct EnemyInfo
@@ -45,6 +44,7 @@ namespace dae
 		void MoveInFormation();
 		void SpawnWave();
 		void CheckForNextWave();
+		void PickEnemiesForAttack();
 
 		std::vector<std::unique_ptr<GameObject>> m_Enemies;
 		std::vector<Wave> m_Waves;

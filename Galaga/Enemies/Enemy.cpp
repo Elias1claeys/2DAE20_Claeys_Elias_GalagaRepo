@@ -6,8 +6,8 @@
 
 namespace dae
 {
-	Enemy::Enemy(GameObject* owner, glm::vec2 formationPos, float yPosEnmie)
-		: Component(owner), m_FormationPos(formationPos)
+	Enemy::Enemy(GameObject* owner, glm::vec2 formationPos, float yPosEnmie, EnemyType type)
+		: Component(owner), m_FormationPos(formationPos), m_Type(type)
 	{
 		GetOwner()->AddComponent<Texture>();
 		GetOwner()->GetComponent<Texture>()->SetTexture("Galaga2.png");

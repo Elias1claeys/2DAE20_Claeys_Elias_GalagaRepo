@@ -1,5 +1,6 @@
 #include "Core/GameObject.h"
 #include "Event/Subject.h"
+#include "Enemies/EnemyTypes.h"
 
 namespace dae
 {
@@ -8,7 +9,7 @@ namespace dae
 
 	public:
 		
-		Enemy(GameObject* owner, glm::vec2 formationPos, float yPosEnemie);
+		Enemy(GameObject* owner, glm::vec2 formationPos, float yPosEnemie, EnemyType type);
 		virtual ~Enemy() = default;
 		Enemy(const Enemy& other) = delete;
 		Enemy(Enemy&& other) = delete;
@@ -23,6 +24,7 @@ namespace dae
 		glm::vec2 GetFormationPos() const { return m_FormationPos; }
 
 	private:
+		EnemyType m_Type{};
 		glm::vec2 m_FormationPos{};
 		bool m_Flying{false};
 		float m_SourceRectX{};
