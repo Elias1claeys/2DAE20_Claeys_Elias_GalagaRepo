@@ -14,9 +14,9 @@ namespace dae
 	Player::Player(GameObject* owner) : Component(owner)
 	{
 		GetOwner()->AddComponent<Texture>()->SetTexture("Galaga2.png");
-		GetOwner()->GetComponent<Texture>()->SetSize({ 40, 40 });
+		GetOwner()->GetComponent<Texture>()->SetSize({ 30, 30 });
 		GetOwner()->GetComponent<Texture>()->SetSourceRect(109.5f, 1.5f, 15.f, 15.f);
-		GetOwner()->GetComponent<Transform>()->SetLocalPosition({ 256.f, 462.f });
+		GetOwner()->GetComponent<Transform>()->SetLocalPosition({ 241.f, 442.f });
 
 		InputManager::GetInstance().BindKeyBoardCommand(SDL_SCANCODE_LEFT, std::make_shared<Move>(this, glm::vec2{ -1.0f, 0.0f }));
 		InputManager::GetInstance().BindKeyBoardCommand(SDL_SCANCODE_RIGHT, std::make_shared<Move>(this, glm::vec2{ 1.0f, 0.0f }));

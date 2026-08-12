@@ -21,51 +21,73 @@ namespace dae
 
 	void EnemiesController::Update()
 	{
-		m_Time += Time::GetInstance().GetDeltaTime();
-
 		if (!m_AllEnemiesSpawned)
 		{
-			if (m_Time > 0.2f)
-			{
-				if (m_EnemyIndex != m_Waves[m_WaveIndex].enemies.size())
-				{
-					SpawnEnemy(m_WaveIndex, m_EnemyIndex);
-
-					if (m_Waves[m_WaveIndex].enemies.size() == 4)
-					{
-						SpawnEnemy(m_WaveIndex + 1, m_EnemyIndex);
-					}
-
-					m_EnemyIndex++;
-				}
-
-				m_Time = 0.f;
-			}
+			SpawnWave();
 		}
 		else
 		{
-			for (auto& enemy : m_Enemies)
-			{
-				if (!enemy->HasComponent<Enemy>())
-					continue;
+			MoveInFormation();
+		}
+	}
 
-				glm::vec2 currentPos = enemy->GetComponent<Enemy>()->GetFormationPos();
-				
-				if (currentPos.x < 0 || currentPos.x > 482)
+	void EnemiesController::SpawnWave()
+	{
+		m_Time += Time::GetInstance().GetDeltaTime();
+
+		if (m_Time > 0.2f)
+		{
+			if (m_EnemyIndex != m_Waves[m_WaveIndex].enemies.size())
+			{
+				SpawnEnemy(m_WaveIndex, m_EnemyIndex);
+
+				if (m_Waves[m_WaveIndex].enemies.size() == 4)
 				{
-					m_Direction.x *= -1;
-					break;
+					SpawnEnemy(m_WaveIndex + 1, m_EnemyIndex);
 				}
+
+				m_EnemyIndex++;
 			}
 
-			for (auto& enemy : m_Enemies)
+			m_Time = 0.f;
+		}
+	}
+
+	void EnemiesController::MoveInFormation()
+	{
+		for (auto& enemy : m_Enemies)
+		{
+			if (!enemy->HasComponent<Enemy>())
+				continue;
+
+			glm::vec2 currentPos = enemy->GetComponent<Enemy>()->GetFormationPos();
+
+			if (currentPos.x < 0 || currentPos.x > 482)
 			{
-				if (!enemy->HasComponent<Enemy>())
-					continue;
-
-				glm::vec2 moveDir = m_Direction * m_Speed * Time::GetInstance().GetDeltaTime();
-				enemy->GetComponent<Enemy>()->AddToFormationPos(moveDir);
+				m_Direction.x *= -1;
+				break;
 			}
+		}
+
+		for (auto& enemy : m_Enemies)
+		{
+			if (!enemy->HasComponent<Enemy>())
+				continue;
+
+			glm::vec2 moveDir = m_Direction * m_Speed * Time::GetInstance().GetDeltaTime();
+			enemy->GetComponent<Enemy>()->AddToFormationPos(moveDir);
+		}
+	}
+
+	void EnemiesController::BackInFormationOrKilledTrying()
+	{
+		if (!m_AllEnemiesSpawned)
+		{
+			CheckForNextWave();
+		}
+		else
+		{
+
 		}
 	}
 

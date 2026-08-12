@@ -13,7 +13,7 @@ namespace dae
 	{
 		if (event.id == ENEMY_IN_FORMATION || event.id == ENEMY_HIT_BEFORE_FORMATION)
 		{
-			m_EnemySpawner->CheckForNextWave();
+			m_EnemySpawner->BackInFormationOrKilledTrying();
 		}
 	}
 }

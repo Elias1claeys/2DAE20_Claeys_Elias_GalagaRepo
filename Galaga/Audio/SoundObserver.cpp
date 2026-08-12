@@ -7,7 +7,7 @@ namespace dae
 	{
 		m_pAudio = &dae::SoundLocator::GetAudio();
 
-		m_pAudio->RegisterSound(static_cast<dae::SoundId>(ENEMY_HIT), "Audio/EnemyDies.mp3");
+		m_pAudio->RegisterSound(static_cast<dae::SoundId>(ENEMY_HIT), "Data/Audio/EnemyDies.mp3");
 		m_pAudio->RegisterSound(static_cast<dae::SoundId>(GAME_STARTED), "Data/Audio/Start.mp3");
 	}
 

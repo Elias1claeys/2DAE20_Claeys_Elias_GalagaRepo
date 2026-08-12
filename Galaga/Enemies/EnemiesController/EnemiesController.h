@@ -37,11 +37,14 @@ namespace dae
 
 		void Update() override;
 		void AddWave(Wave wave);
-		void CheckForNextWave();
+		void BackInFormationOrKilledTrying();
 		void AddEnemyCollisions(GameObject* object, Event event);
 		
 	private:
 		void SpawnEnemy(int waveIndex, int enemieIndex);
+		void MoveInFormation();
+		void SpawnWave();
+		void CheckForNextWave();
 
 		std::vector<std::unique_ptr<GameObject>> m_Enemies;
 		std::vector<Wave> m_Waves;
