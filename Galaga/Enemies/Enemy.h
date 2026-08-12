@@ -21,11 +21,13 @@ namespace dae
 		void SetEnemieTexture(glm::vec2 prevPos);
 		void SetEnemieTexture(float x);
 		void AddToFormationPos(glm::vec2 dir);
+		bool IsEnemyKilled();
 		glm::vec2 GetFormationPos() const { return m_FormationPos; }
 
 	private:
 		EnemyType m_Type{};
 		glm::vec2 m_FormationPos{};
+		bool m_ShotOnce{};
 		bool m_Flying{false};
 		float m_SourceRectX{};
 		float m_SourceRectY{};

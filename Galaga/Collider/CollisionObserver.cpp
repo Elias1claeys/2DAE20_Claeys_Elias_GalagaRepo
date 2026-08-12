@@ -19,6 +19,12 @@ namespace dae
 			if (!event.args[0].go->HasComponent<Enemy>())
 				return;
 
+			if (!event.args[0].go->GetComponent<Enemy>()->IsEnemyKilled())
+			{
+				bullet->RemoveAllComponents();
+				return;
+			}
+
 			if (auto stateComp = event.args[0].go->GetComponent<State>())
 			{
 				if (auto enemyState = dynamic_cast<EnemyState*>(stateComp->GetGameState()))
@@ -27,7 +33,6 @@ namespace dae
 				}
 			}
 
-			bullet->RemoveAllComponents();
 			event.args[0].go->RemoveComponent<Enemy>();
 			event.args[0].go->RemoveComponent<State>();
 			event.args[0].go->RemoveComponent<BezierPath>();

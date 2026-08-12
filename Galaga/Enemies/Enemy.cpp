@@ -78,4 +78,16 @@ namespace dae
 	{
 		Subject::Notify(event, GetOwner());
 	}
+
+	bool Enemy::IsEnemyKilled()
+	{
+		if (m_Type == EnemyType::Boss && !m_ShotOnce)
+		{
+			m_SourceRectY += 36.f;
+			m_ShotOnce = true;
+			return false;
+		}
+		
+		return true;
+	}
 }

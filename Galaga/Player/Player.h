@@ -18,7 +18,7 @@ namespace dae
 
 	private:
 		bool m_CanShoot = true;
-		float m_Speed = 200.0f;
+		float m_Speed = 100.0f;
 		float m_Time = 0.f;
 		glm::vec2 m_Direction{ 0.0f, 0.0f };
 		std::vector<std::unique_ptr<GameObject>> m_Bullets{};
