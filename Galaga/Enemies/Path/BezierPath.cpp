@@ -54,9 +54,17 @@ namespace dae
 
 		if (m_T > 1.f)
 		{
-			m_ApplyWeave = false;
-			transform->SetLocalPosition(m_BezierSegment.endPoint);
-			GetOwner()->GetComponent<dae::State>()->GoToNextStage();
+			if (m_IsWeaving && m_WeaveIndex + 1 < m_WeaveSegments.size())
+			{
+				++m_WeaveIndex;
+				m_BezierSegment = m_WeaveSegments[m_WeaveIndex];
+				m_T = 0.f;
+			}
+			else
+			{
+				m_IsWeaving = false;
+				GetOwner()->GetComponent<dae::State>()->GoToNextStage();
+			}
 		}
 		else
 		{
@@ -81,14 +89,6 @@ namespace dae
 		glm::vec2 newPos = ((1 - m_T) * (1 - m_T) * m_BezierSegment.startPoint) +
 			2 * (1 - m_T) * m_T * m_BezierSegment.curvePoint +
 			m_T * m_T * m_BezierSegment.endPoint;
-
-		if (m_ApplyWeave && curveSpeed > 0.f)
-		{
-			glm::vec2 tangent = derivative / curveSpeed;
-			glm::vec2 normal{ -tangent.y, tangent.x };
-			float offset = m_WeaveAmplitude * std::sin(m_WeaveFrequency * m_DistanceTraveled + m_WeavePhase);
-			newPos += normal * offset;
-		}
 
 		transform->SetLocalPosition(newPos);
 	}
@@ -122,15 +122,33 @@ namespace dae
 
 		m_BezierSegment = segment;
 		m_T = 0.f;
-		m_DistanceTraveled = 0.f;
 	}
 
-	void BezierPath::SetWeave(float amplitude, float frequency)
+	void BezierPath::SetWeavePath(glm::vec2 endPoint, int numSegments, float amplitude)
 	{
-		m_ApplyWeave = true;
-		m_WeaveAmplitude = amplitude;
-		m_WeaveFrequency = frequency;
-		m_WeavePhase = (static_cast<float>(rand()) / RAND_MAX) * glm::two_pi<float>();
+		glm::vec2 start = GetOwner()->GetComponent<dae::Transform>()->GetWorldPosition();
+		glm::vec2 fullDir = endPoint - start;
+
+		m_WeaveSegments.clear();
+		m_WeaveIndex = 0;
+		m_IsWeaving = true;
+
+		glm::vec2 segStart = start;
+		float sign = 1.f;
+
+		for (int i = 0; i < numSegments; ++i)
+		{
+			glm::vec2 segEnd = start + fullDir * (static_cast<float>(i + 1) / numSegments);
+			glm::vec2 curvePoint = CalculateCurvePoint(segStart, segEnd, amplitude * sign);
+
+			m_WeaveSegments.push_back({ segStart, segEnd, curvePoint, 0.f });
+
+			segStart = segEnd;
+			sign *= -1.f; // alternate left/right
+		}
+
+		m_BezierSegment = m_WeaveSegments[0];
+		m_T = 0.f;
 	}
 
 	glm::vec2 BezierPath::CalculateCurvePoint(glm::vec2 start, glm::vec2 end, float curveAmount)

@@ -4,6 +4,7 @@
 #include "Enemies/Path/BezierPath.h"
 #include "Enemies/Enemy.h"
 #include "GameEvents.h"
+#include "FlyDive.h"
 
 namespace dae
 {
@@ -26,11 +27,18 @@ namespace dae
 			curvePoint = { -238.f, 200.f };
 		}
 
-		m_pState->GetOwner()->GetComponent<BezierPath>()->SetNewPath(curvePoint, { 256, 256 }, 0.f);
+		m_pState->GetOwner()->GetComponent<BezierPath>()->SetNewPath(curvePoint, { 256.f, 200.f }, 0.f);
 	}
 
 	std::unique_ptr<GameState> Bombing::GoToNextState()
 	{
-		return nullptr;
+		if (m_pState->GetOwner()->GetComponent<Enemy>()->GetType() == EnemyType::Flie)
+		{
+			return std::make_unique<FlyDive>(m_pState);
+		}
+		else
+		{
+			return nullptr;
+		}
 	}
 }

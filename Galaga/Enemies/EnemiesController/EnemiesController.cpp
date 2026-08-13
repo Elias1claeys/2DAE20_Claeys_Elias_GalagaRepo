@@ -140,8 +140,8 @@ namespace dae
 			}
 		}
 
-		int r = rand() % 3 + 1;
-		ChooseAttack(bees, flies, bosses, r);
+		//int r = rand() % 3 + 1;
+		ChooseAttack(bees, flies, bosses, 2);
 	}
 
 	void EnemiesController::ChooseAttack(std::vector<GameObject*> bees, std::vector<GameObject*> flies, std::vector<GameObject*> bosses, int attack)
