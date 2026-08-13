@@ -34,6 +34,7 @@ namespace dae
 			}
 
 			bullet->GetComponent<Transform>()->SetLocalPosition({ -100, 0 });
+			event.args[0].go->RemoveAllChilderen();
 			event.args[0].go->RemoveComponent<Enemy>();
 			event.args[0].go->RemoveComponent<State>();
 			event.args[0].go->RemoveComponent<BezierPath>();

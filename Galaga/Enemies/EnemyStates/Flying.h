@@ -22,6 +22,8 @@ namespace dae
 		void OnExit() override {};
 
 		std::unique_ptr<GameState> GoToNextState() override;
+
+	private:
 		glm::vec2 m_EndPoint{};
 		glm::vec2 m_CurvePoint{};
 		float m_LoopPoint{};
