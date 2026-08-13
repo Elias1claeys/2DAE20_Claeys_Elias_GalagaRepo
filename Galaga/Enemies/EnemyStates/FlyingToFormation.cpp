@@ -50,9 +50,4 @@ namespace dae
 	{
 		return std::make_unique<InFormation>(m_pState);
 	}
-
-	void FlyingToFormation::EnemyHit()
-	{
-		m_pState->GetOwner()->GetComponent<Enemy>()->Notify(Event{ ENEMY_HIT_BEFORE_FORMATION });
-	}
 }

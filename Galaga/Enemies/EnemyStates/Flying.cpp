@@ -16,9 +16,4 @@ namespace dae
 	{
 		return std::make_unique<FlyingToFormation>(m_pState);
 	}
-
-	void Flying::EnemyHit()
-	{
-		m_pState->GetOwner()->GetComponent<Enemy>()->Notify(Event{ ENEMY_HIT_BEFORE_FORMATION });
-	}
 }

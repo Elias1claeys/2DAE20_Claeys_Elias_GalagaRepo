@@ -1,5 +1,8 @@
 #pragma once
 #include "StateMachine/GameState.h"
+#include "StateMachine/State.h"
+#include "GameEvents.h"
+#include "Enemies/Enemy.h"
 
 namespace dae
 {
@@ -17,6 +20,9 @@ namespace dae
         EnemyState& operator=(const EnemyState& other) = delete;
         EnemyState& operator=(EnemyState&& other) = delete;
 
-        virtual void EnemyHit() = 0;
+        virtual void EnemyHit()
+        {
+            m_pState->GetOwner()->GetComponent<Enemy>()->Notify(Event{ ENEMY_HIT_BEFORE_FORMATION });
+        };
 	};
 }
