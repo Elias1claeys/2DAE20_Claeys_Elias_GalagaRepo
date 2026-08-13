@@ -79,7 +79,7 @@ namespace dae
 		Subject::Notify(event, GetOwner());
 	}
 
-	bool Enemy::IsEnemyKilled()
+	bool Enemy::IsBossKilled()
 	{
 		if (m_Type == EnemyType::Boss && !m_ShotOnce)
 		{

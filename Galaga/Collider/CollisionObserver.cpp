@@ -19,7 +19,7 @@ namespace dae
 			if (!event.args[0].go->HasComponent<Enemy>())
 				return;
 
-			if (!event.args[0].go->GetComponent<Enemy>()->IsEnemyKilled())
+			if (!event.args[0].go->GetComponent<Enemy>()->IsBossKilled())
 			{
 				bullet->GetComponent<Transform>()->SetLocalPosition({ -100, 0 });
 				return;
@@ -29,6 +29,7 @@ namespace dae
 			{
 				if (auto enemyState = dynamic_cast<EnemyState*>(stateComp->GetGameState()))
 				{
+					event.args[0].go->GetComponent<Enemy>()->EnemyDied();
 					enemyState->EnemyHit();
 				}
 			}

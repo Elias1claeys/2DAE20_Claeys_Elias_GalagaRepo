@@ -121,6 +121,8 @@ namespace dae
 		{
 			if (!enemy->HasComponent<Enemy>())
 				continue;
+			else if (enemy->GetComponent<Enemy>()->IsDead())
+				continue;
 
 			auto enemyComponent = enemy->GetComponent<Enemy>();
 
