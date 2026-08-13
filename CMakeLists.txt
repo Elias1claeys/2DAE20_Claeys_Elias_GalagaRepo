@@ -212,6 +212,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Galaga/Collider/CollisionObserver.cpp
   Galaga/Enemies/EnemiesController/EnemiesController.cpp
   Galaga/Explosion/ExplosionAnimation.cpp
+  Galaga/Enemies/EnemyStates/Dive.cpp
   Galaga/Enemies/EnemyStates/Flying.cpp
   Galaga/Enemies/EnemyStates/Bombing.cpp
   Galaga/Enemies/EnemyStates/FlyingToFormation.cpp

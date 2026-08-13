@@ -5,6 +5,7 @@
 #include "Enemies/Enemy.h"
 #include "GameEvents.h"
 #include "FlyDive.h"
+#include "Dive.h"
 
 namespace dae
 {
@@ -38,7 +39,7 @@ namespace dae
 		}
 		else
 		{
-			return nullptr;
+			return std::make_unique<Dive>(m_pState);
 		}
 	}
 }
