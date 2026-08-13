@@ -1,11 +1,14 @@
 #include "BeamAttack.h"
 #include "InFormation.h"
+#include "Enemies/Beam/Beam.h"
+#include "Flying.h"
 
 namespace dae
 {
 	BeamAttack::BeamAttack(State* state)
 		: EnemyState(state)
 	{
+		
 	}
 
 	void BeamAttack::Update(float deltaTime)
@@ -27,6 +30,10 @@ namespace dae
 			{
 				enemy->SetEnemieTexture(145.5f);
 				m_EndReached = true;
+
+				m_Beam = std::make_unique<GameObject>();
+				m_Beam->AddComponent<Beam>();
+				m_Beam->SetParent(m_pState->GetOwner(), false);
 				return;
 			}
 
@@ -39,6 +46,13 @@ namespace dae
 			transform->SetLocalPosition(currentPos);
 			enemy->SetEnemieTexture(previousPos);
 		}
+		else
+		{
+			if (!m_Beam->HasComponent<Beam>())
+			{
+				m_pState->GoToNextStage();
+			}
+		}
 	}
 
 	void BeamAttack::OnExit()
@@ -48,6 +62,10 @@ namespace dae
 
 	std::unique_ptr<GameState> BeamAttack::GoToNextState()
 	{
-		return nullptr;
+		glm::vec2 startPoint = m_pState->GetOwner()->GetComponent<Transform>()->GetWorldPosition();
+		glm::vec2 endPoint = { 256, 600 };
+		glm::vec2 curvePoint = m_pState->GetOwner()->GetComponent<BezierPath>()->CalculateCurvePoint(startPoint, endPoint, 50.f);
+
+		return std::make_unique<Flying>(m_pState, curvePoint, endPoint);
 	}
 }

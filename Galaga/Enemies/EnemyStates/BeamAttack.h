@@ -22,6 +22,9 @@ namespace dae
 		void OnExit() override;
 
 		std::unique_ptr<GameState> GoToNextState() override;
+	
+	private:
 		bool m_EndReached = false;
+		std::unique_ptr<GameObject> m_Beam;
 	};
 }
