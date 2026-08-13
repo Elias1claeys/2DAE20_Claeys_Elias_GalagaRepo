@@ -1,3 +1,5 @@
+#pragma once
+
 #include "StateMachine/GameState.h"
 #include "EnemyState.h"
 

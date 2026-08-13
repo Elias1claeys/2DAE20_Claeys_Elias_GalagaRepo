@@ -141,7 +141,7 @@ namespace dae
 		}
 
 		//int r = rand() % 3 + 1;
-		ChooseAttack(bees, flies, bosses, 3);
+		ChooseAttack(bees, flies, bosses, 1);
 	}
 
 	void EnemiesController::ChooseAttack(std::vector<GameObject*> bees, std::vector<GameObject*> flies, std::vector<GameObject*> bosses, int attack)
@@ -166,6 +166,7 @@ namespace dae
 				ChooseAttack(bees, flies, bosses, 2);
 			else
 			{
+				bosses[randomBoss]->GetComponent<Enemy>()->SetBeamAttack(true);
 				bosses[randomBoss]->GetComponent<State>()->GoToNextStage();
 				m_RemainingEnemies = 1;
 			}
@@ -178,6 +179,7 @@ namespace dae
 			{
 				if (!bosses.empty())
 				{
+					bosses[randomBoss]->GetComponent<Enemy>()->SetBeamAttack(false);
 					bosses[randomBoss]->GetComponent<State>()->GoToNextStage();
 					m_RemainingEnemies++;
 				}

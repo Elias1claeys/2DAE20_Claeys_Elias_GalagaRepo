@@ -24,6 +24,8 @@ namespace dae
 		void SetEnemieTexture(glm::vec2 prevPos);
 		void SetEnemieTexture(float x);
 		void AddToFormationPos(glm::vec2 dir);
+		void SetBeamAttack(bool beamAttack) { m_BeamAttack = beamAttack; }
+		bool DoesBeamAttack() { return m_BeamAttack; }
 		bool IsEnemyKilled();
 		glm::vec2 GetFormationPos() const { return m_FormationPos; }
 		glm::vec2 GetPlayerPos() const { return m_Player->GetComponent<Transform>()->GetWorldPosition(); }
@@ -35,6 +37,7 @@ namespace dae
 		glm::vec2 m_FormationPos{};
 		bool m_ShotOnce{};
 		bool m_Flying{false};
+		bool m_BeamAttack{ false };
 		float m_SourceRectX{};
 		float m_SourceRectY{};
 		float m_Time{};

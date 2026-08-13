@@ -4,6 +4,7 @@
 #include "GameEvents.h"
 #include "Components/Transform.h"
 #include "Bombing.h"
+#include "BeamAttack.h"
 
 namespace dae
 {
@@ -26,6 +27,15 @@ namespace dae
 
 	std::unique_ptr<GameState> InFormation::GoToNextState()
 	{
-		return std::make_unique<Bombing>(m_pState);
+		if (m_pState->GetOwner()->GetComponent<Enemy>()->GetType() == EnemyType::Boss && 
+			m_pState->GetOwner()->GetComponent<Enemy>()->DoesBeamAttack())
+		{
+			return std::make_unique<BeamAttack>(m_pState);
+		}
+		else
+		{
+			return std::make_unique<Bombing>(m_pState);
+		}
+		
 	}
 }

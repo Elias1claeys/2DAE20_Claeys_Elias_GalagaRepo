@@ -22,7 +22,7 @@ namespace dae
 		}
 	}
 
-	void FlyingToFormation::Update(float)
+	void FlyingToFormation::Update(float deltaTime)
 	{
 		auto transform = m_pState->GetOwner()->GetComponent<Transform>();
 		auto enemy = m_pState->GetOwner()->GetComponent<Enemy>();
@@ -44,7 +44,7 @@ namespace dae
 
 		constexpr float speed = 200.f;
 
-		currentPos += direction * speed * Time::GetInstance().GetDeltaTime();
+		currentPos += direction * speed * deltaTime;
 
 		transform->SetLocalPosition(currentPos);
 		enemy->SetEnemieTexture(previousPos);
