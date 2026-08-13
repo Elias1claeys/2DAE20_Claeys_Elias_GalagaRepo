@@ -78,36 +78,36 @@ namespace dae
 
 	void EnemiesController::BackInFormationOrKilledTrying()
 	{
-		if (!m_AllEnemiesSpawned)
+		m_RemainingEnemies--;
+
+		if (m_RemainingEnemies == 0)
 		{
-			CheckForNextWave();
-		}
-		else
-		{
-			//PickEnemiesForAttack();
+			if (!m_AllEnemiesSpawned)
+			{
+				CheckForNextWave();
+			}
+			else
+			{
+				PickEnemiesForAttack();
+			}
 		}
 	}
 
 	void EnemiesController::CheckForNextWave()
 	{
-		m_RemainingEnemies--;
-
-		if (m_RemainingEnemies == 0)
+		if (m_WaveIndex < m_Waves.size() - 1)
 		{
-			if (m_WaveIndex < m_Waves.size() - 1)
-			{
-				if (m_Waves[m_WaveIndex].enemies.size() == 4)
-					m_WaveIndex++;
-
+			if (m_Waves[m_WaveIndex].enemies.size() == 4)
 				m_WaveIndex++;
-				m_EnemyIndex = 0;
-				m_RemainingEnemies = 8;
-			}
-			else
-			{
-				m_AllEnemiesSpawned = true;
-				PickEnemiesForAttack();
-			}
+
+			m_WaveIndex++;
+			m_EnemyIndex = 0;
+			m_RemainingEnemies = 8;
+		}
+		else
+		{
+			m_AllEnemiesSpawned = true;
+			PickEnemiesForAttack();
 		}
 	}
 
@@ -141,7 +141,7 @@ namespace dae
 		}
 
 		//int r = rand() % 3 + 1;
-		ChooseAttack(bees, flies, bosses, 2);
+		ChooseAttack(bees, flies, bosses, 3);
 	}
 
 	void EnemiesController::ChooseAttack(std::vector<GameObject*> bees, std::vector<GameObject*> flies, std::vector<GameObject*> bosses, int attack)
