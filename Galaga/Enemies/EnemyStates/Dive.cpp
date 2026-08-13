@@ -12,8 +12,13 @@ namespace dae
 	void Dive::OnEnter()
 	{
 		glm::vec2 startPos = m_pState->GetOwner()->GetComponent<Transform>()->GetWorldPosition();
-		glm::vec2 endPos = m_pState->GetOwner()->GetComponent<Enemy>()->GetPlayerPos();
+
+		int interval = rand() % 101 - 50;
+		auto playerPos = m_pState->GetOwner()->GetComponent<Enemy>()->GetPlayerPos();
+		glm::vec2 endPos = { playerPos.x - interval, playerPos.y };
+
 		glm::vec2 curvePos = m_pState->GetOwner()->GetComponent<BezierPath>()->CalculateCurvePoint(startPos, endPos, 1.f);
+
 		m_pState->GetOwner()->GetComponent<BezierPath>()->SetNewPath(curvePos, endPos, 1.f);
 	}
 

@@ -11,14 +11,11 @@ namespace dae
 
 	void FlyDive::OnEnter()
 	{
-		glm::vec2 endPoint = m_pState->GetOwner()->GetComponent<Enemy>()->GetPlayerPos();
-		m_pState->GetOwner()->GetComponent<BezierPath>()->SetWeavePath(endPoint, 5, 15.f);
+		int interval = rand() % 101 - 50;
+		auto playerPos = m_pState->GetOwner()->GetComponent<Enemy>()->GetPlayerPos();
+		glm::vec2 endPos = { playerPos.x - interval, playerPos.y };
 
-	}
-
-	void FlyDive::Update(float)
-	{
-
+		m_pState->GetOwner()->GetComponent<BezierPath>()->SetWeavePath(endPos, 5, 15.f);
 	}
 
 	std::unique_ptr<GameState> FlyDive::GoToNextState()

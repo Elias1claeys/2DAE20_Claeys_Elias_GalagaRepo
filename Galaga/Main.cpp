@@ -21,6 +21,7 @@ namespace fs = std::filesystem;
 
 static void load()
 {
+	srand(static_cast<unsigned int>(time(nullptr)));
 	dae::SoundLocator::RegisterAudio(std::make_unique<dae::SDLSoundSystem>());
 	
 	auto& scene = dae::SceneManager::GetInstance().CreateScene(); 
