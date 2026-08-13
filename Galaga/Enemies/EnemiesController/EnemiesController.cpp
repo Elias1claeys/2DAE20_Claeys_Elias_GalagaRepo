@@ -13,7 +13,7 @@ namespace dae
 	EnemiesController::EnemiesController(GameObject* Owner) :
 		Component(Owner)
 	{
-		
+		srand(static_cast<unsigned int>(time(nullptr)));
 	}
 
 	void EnemiesController::Update()
