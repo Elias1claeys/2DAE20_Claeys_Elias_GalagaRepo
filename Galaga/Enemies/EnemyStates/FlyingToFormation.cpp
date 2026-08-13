@@ -14,8 +14,12 @@ namespace dae
 
 	void FlyingToFormation::OnEnter()
 	{
-		glm::vec2 start = { 256.f, 256.f };
-		glm::vec2 end = m_pState->GetOwner()->GetComponent<dae::Enemy>()->GetFormationPos();
+		glm::vec2 currentPos = m_pState->GetOwner()->GetComponent<dae::Transform>()->GetWorldPosition();
+		
+		if (currentPos.y >= 512.f)
+		{
+			m_pState->GetOwner()->GetComponent<dae::Transform>()->SetLocalPosition({ 256, -50 });
+		}
 	}
 
 	void FlyingToFormation::Update(float)

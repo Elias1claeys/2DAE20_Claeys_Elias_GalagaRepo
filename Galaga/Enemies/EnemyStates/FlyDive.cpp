@@ -1,4 +1,5 @@
 #include "FlyDive.h"
+#include "Flying.h"
 #include "Enemies/Path/BezierPath.h"
 
 namespace dae
@@ -22,6 +23,10 @@ namespace dae
 
 	std::unique_ptr<GameState> FlyDive::GoToNextState()
 	{
-		return nullptr;
+		glm::vec2 startPoint = m_pState->GetOwner()->GetComponent<Transform>()->GetWorldPosition();
+		glm::vec2 endPoint = { 256, 600 };
+		glm::vec2 curvePoint = m_pState->GetOwner()->GetComponent<BezierPath>()->CalculateCurvePoint(startPoint, endPoint, 50.f);
+
+		return std::make_unique<Flying>(m_pState, curvePoint, endPoint);
 	}
 }
