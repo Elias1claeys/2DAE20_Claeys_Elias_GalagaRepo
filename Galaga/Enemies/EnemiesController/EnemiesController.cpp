@@ -156,7 +156,10 @@ namespace dae
 			if (bosses.empty())
 				ChooseAttack(bees, flies, bosses, 2);
 			else
+			{
 				bosses[randomBoss]->GetComponent<State>()->GoToNextStage();
+				m_RemainingEnemies = 1;
+			}
 			break;
 
 		case 2:
@@ -164,12 +167,17 @@ namespace dae
 				ChooseAttack(bees, flies, bosses, 3);
 			else
 			{
-				if(!bosses.empty())
+				if (!bosses.empty())
+				{
 					bosses[randomBoss]->GetComponent<State>()->GoToNextStage();
+					m_RemainingEnemies++;
+				}
+					
 
 				if (!flies.empty())
 				{
 					flies[randomFlie]->GetComponent<State>()->GoToNextStage();
+					m_RemainingEnemies++;
 
 					if (flies.size() >= 2)
 					{
@@ -179,6 +187,7 @@ namespace dae
 							secondFlie = rand() % flies.size();
 
 						flies[secondFlie]->GetComponent<State>()->GoToNextStage();
+						m_RemainingEnemies++;
 					}
 						
 				}
@@ -191,10 +200,16 @@ namespace dae
 			else
 			{
 				if (!bees.empty())
+				{
 					bees[randomBee]->GetComponent<State>()->GoToNextStage();
-
+					m_RemainingEnemies++;
+				}
+					
 				if (!flies.empty())
+				{
 					flies[randomFlie]->GetComponent<State>()->GoToNextStage();
+					m_RemainingEnemies++;
+				}
 			}
 			break;
 		}
