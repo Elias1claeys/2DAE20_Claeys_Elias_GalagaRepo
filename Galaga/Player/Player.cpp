@@ -11,7 +11,8 @@
 
 namespace dae
 {
-	Player::Player(GameObject* owner) : Component(owner)
+	Player::Player(GameObject* owner, EnemiesController* enemiesController) 
+		: Component(owner), m_EnemiesController(enemiesController)
 	{
 		GetOwner()->AddComponent<Texture>()->SetTexture("Galaga2.png");
 		GetOwner()->GetComponent<Texture>()->SetSize({ 30, 30 });
@@ -65,7 +66,7 @@ namespace dae
 			bullet->AddComponent<Collider>(glm::vec2{ 17.f, 7.f }, glm::vec2{ 5.f, 25.f });
 
 			Event hitEvent{ ENEMY_HIT };
-			GetOwner()->GetParent()->GetComponent<EnemiesController>()->AddEnemyCollisions(bullet.get(), hitEvent);
+			m_EnemiesController->AddEnemyCollisions(bullet.get(), hitEvent);
 
 			bullet->SetParent(GetOwner()->GetParent(), false);
 			m_Bullets.push_back(std::move(bullet));
@@ -79,7 +80,7 @@ namespace dae
 					bullet->GetComponent<Transform>()->GetWorldPosition().y >= 512.f)
 				{
 					Event hitEvent{ ENEMY_HIT };
-					GetOwner()->GetParent()->GetComponent<EnemiesController>()->AddEnemyCollisions(bullet.get(), hitEvent);
+					m_EnemiesController->AddEnemyCollisions(bullet.get(), hitEvent);
 
 					glm::vec2 playerPos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
 					bullet->GetComponent<Transform>()->SetLocalPosition(playerPos + glm::vec2{ 0.f, -40.f });

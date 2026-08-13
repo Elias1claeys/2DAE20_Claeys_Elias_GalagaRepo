@@ -31,7 +31,7 @@ namespace dae
 			float rotationPoint = 0.f;
 		};
 
-		EnemiesController(GameObject* owner, GameObject* player);
+		EnemiesController(GameObject* owner);
 		virtual ~EnemiesController() = default;
 		EnemiesController(const EnemiesController& other) = delete;
 		EnemiesController(EnemiesController&& other) = delete;
@@ -43,6 +43,7 @@ namespace dae
 		void BackInFormationOrKilledTrying();
 		void AddEnemyCollisions(GameObject* object, Event event);
 		void EnemyKilled();
+		void GetPlayer(GameObject* player) { m_Player = player; }
 		
 	private:
 		void SpawnEnemy(int waveIndex, int enemieIndex);

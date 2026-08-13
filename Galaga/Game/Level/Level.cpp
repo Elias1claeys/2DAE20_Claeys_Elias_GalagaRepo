@@ -17,13 +17,14 @@ namespace dae
 {
 	void Level::OnEnter()
 	{
+		m_pState->GetOwner()->AddComponent<EnemiesController>();
+		m_pState->GetOwner()->AddComponent<HealthDisplay>();
+
 		auto player = std::make_unique<GameObject>();
-		player->AddComponent<Player>();
+		player->AddComponent<Player>(m_pState->GetOwner()->GetComponent<EnemiesController>());
 		player->SetParent(m_pState->GetOwner(), false);
 		m_GameObjects.push_back(std::move(player));
-
-		m_pState->GetOwner()->AddComponent<EnemiesController>(m_GameObjects[0].get());
-		m_pState->GetOwner()->AddComponent<HealthDisplay>();
+		m_pState->GetOwner()->GetComponent<EnemiesController>()->GetPlayer(m_GameObjects[0].get());
 
 		auto soundObserver = std::make_unique<SoundObserver>();
 		auto levelObserver = std::make_unique<LevelObserver>(this);

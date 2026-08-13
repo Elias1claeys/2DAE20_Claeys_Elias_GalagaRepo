@@ -1,11 +1,12 @@
 #include "Core/GameObject.h"
+#include "Enemies/EnemiesController/EnemiesController.h"
 
 namespace dae
 {
 	class Player : public Component
 	{
 	public:
-		Player(GameObject* owner);
+		Player(GameObject* owner, EnemiesController* enemiesController);
 		virtual ~Player() = default;
 		Player(const Player& other) = delete;
 		Player(Player&& other) = delete;
@@ -22,5 +23,6 @@ namespace dae
 		float m_Time = 0.f;
 		glm::vec2 m_Direction{ 0.0f, 0.0f };
 		std::vector<std::unique_ptr<GameObject>> m_Bullets{};
+		EnemiesController* m_EnemiesController{};
 	};
 }
