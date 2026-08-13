@@ -12,11 +12,8 @@ namespace dae
 	private:
 		std::vector<std::unique_ptr<Observer>> m_Observers;
 
-	protected:
-		
-		void Notify(Event event, GameObject* gameObject);
-
 	public:
+		void Notify(Event event, GameObject* gameObject);
 
 		void AddObserver( std::unique_ptr<Observer> observer);
 		void RemoveObserver(std::unique_ptr<Observer> observer);

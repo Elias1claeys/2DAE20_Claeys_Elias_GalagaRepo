@@ -1,11 +1,11 @@
 #pragma once
-
+#include "Event/Subject.h"
 #include "Core/GameObject.h"
 #include "GameState.h"
 
 namespace dae
 {
-	class State : public Component
+	class State : public Component, public Subject 
 	{
 	public:
 

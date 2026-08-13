@@ -25,9 +25,13 @@ namespace dae
 		m_pState->GetOwner()->AddComponent<EnemiesController>(m_GameObjects[0].get());
 		m_pState->GetOwner()->AddComponent<HealthDisplay>();
 
-		m_SoundObserver = std::make_unique<SoundObserver>();
+		auto soundObserver = std::make_unique<SoundObserver>();
+		auto levelObserver = std::make_unique<LevelObserver>(this);
+
+		m_pState->AddObserver(std::move(levelObserver));
+		m_pState->AddObserver(std::move(soundObserver));
 		Event e{ GAME_STARTED };
-		m_SoundObserver->OnNotify(m_pState->GetOwner(), e);
+		m_pState->Notify(e, m_pState->GetOwner());
 
 		LoadLevel(1);
 	}

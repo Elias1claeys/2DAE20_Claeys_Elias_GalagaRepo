@@ -34,9 +34,6 @@ namespace dae
 		std::vector<glm::vec2> m_FormationPosFlies;
 		std::vector<glm::vec2> m_FormationPosBosses;
 
-		std::unique_ptr<SoundObserver> m_SoundObserver;
-		std::unique_ptr<LevelObserver> m_LevelObserver;
-
 		std::vector<std::unique_ptr<GameObject>> m_GameObjects;
 	};
 }
