@@ -25,6 +25,7 @@ namespace dae
 		void AddToFormationPos(glm::vec2 dir);
 		bool IsEnemyKilled();
 		glm::vec2 GetFormationPos() const { return m_FormationPos; }
+		EnemyType GetType() const { return m_Type; }
 
 	private:
 		EnemyType m_Type{};

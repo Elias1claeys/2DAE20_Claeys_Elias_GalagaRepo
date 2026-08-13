@@ -12,7 +12,9 @@ namespace dae
 
 		enum class Attacks
 		{
-			BossCapture
+			BossCapture,
+			BossDive,
+			BeeAttack
 		};
 
 		struct EnemyInfo
@@ -48,6 +50,7 @@ namespace dae
 		void SpawnWave();
 		void CheckForNextWave();
 		void PickEnemiesForAttack();
+		void ChooseAttack(std::vector<GameObject*> bees, std::vector<GameObject*> flies, std::vector<GameObject*> bosses, int attack);
 
 		std::vector<std::unique_ptr<GameObject>> m_Enemies;
 		std::vector<Wave> m_Waves;

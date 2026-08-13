@@ -84,11 +84,9 @@ namespace dae
 		}
 		else
 		{
-
+			//PickEnemiesForAttack();
 		}
 	}
-
-	
 
 	void EnemiesController::CheckForNextWave()
 	{
@@ -108,7 +106,85 @@ namespace dae
 			else
 			{
 				m_AllEnemiesSpawned = true;
+				//PickEnemiesForAttack();
 			}
+		}
+	}
+
+	void EnemiesController::PickEnemiesForAttack()
+	{
+		std::vector<GameObject*> bees;
+		std::vector<GameObject*> flies;
+		std::vector<GameObject*> bosses;
+
+		for (auto& enemy : m_Enemies)
+		{
+			if (!enemy->HasComponent<Enemy>())
+				continue;
+
+			auto enemyComponent = enemy->GetComponent<Enemy>();
+
+			switch (enemyComponent->GetType())
+			{
+			case EnemyType::Bee:
+				bees.push_back(enemy.get());
+				break;
+
+			case EnemyType::Flie:
+				flies.push_back(enemy.get());
+				break;
+
+			case EnemyType::Boss:
+				bosses.push_back(enemy.get());
+				break;
+			}
+		}
+
+		int r = rand() % 3 + 1;
+		ChooseAttack(bees, flies, bosses, r);
+	}
+
+	void EnemiesController::ChooseAttack(std::vector<GameObject*> bees, std::vector<GameObject*> flies, std::vector<GameObject*> bosses, int attack)
+	{
+		switch (attack)
+		{
+		case 1:
+			if (bosses.empty())
+				ChooseAttack(bees, flies, bosses, 2);
+			else
+				bosses[0]->GetComponent<State>()->GoToNextStage();
+			break;
+
+		case 2:
+			if (bosses.empty() && flies.empty())
+				ChooseAttack(bees, flies, bosses, 3);
+			else
+			{
+				if(!bosses.empty())
+					bosses[0]->GetComponent<State>()->GoToNextStage();
+
+				if (!flies.empty())
+				{
+					flies[0]->GetComponent<State>()->GoToNextStage();
+
+					if (flies.size() >= 2)
+						flies[1]->GetComponent<State>()->GoToNextStage();
+				}
+			}
+			break;
+
+		case 3:
+			if (bees.empty() && flies.empty())
+				ChooseAttack(bees, flies, bosses, 1);
+			else
+			{
+				if (!bees.empty())
+					bees[0]->GetComponent<State>()->GoToNextStage();
+
+				if (!flies.empty())
+					flies[0]->GetComponent<State>()->GoToNextStage();
+			}
+			break;
 		}
 	}
 
