@@ -4,6 +4,11 @@
 
 namespace dae
 {
+	LevelObserver::LevelObserver(Level* level)
+		: m_Level(level)
+	{
+	}
+
 	void LevelObserver::OnNotify(GameObject* , const Event& event)
 	{
 		if (event.id == ENEMY_DIED)

@@ -9,6 +9,7 @@
 #include "Game/Start/Start.h"
 #include "Health/HealthDisplay.h"
 #include "GameEvents.h"
+#include "LevelObserver.h"
 #include <fstream>
 
 
