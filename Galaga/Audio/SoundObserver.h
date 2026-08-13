@@ -8,7 +8,6 @@ namespace dae
 	{
 	private:
 		SoundSystem* m_pAudio;
-		int m_EmeraldsCollected{};
 
 	public:
 		SoundObserver();
