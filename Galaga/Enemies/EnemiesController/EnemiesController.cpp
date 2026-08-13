@@ -146,9 +146,18 @@ namespace dae
 
 	void EnemiesController::ChooseAttack(std::vector<GameObject*> bees, std::vector<GameObject*> flies, std::vector<GameObject*> bosses, int attack)
 	{
-		int randomBee = rand() % bees.size();
-		int randomFlie = rand() % flies.size();
-		int randomBoss = rand() % bosses.size();
+		int randomBee = 0;
+		int randomFlie = 0;
+		int randomBoss = 0;
+
+		if(!bees.empty())
+			randomBee = rand() % bees.size();
+
+		if (!flies.empty())
+			randomFlie = rand() % flies.size();
+
+		if(!bosses.empty())
+			randomBoss = rand() % bosses.size();
 
 		switch (attack)
 		{
