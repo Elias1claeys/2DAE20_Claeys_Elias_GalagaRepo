@@ -31,7 +31,7 @@ namespace dae
 			float rotationPoint = 0.f;
 		};
 
-		EnemiesController(GameObject* owner);
+		EnemiesController(GameObject* owner, GameObject* player);
 		virtual ~EnemiesController() = default;
 		EnemiesController(const EnemiesController& other) = delete;
 		EnemiesController(EnemiesController&& other) = delete;
@@ -52,6 +52,7 @@ namespace dae
 		void PickEnemiesForAttack();
 		void ChooseAttack(std::vector<GameObject*> bees, std::vector<GameObject*> flies, std::vector<GameObject*> bosses, int attack);
 
+		GameObject* m_Player;
 		std::vector<std::unique_ptr<GameObject>> m_Enemies;
 		std::vector<Wave> m_Waves;
 		float m_Time{ 1.f };

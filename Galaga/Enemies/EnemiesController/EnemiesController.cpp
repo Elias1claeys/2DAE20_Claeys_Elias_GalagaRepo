@@ -10,8 +10,8 @@
 
 namespace dae
 {
-	EnemiesController::EnemiesController(GameObject* Owner) :
-		Component(Owner)
+	EnemiesController::EnemiesController(GameObject* Owner, GameObject* player) :
+		Component(Owner), m_Player(player)
 	{
 		srand(static_cast<unsigned int>(time(nullptr)));
 	}
@@ -223,13 +223,13 @@ namespace dae
 		switch (currentWave.enemies[enemyIndex].type)
 		{
 			case EnemyType::Bee:
-				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 18.f, EnemyType::Bee);
+				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 18.f, EnemyType::Bee, m_Player);
 				break;
 			case EnemyType::Flie:
-				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 54.f, EnemyType::Flie);
+				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 54.f, EnemyType::Flie, m_Player);
 				break;
 			case EnemyType::Boss:
-				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 90.f, EnemyType::Boss);
+				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 90.f, EnemyType::Boss, m_Player);
 				break;
 		}
 		

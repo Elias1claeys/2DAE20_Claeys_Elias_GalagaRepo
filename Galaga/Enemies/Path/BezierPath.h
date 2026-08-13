@@ -32,6 +32,7 @@ namespace dae
 		BezierPath& operator=(BezierPath&& other) = delete;
 
 		void SetNewPath(glm::vec2 curvePoint, glm::vec2 endPoint, float loopPoint = 0.f);
+		void SetWeave(float amplitude, float frequency);
 		void Update() override;
 		glm::vec2 CalculateCurvePoint(glm::vec2 start, glm::vec2 end, float curveAmount);
 
@@ -45,6 +46,13 @@ namespace dae
 		float m_T = 1.f;
 		float m_loopDirection = 1.f;
 		int m_PathIndex = 0;
+
+		//Weave
+		bool m_ApplyWeave = false;
+		float m_WeaveAmplitude = 40.f;
+		float m_WeaveFrequency = 0.02f;
+		float m_WeavePhase = 0.f;
+		float m_DistanceTraveled = 0.f;
 
 		void BezierMovement(Transform* transform);
 		void Looping(Transform* transform);

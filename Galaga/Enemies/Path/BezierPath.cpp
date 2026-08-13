@@ -54,6 +54,7 @@ namespace dae
 
 		if (m_T > 1.f)
 		{
+			m_ApplyWeave = false;
 			transform->SetLocalPosition(m_BezierSegment.endPoint);
 			GetOwner()->GetComponent<dae::State>()->GoToNextStage();
 		}
@@ -80,6 +81,14 @@ namespace dae
 		glm::vec2 newPos = ((1 - m_T) * (1 - m_T) * m_BezierSegment.startPoint) +
 			2 * (1 - m_T) * m_T * m_BezierSegment.curvePoint +
 			m_T * m_T * m_BezierSegment.endPoint;
+
+		if (m_ApplyWeave && curveSpeed > 0.f)
+		{
+			glm::vec2 tangent = derivative / curveSpeed;
+			glm::vec2 normal{ -tangent.y, tangent.x };
+			float offset = m_WeaveAmplitude * std::sin(m_WeaveFrequency * m_DistanceTraveled + m_WeavePhase);
+			newPos += normal * offset;
+		}
 
 		transform->SetLocalPosition(newPos);
 	}
@@ -113,6 +122,15 @@ namespace dae
 
 		m_BezierSegment = segment;
 		m_T = 0.f;
+		m_DistanceTraveled = 0.f;
+	}
+
+	void BezierPath::SetWeave(float amplitude, float frequency)
+	{
+		m_ApplyWeave = true;
+		m_WeaveAmplitude = amplitude;
+		m_WeaveFrequency = frequency;
+		m_WeavePhase = (static_cast<float>(rand()) / RAND_MAX) * glm::two_pi<float>();
 	}
 
 	glm::vec2 BezierPath::CalculateCurvePoint(glm::vec2 start, glm::vec2 end, float curveAmount)

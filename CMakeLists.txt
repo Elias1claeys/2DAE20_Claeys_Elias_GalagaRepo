@@ -215,6 +215,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Galaga/Enemies/EnemyStates/Flying.cpp
   Galaga/Enemies/EnemyStates/Bombing.cpp
   Galaga/Enemies/EnemyStates/FlyingToFormation.cpp
+  Galaga/Enemies/EnemyStates/FlyDive.cpp
   Galaga/Enemies/EnemyStates/InFormation.cpp
   Galaga/Enemies/Path/BezierPath.cpp
   Galaga/Enemies/Enemy.cpp

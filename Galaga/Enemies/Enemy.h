@@ -1,8 +1,9 @@
 #pragma once
-
 #include "Core/GameObject.h"
 #include "Event/Subject.h"
 #include "Enemies/EnemyTypes.h"
+#include "Player/Player.h"
+#include "Components/Transform.h"
 
 namespace dae
 {
@@ -11,7 +12,7 @@ namespace dae
 
 	public:
 		
-		Enemy(GameObject* owner, glm::vec2 formationPos, float yPosEnemie, EnemyType type);
+		Enemy(GameObject* owner, glm::vec2 formationPos, float yPosEnemie, EnemyType type, GameObject* player);
 		virtual ~Enemy() = default;
 		Enemy(const Enemy& other) = delete;
 		Enemy(Enemy&& other) = delete;
@@ -25,9 +26,11 @@ namespace dae
 		void AddToFormationPos(glm::vec2 dir);
 		bool IsEnemyKilled();
 		glm::vec2 GetFormationPos() const { return m_FormationPos; }
+		glm::vec2 GetPlayerPos() const { return m_Player->GetComponent<Transform>()->GetWorldPosition(); }
 		EnemyType GetType() const { return m_Type; }
 
 	private:
+		GameObject* m_Player;
 		EnemyType m_Type{};
 		glm::vec2 m_FormationPos{};
 		bool m_ShotOnce{};
