@@ -19,6 +19,6 @@ namespace dae
 
 		void EnemyHit() override {};
 
-		std::unique_ptr<GameState> GoToNextState() override { return nullptr; };
+		std::unique_ptr<GameState> GoToNextState() override;
 	};
 }

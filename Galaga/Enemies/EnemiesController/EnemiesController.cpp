@@ -106,7 +106,7 @@ namespace dae
 			else
 			{
 				m_AllEnemiesSpawned = true;
-				//PickEnemiesForAttack();
+				PickEnemiesForAttack();
 			}
 		}
 	}
@@ -146,13 +146,17 @@ namespace dae
 
 	void EnemiesController::ChooseAttack(std::vector<GameObject*> bees, std::vector<GameObject*> flies, std::vector<GameObject*> bosses, int attack)
 	{
+		int randomBee = rand() % bees.size();
+		int randomFlie = rand() % flies.size();
+		int randomBoss = rand() % bosses.size();
+
 		switch (attack)
 		{
 		case 1:
 			if (bosses.empty())
 				ChooseAttack(bees, flies, bosses, 2);
 			else
-				bosses[0]->GetComponent<State>()->GoToNextStage();
+				bosses[randomBoss]->GetComponent<State>()->GoToNextStage();
 			break;
 
 		case 2:
@@ -161,14 +165,22 @@ namespace dae
 			else
 			{
 				if(!bosses.empty())
-					bosses[0]->GetComponent<State>()->GoToNextStage();
+					bosses[randomBoss]->GetComponent<State>()->GoToNextStage();
 
 				if (!flies.empty())
 				{
-					flies[0]->GetComponent<State>()->GoToNextStage();
+					flies[randomFlie]->GetComponent<State>()->GoToNextStage();
 
 					if (flies.size() >= 2)
-						flies[1]->GetComponent<State>()->GoToNextStage();
+					{
+						int secondFlie = rand() % flies.size();
+
+						while (randomFlie == secondFlie)
+							secondFlie = rand() % flies.size();
+
+						flies[secondFlie]->GetComponent<State>()->GoToNextStage();
+					}
+						
 				}
 			}
 			break;
@@ -179,10 +191,10 @@ namespace dae
 			else
 			{
 				if (!bees.empty())
-					bees[0]->GetComponent<State>()->GoToNextStage();
+					bees[randomBee]->GetComponent<State>()->GoToNextStage();
 
 				if (!flies.empty())
-					flies[0]->GetComponent<State>()->GoToNextStage();
+					flies[randomFlie]->GetComponent<State>()->GoToNextStage();
 			}
 			break;
 		}
