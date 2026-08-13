@@ -13,7 +13,8 @@ namespace dae
 	EnemiesController::EnemiesController(GameObject* Owner) :
 		Component(Owner)
 	{
-		
+		m_EnemiesParent = std::make_unique<GameObject>();
+		m_EnemiesParent->SetParent(GetOwner(), false);
 	}
 
 	void EnemiesController::Update()
@@ -255,7 +256,7 @@ namespace dae
 		enemy->GetComponent<Transform>()->SetLocalPosition(currentWave.startPoint);
 		enemy->AddComponent<BezierPath>();
 		enemy->AddComponent<State>(std::make_unique<dae::Flying>(nullptr, currentWave.curvePoint, glm::vec2{256, 256}, currentWave.rotationPoint));
-		enemy->SetParent(GetOwner(), false);
+		enemy->SetParent(m_EnemiesParent.get(), false);
 
 		m_Enemies.push_back(std::move(enemy));
 	}
