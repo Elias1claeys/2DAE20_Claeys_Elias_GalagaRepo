@@ -22,6 +22,8 @@ namespace dae
 
 		std::unique_ptr<GameState> GoToNextState() override;
 
+		void LoadLevel(int number);
+
 	private:
 
 		std::vector<glm::vec2> ReadPositionsFromFile(const std::string& filePath);

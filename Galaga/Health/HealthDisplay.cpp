@@ -8,7 +8,7 @@ namespace dae
 	HealthDisplay::HealthDisplay(GameObject* owner)
 		: Component(owner)
 	{
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < 3; i++)
 		{
 			auto health = std::make_unique<GameObject>();
 			health->AddComponent<Texture>()->SetTexture("Galaga2.png");

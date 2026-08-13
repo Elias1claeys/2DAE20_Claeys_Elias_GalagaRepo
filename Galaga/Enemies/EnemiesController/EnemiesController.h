@@ -40,6 +40,7 @@ namespace dae
 		void AddWave(Wave wave);
 		void BackInFormationOrKilledTrying();
 		void AddEnemyCollisions(GameObject* object, Event event);
+		void EnemyKilled();
 		
 	private:
 		void SpawnEnemy(int waveIndex, int enemieIndex);

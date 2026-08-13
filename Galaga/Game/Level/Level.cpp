@@ -16,14 +16,9 @@ namespace dae
 {
 	void Level::OnEnter()
 	{
-		m_FormationPosBees = ReadPositionsFromFile("Data/Formations/Formation1Bees.txt");
-		m_FormationPosBosses = ReadPositionsFromFile("Data/Formations/Formation1Boss.txt");
-		m_FormationPosFlies = ReadPositionsFromFile("Data/Formations/Formation1Butterflies.txt");
-
 		m_pState->GetOwner()->AddComponent<EnemiesController>();
 		m_pState->GetOwner()->AddComponent<HealthDisplay>();
-		SpawnEnemies();
-
+		
 		auto player = std::make_unique<GameObject>();
 		player->AddComponent<Player>();
 		player->SetParent(m_pState->GetOwner(), false);
@@ -32,6 +27,17 @@ namespace dae
 		m_SoundObserver = std::make_unique<SoundObserver>();
 		Event e{ GAME_STARTED };
 		m_SoundObserver->OnNotify(m_pState->GetOwner(), e);
+
+		LoadLevel(1);
+	}
+
+	void Level::LoadLevel(int number)
+	{
+		m_FormationPosBees = ReadPositionsFromFile("Data/Formations/Formation" + std::to_string(number) + "Bees.txt");
+		m_FormationPosBosses = ReadPositionsFromFile("Data/Formations/Formation" + std::to_string(number) + "Boss.txt");
+		m_FormationPosFlies = ReadPositionsFromFile("Data/Formations/Formation" + std::to_string(number) + "Butterflies.txt");
+
+		SpawnEnemies();
 	}
 
 	std::vector<glm::vec2> Level::ReadPositionsFromFile(const std::string& filePath)
