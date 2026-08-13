@@ -19,17 +19,27 @@ namespace dae
 
 	std::unique_ptr<GameState> Dive::GoToNextState()
 	{
-		if (m_pState->GetOwner()->GetComponent<Enemy>()->GetType() == EnemyType::Boss)
-		{
-			glm::vec2 startPoint = m_pState->GetOwner()->GetComponent<Transform>()->GetWorldPosition();
-			glm::vec2 endPoint = { 256, 600 };
-			glm::vec2 curvePoint = m_pState->GetOwner()->GetComponent<BezierPath>()->CalculateCurvePoint(startPoint, endPoint, 50.f);
+		glm::vec2 startPoint = m_pState->GetOwner()->GetComponent<Transform>()->GetWorldPosition();
+		glm::vec2 endPoint = { 256, 600 };
+		float curveAmount = 50.f;
 
-			return std::make_unique<Flying>(m_pState, curvePoint, endPoint);
-		}
-		else
+		if (m_pState->GetOwner()->GetComponent<Enemy>()->GetType() == EnemyType::Bee)
 		{
-			return nullptr;
+			auto playerPos = m_pState->GetOwner()->GetComponent<Enemy>()->GetPlayerPos();
+
+			if (playerPos.x < startPoint.x)
+			{
+				endPoint = glm::vec2(0, 442.f);
+				curveAmount = -75.f;
+			}
+			else
+			{
+				endPoint = glm::vec2(462.f, 442.f);
+				curveAmount = 75.f;
+			}
 		}
+
+		glm::vec2 curvePoint = m_pState->GetOwner()->GetComponent<BezierPath>()->CalculateCurvePoint(startPoint, endPoint, curveAmount);
+		return std::make_unique<Flying>(m_pState, curvePoint, endPoint, 0.f);
 	}
 }
