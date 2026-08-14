@@ -31,6 +31,20 @@ namespace dae
 		m_pState->GetOwner()->GetComponent<BezierPath>()->SetNewPath(curvePoint, { 256.f, 200.f }, 0.f);
 	}
 
+	void Bombing::Update(float)
+	{
+		if (!m_HasShot)
+		{
+			float t = m_pState->GetOwner()->GetComponent<BezierPath>()->CurrentPos();
+
+			if (t >= 0.7f)
+			{
+				m_pState->GetOwner()->GetComponent<Enemy>()->Shoot();
+				m_HasShot = true;
+			}
+		}
+	}
+
 	std::unique_ptr<GameState> Bombing::GoToNextState()
 	{
 		if (m_pState->GetOwner()->GetComponent<Enemy>()->GetType() == EnemyType::Flie)

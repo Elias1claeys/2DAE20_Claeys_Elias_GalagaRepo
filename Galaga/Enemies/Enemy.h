@@ -20,6 +20,7 @@ namespace dae
 		Enemy& operator=(Enemy&& other) = delete;
 
 		void Update() override;
+		void Shoot();
 		void Notify(Event event);
 		void SetEnemieTexture(glm::vec2 prevPos);
 		void SetEnemieTexture(float x);
@@ -34,9 +35,11 @@ namespace dae
 		EnemyType GetType() const { return m_Type; }
 
 	private:
+		std::unique_ptr<GameObject> m_Bullet;
 		GameObject* m_Player;
 		EnemyType m_Type{};
 		glm::vec2 m_FormationPos{};
+		glm::vec2 m_Direction{ 0, 0 };
 		bool m_ShotOnce{};
 		bool m_Flying{false};
 		bool m_BeamAttack{ false };

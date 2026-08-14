@@ -14,9 +14,12 @@ namespace dae
 		Bombing& operator=(Bombing&& other) = delete;
 
 		void OnEnter() override;
-		void Update(float) override {};
+		void Update(float) override;
 		void OnExit() override {};
 
 		std::unique_ptr<GameState> GoToNextState() override;
+
+	private:
+		bool m_HasShot{ false };
 	};
 }

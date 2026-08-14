@@ -35,6 +35,7 @@ namespace dae
 		void SetWeavePath(glm::vec2 endPoint, int numSegments, float amplitude);
 		void Update() override;
 		glm::vec2 CalculateCurvePoint(glm::vec2 start, glm::vec2 end, float curveAmount);
+		float CurrentPos() { return m_T; }
 
 	private:
 		Phase m_Phase = Phase::preLoop;
