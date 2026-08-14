@@ -9,7 +9,6 @@ namespace dae
 	class Level : public GameState
 	{
 	public:
-
 		enum GameType
 		{
 			single,

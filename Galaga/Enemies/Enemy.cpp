@@ -9,14 +9,9 @@
 
 namespace dae
 {
-	Enemy::Enemy(GameObject* owner, glm::vec2 formationPos, float yPosEnmie, EnemyType type, GameObject* player)
-		: Component(owner), m_FormationPos(formationPos), m_Type(type), m_Player(player)
+	Enemy::Enemy(GameObject* owner, GameObject* bullet, glm::vec2 formationPos, float yPosEnmie, EnemyType type, GameObject* player)
+		: Component(owner), m_Bullet(bullet), m_FormationPos(formationPos), m_Type(type), m_Player(player)
 	{
-		m_Bullet = std::make_unique<GameObject>();
-		m_Bullet->AddComponent<Bullet>(glm::vec2(0, 0));
-		m_Bullet->GetComponent<Transform>()->SetLocalPosition(glm::vec2(-100, -100));
-		m_Bullet->SetParent(m_Player->GetParent(), false);
-
 		GetOwner()->AddComponent<Texture>();
 		GetOwner()->GetComponent<Texture>()->SetTexture("Galaga2.png");
 
@@ -29,7 +24,6 @@ namespace dae
 
 		Event e{ PLAYER_HIT };
 		m_Player->GetComponent<Collider>()->AddTrigger(Collider::Trigger{ GetOwner(), e, glm::vec2(30, 30), glm::vec2(0, 0), true });
-		m_Player->GetComponent<Collider>()->AddTrigger(Collider::Trigger{ m_Bullet.get(), e, glm::vec2(30, 30), glm::vec2(0, 0), true});
 	}
 
 	void Enemy::Update()
@@ -60,10 +54,10 @@ namespace dae
 		m_Bullet->GetComponent<Transform>()->SetLocalPosition(glm::vec2(enemyPos.x, enemyPos.y + 30.f));
 		
 		float x = 1;
-
+		
 		if (m_Direction.x < 0)
 			x = -1;
-
+		
 		m_Bullet->GetComponent<Bullet>()->SetDirection(glm::vec2(x, 1));
 	}
 

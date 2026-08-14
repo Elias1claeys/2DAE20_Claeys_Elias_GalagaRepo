@@ -4,6 +4,7 @@
 #include "Enemies/EnemyObserver.h"
 #include "Enemies/EnemyTypes.h"
 
+
 namespace dae
 {
 	class EnemiesController : public Component
@@ -55,6 +56,7 @@ namespace dae
 		void ChooseAttack(std::vector<GameObject*> bees, std::vector<GameObject*> flies, std::vector<GameObject*> bosses, int attack);
 
 		GameObject* m_Player{};
+		std::vector<std::unique_ptr<GameObject>> m_Bullets;
 		std::vector<std::unique_ptr<GameObject>> m_Enemies;
 		std::vector<Wave> m_Waves;
 		float m_Time{ 1.f };

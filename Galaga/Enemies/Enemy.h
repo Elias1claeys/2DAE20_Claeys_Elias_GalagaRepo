@@ -12,7 +12,7 @@ namespace dae
 
 	public:
 		
-		Enemy(GameObject* owner, glm::vec2 formationPos, float yPosEnemie, EnemyType type, GameObject* player);
+		Enemy(GameObject* owner, GameObject* bullet, glm::vec2 formationPos, float yPosEnemie, EnemyType type, GameObject* player);
 		virtual ~Enemy() = default;
 		Enemy(const Enemy& other) = delete;
 		Enemy(Enemy&& other) = delete;
@@ -35,7 +35,7 @@ namespace dae
 		EnemyType GetType() const { return m_Type; }
 
 	private:
-		std::unique_ptr<GameObject> m_Bullet;
+		GameObject* m_Bullet;
 		GameObject* m_Player;
 		EnemyType m_Type{};
 		glm::vec2 m_FormationPos{};

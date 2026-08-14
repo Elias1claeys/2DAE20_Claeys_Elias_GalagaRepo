@@ -7,6 +7,7 @@
 #include "GameEvents.h"
 #include "Components/Texture.h"
 #include "Collider/Collider.h"
+#include "Bullet/Bullet.h"
 
 namespace dae
 {
@@ -232,22 +233,33 @@ namespace dae
 
 	void EnemiesController::SpawnEnemy(int waveIndex, int enemyIndex)
 	{
+
+		auto bullet = std::make_unique<GameObject>();
+		bullet->AddComponent<Bullet>(glm::vec2(0, 0));
+		bullet->GetComponent<Transform>()->SetLocalPosition(glm::vec2(-100, -100));
+		bullet->SetParent(GetOwner(), false);
+
+		Event e{ PLAYER_HIT };
+		m_Player->GetComponent<Collider>()->AddTrigger(Collider::Trigger{ bullet.get(), e, glm::vec2(30, 30), glm::vec2(0, 0), true });
+
 		auto enemy = std::make_unique<GameObject>();
 		auto currentWave = m_Waves[waveIndex];
 
 		switch (currentWave.enemies[enemyIndex].type)
 		{
 			case EnemyType::Bee:
-				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 18.f, EnemyType::Bee, m_Player);
+				enemy->AddComponent<Enemy>(bullet.get(), currentWave.enemies[enemyIndex].endPoint, 18.f, EnemyType::Bee, m_Player);
 				break;
 			case EnemyType::Flie:
-				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 54.f, EnemyType::Flie, m_Player);
+				enemy->AddComponent<Enemy>(bullet.get(), currentWave.enemies[enemyIndex].endPoint, 54.f, EnemyType::Flie, m_Player);
 				break;
 			case EnemyType::Boss:
-				enemy->AddComponent<Enemy>(currentWave.enemies[enemyIndex].endPoint, 90.f, EnemyType::Boss, m_Player);
+				enemy->AddComponent<Enemy>(bullet.get(), currentWave.enemies[enemyIndex].endPoint, 90.f, EnemyType::Boss, m_Player);
 				break;
 		}
 		
+		m_Bullets.push_back(std::move(bullet));
+
 		auto enemyObserver = std::make_unique<EnemyObserver>(this, m_Player->GetComponent<Player>());
 		enemy->GetComponent<Enemy>()->AddObserver(std::move(enemyObserver));
 

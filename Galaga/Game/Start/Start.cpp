@@ -93,6 +93,5 @@ namespace dae
 		else							   
 			return std::make_unique<Level>(m_pState, Level::GameType::versus);
 
-		return std::make_unique<Level>(m_pState);
 	}
 }
