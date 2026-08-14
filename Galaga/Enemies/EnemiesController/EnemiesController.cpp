@@ -13,8 +13,6 @@ namespace dae
 	EnemiesController::EnemiesController(GameObject* Owner) :
 		Component(Owner)
 	{
-		m_EnemiesParent = std::make_unique<GameObject>();
-		m_EnemiesParent->SetParent(GetOwner(), false);
 	}
 
 	void EnemiesController::Update()
@@ -53,7 +51,7 @@ namespace dae
 
 	void EnemiesController::MoveInFormation()
 	{
-		for (auto& enemy : m_EnemiesParent->GetChildren())
+		for (auto& enemy : m_Enemies)
 		{
 			if (!enemy->HasComponent<Enemy>())
 				continue;
@@ -67,7 +65,7 @@ namespace dae
 			}
 		}
 
-		for (auto& enemy : m_EnemiesParent->GetChildren())
+		for (auto& enemy : m_Enemies)
 		{
 			if (!enemy->HasComponent<Enemy>())
 				continue;
@@ -118,7 +116,7 @@ namespace dae
 		std::vector<GameObject*> flies;
 		std::vector<GameObject*> bosses;
 
-		for (auto& enemy : m_EnemiesParent->GetChildren())
+		for (auto& enemy : m_Enemies)
 		{
 			if (!enemy->HasComponent<Enemy>())
 				continue;
@@ -130,15 +128,15 @@ namespace dae
 			switch (enemyComponent->GetType())
 			{
 			case EnemyType::Bee:
-				bees.push_back(enemy);
+				bees.push_back(enemy.get());
 				break;
 
 			case EnemyType::Flie:
-				flies.push_back(enemy);
+				flies.push_back(enemy.get());
 				break;
 
 			case EnemyType::Boss:
-				bosses.push_back(enemy);
+				bosses.push_back(enemy.get());
 				break;
 			}
 		}
@@ -259,7 +257,7 @@ namespace dae
 		enemy->GetComponent<Transform>()->SetLocalPosition(currentWave.startPoint);
 		enemy->AddComponent<BezierPath>();
 		enemy->AddComponent<State>(std::make_unique<dae::Flying>(nullptr, currentWave.curvePoint, glm::vec2{256, 256}, currentWave.rotationPoint));
-		enemy->SetParent(m_EnemiesParent.get(), false);
+		enemy->SetParent(GetOwner() , false);
 
 		m_Enemies.push_back(std::move(enemy));
 	}
@@ -274,21 +272,20 @@ namespace dae
 		object->GetComponent<Collider>()->ResetAllTriggers();
 
 		
-		for (auto& enemy : m_EnemiesParent->GetChildren())
+		for (auto& enemy : m_Enemies)
 		{
 			if (!enemy->GetComponent<Enemy>())
 				continue;
 
-			event.args[1].go = enemy;
+			event.args[1].go = enemy.get();
 			auto enemySize = enemy->GetComponent<Texture>()->GetSize();
 
-			object->GetComponent<Collider>()->AddTrigger(Collider::Trigger{enemy, event, enemySize, {0.f, 0.f}, false});
+			object->GetComponent<Collider>()->AddTrigger(Collider::Trigger{enemy.get(), event, enemySize, {0.f, 0.f}, false});
 		}
 	}
 
 	void EnemiesController::ResetAllEnemies()
 	{
-		m_EnemiesParent->RemoveAllChilderen();
 		m_Waves.clear();
 		m_Time = 1.f;
 		m_EnemyIndex = 0;

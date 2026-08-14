@@ -55,7 +55,6 @@ namespace dae
 		void ChooseAttack(std::vector<GameObject*> bees, std::vector<GameObject*> flies, std::vector<GameObject*> bosses, int attack);
 
 		GameObject* m_Player{};
-		std::unique_ptr<GameObject> m_EnemiesParent{};
 		std::vector<std::unique_ptr<GameObject>> m_Enemies;
 		std::vector<Wave> m_Waves;
 		float m_Time{ 1.f };
