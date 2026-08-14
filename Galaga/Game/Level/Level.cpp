@@ -28,17 +28,17 @@ namespace dae
 
 		auto soundObserver = std::make_unique<SoundObserver>();
 		auto levelObserver = std::make_unique<LevelObserver>(this);
-		auto healthObserver = std::make_unique<HealthObserver>(m_pState->GetOwner()->GetComponent<HealthDisplay>());
+		auto healthObserver = std::make_unique<HealthObserver>(m_Parent->GetComponent<HealthDisplay>());
 
 		auto player = std::make_unique<GameObject>();
-		player->AddComponent<Player>(m_pState->GetOwner()->GetComponent<EnemiesController>());
-		player->SetParent(m_pState->GetOwner(), false);
+		player->AddComponent<Player>(m_Parent->GetComponent<EnemiesController>());
+		player->SetParent(m_Parent.get(), false);
 		player->GetComponent<Player>()->AddObserver(std::move(levelObserver));
 		player->GetComponent<Player>()->AddObserver(std::move(soundObserver));
 		player->GetComponent<Player>()->AddObserver(std::move(healthObserver));
 
 		Event e{ GAME_STARTED };
-		player->GetComponent<Player>()->Notify(e, m_pState->GetOwner());
+		player->GetComponent<Player>()->Notify(e, m_Parent.get());
 
 		m_GameObjects.push_back(std::move(player));
 		m_Parent->GetComponent<EnemiesController>()->GetPlayer(m_GameObjects[0].get());

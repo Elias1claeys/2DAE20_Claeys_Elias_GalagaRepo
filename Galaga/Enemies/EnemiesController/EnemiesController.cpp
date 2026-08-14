@@ -53,7 +53,7 @@ namespace dae
 
 	void EnemiesController::MoveInFormation()
 	{
-		for (auto& enemy : m_Enemies)
+		for (auto& enemy : m_EnemiesParent->GetChildren())
 		{
 			if (!enemy->HasComponent<Enemy>())
 				continue;
@@ -67,7 +67,7 @@ namespace dae
 			}
 		}
 
-		for (auto& enemy : m_Enemies)
+		for (auto& enemy : m_EnemiesParent->GetChildren())
 		{
 			if (!enemy->HasComponent<Enemy>())
 				continue;
@@ -118,7 +118,7 @@ namespace dae
 		std::vector<GameObject*> flies;
 		std::vector<GameObject*> bosses;
 
-		for (auto& enemy : m_Enemies)
+		for (auto& enemy : m_EnemiesParent->GetChildren())
 		{
 			if (!enemy->HasComponent<Enemy>())
 				continue;
@@ -130,15 +130,15 @@ namespace dae
 			switch (enemyComponent->GetType())
 			{
 			case EnemyType::Bee:
-				bees.push_back(enemy.get());
+				bees.push_back(enemy);
 				break;
 
 			case EnemyType::Flie:
-				flies.push_back(enemy.get());
+				flies.push_back(enemy);
 				break;
 
 			case EnemyType::Boss:
-				bosses.push_back(enemy.get());
+				bosses.push_back(enemy);
 				break;
 			}
 		}
