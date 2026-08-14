@@ -22,6 +22,10 @@ namespace dae
 		InputManager::GetInstance().BindKeyBoardCommand(SDL_SCANCODE_LEFT, std::make_shared<Move>(this, glm::vec2{ -1.0f, 0.0f }));
 		InputManager::GetInstance().BindKeyBoardCommand(SDL_SCANCODE_RIGHT, std::make_shared<Move>(this, glm::vec2{ 1.0f, 0.0f }));
 		InputManager::GetInstance().BindKeyBoardCommand(SDL_SCANCODE_SPACE, std::make_shared<Attack>(this));
+
+		InputManager::GetInstance().BindControllerCommand(0x0004, std::make_shared<Move>(this, glm::vec2{ -1.0f, 0.0f }));
+		InputManager::GetInstance().BindControllerCommand(0x0008, std::make_shared<Move>(this, glm::vec2{ 1.0f, 0.0f }));
+		InputManager::GetInstance().BindControllerCommand(0x4000, std::make_shared<Attack>(this));
 	}
 
 	void Player::Update()
