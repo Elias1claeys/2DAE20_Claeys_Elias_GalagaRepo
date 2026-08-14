@@ -13,9 +13,11 @@ namespace dae
 		Bullet& operator=(Bullet&& other) = delete;
 
 		void Update() override;
+		void SetDirection(glm::vec2 dir) { m_Direction = dir; }
 
 	private:
 		glm::vec2 m_Direction{ 0.0f, 0.0f };
-		float m_Speed = 300.f;
+		float m_SpeedY = 300.f;
+		float m_SpeedX = 100.f;
 	};
 }

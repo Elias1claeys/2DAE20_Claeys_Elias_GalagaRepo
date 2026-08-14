@@ -62,7 +62,7 @@ namespace dae
 		if (m_Bullets.size() < 2 && m_CanShoot)
 		{
 			auto bullet = std::make_unique<GameObject>();
-			bullet->AddComponent<Bullet>(glm::vec2{ 0.0f, -1.0f });
+			bullet->AddComponent<Bullet>(glm::vec2{ m_Direction.x, -1.0f });
 
 			glm::vec2 playerPos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
 			bullet->GetComponent<Transform>()->SetLocalPosition(playerPos + glm::vec2{ 0.f, -40.f });
@@ -96,6 +96,7 @@ namespace dae
 
 					glm::vec2 playerPos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
 					bullet->GetComponent<Transform>()->SetLocalPosition(playerPos + glm::vec2{ 0.f, -40.f });
+					bullet->GetComponent<Bullet>()->SetDirection({ m_Direction.x, -1.0f });
 					break;
 				}
 			}

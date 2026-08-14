@@ -18,7 +18,8 @@ namespace dae
 	void Bullet::Update()
 	{
 		auto pos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
-		pos += m_Direction * m_Speed * Time::GetInstance().GetDeltaTime();
+		pos.y += m_Direction.y * m_SpeedY * Time::GetInstance().GetDeltaTime();
+		pos.x += m_Direction.x * m_SpeedX * Time::GetInstance().GetDeltaTime();
 		GetOwner()->GetComponent<Transform>()->SetLocalPosition(pos);
 	}
 }
