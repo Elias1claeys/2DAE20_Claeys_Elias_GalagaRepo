@@ -11,6 +11,7 @@
 #include "GameEvents.h"
 #include "LevelObserver.h"
 #include "Health/HealthObserver.h"
+#include "Collider/collider.h"
 #include <fstream>
 
 
@@ -43,6 +44,7 @@ namespace dae
 
 	void Level::LoadLevel(int number)
 	{
+		m_GameObjects[0]->GetComponent<Collider>()->ResetAllTriggers();
 		m_pState->GetOwner()->GetComponent<EnemiesController>()->ResetAllEnemies();
 
 		m_FormationPosBees = ReadPositionsFromFile("Data/Formations/Formation" + std::to_string(number) + "Bees.txt");

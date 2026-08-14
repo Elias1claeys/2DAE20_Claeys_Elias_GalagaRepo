@@ -11,6 +11,8 @@ namespace dae
 		m_pAudio->RegisterSound(static_cast<dae::SoundId>(GAME_STARTED), "Data/Audio/Start.mp3");
 		m_pAudio->RegisterSound(static_cast<dae::SoundId>(PLAYER_SHOOT), "Data/Audio/PlayerShoot.mp3");
 		m_pAudio->RegisterSound(static_cast<dae::SoundId>(BOSS_DIED), "Data/Audio/BossDeath.mp3");
+		m_pAudio->RegisterSound(static_cast<dae::SoundId>(PLAYER_HIT), "Data/Audio/PlayerDies.mp3");
+		m_pAudio->RegisterSound(static_cast<dae::SoundId>(PLAYER_DIED), "Data/Audio/PlayerDies.mp3");
 	}
 
 	void SoundObserver::OnNotify(GameObject* , const Event& event)
