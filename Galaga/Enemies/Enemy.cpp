@@ -15,7 +15,7 @@ namespace dae
 		m_Bullet = std::make_unique<GameObject>();
 		m_Bullet->AddComponent<Bullet>(glm::vec2(0, 0));
 		m_Bullet->GetComponent<Transform>()->SetLocalPosition(glm::vec2(-100, -100));
-		m_Bullet->SetParent(GetOwner()->GetParent(), false);
+		m_Bullet->SetParent(m_Player->GetParent(), false);
 
 		GetOwner()->AddComponent<Texture>();
 		GetOwner()->GetComponent<Texture>()->SetTexture("Galaga2.png");
@@ -57,7 +57,7 @@ namespace dae
 	void Enemy::Shoot()
 	{
 		auto enemyPos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
-		m_Bullet->GetComponent<Transform>()->SetLocalPosition(glm::vec2(enemyPos.x, enemyPos.y - 50.f));
+		m_Bullet->GetComponent<Transform>()->SetLocalPosition(glm::vec2(enemyPos.x, enemyPos.y + 30.f));
 		
 		float x = 1;
 

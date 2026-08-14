@@ -37,7 +37,7 @@ namespace dae
 		{
 			float t = m_pState->GetOwner()->GetComponent<BezierPath>()->CurrentPos();
 
-			if (t >= 0.7f)
+			if (t >= 0.8f)
 			{
 				m_pState->GetOwner()->GetComponent<Enemy>()->Shoot();
 				m_HasShot = true;
