@@ -38,25 +38,25 @@ namespace dae
 
 	const void Collider::Render()
 	{
-		//auto pos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
-		//
-		//SDL_FRect rect{};
-		//rect.x = pos.x + m_Offset.x;
-		//rect.y = pos.y + m_Offset.y;
-		//rect.w = m_ColliderSize.x;
-		//rect.h = m_ColliderSize.y;
-		//
-		//Renderer::GetInstance().DrawRect({255, 0, 255, 255}, rect);
-		//
-		//for (auto& trigger: m_Triggers)
-		//{
-		//	auto triggerPos = trigger.triggerObject->GetComponent<Transform>()->GetWorldPosition();
-		//	rect.x = triggerPos.x + trigger.offset.x;
-		//	rect.y = triggerPos.y + trigger.offset.y;
-		//	rect.w = trigger.size.x;
-		//	rect.h = trigger.size.y;
-		//	Renderer::GetInstance().DrawRect({ 255, 0, 0, 255 }, rect);
-		//}
+		//  auto pos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
+		//  
+		//  SDL_FRect rect{};
+		//  rect.x = pos.x + m_Offset.x;
+		//  rect.y = pos.y + m_Offset.y;
+		//  rect.w = m_ColliderSize.x;
+		//  rect.h = m_ColliderSize.y;
+		//  
+		//  Renderer::GetInstance().DrawRect({255, 0, 255, 255}, rect);
+		//  
+		//  for (auto& trigger: m_Triggers)
+		//  {
+		//  	auto triggerPos = trigger.triggerObject->GetComponent<Transform>()->GetWorldPosition();
+		//  	rect.x = triggerPos.x + trigger.offset.x;
+		//  	rect.y = triggerPos.y + trigger.offset.y;
+		//  	rect.w = trigger.size.x;
+		//  	rect.h = trigger.size.y;
+		//  	Renderer::GetInstance().DrawRect({ 255, 0, 0, 255 }, rect);
+		//  }
 	}
 
 	bool Collider::Overlaps(Trigger trigger)
