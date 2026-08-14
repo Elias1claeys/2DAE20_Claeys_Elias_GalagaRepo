@@ -273,15 +273,16 @@ namespace dae
 	{
 		object->GetComponent<Collider>()->ResetAllTriggers();
 
-		for (auto& enemy : m_Enemies)
+		
+		for (auto& enemy : m_EnemiesParent->GetChildren())
 		{
 			if (!enemy->GetComponent<Enemy>())
 				continue;
 
-			event.args[1].go = enemy.get();
+			event.args[1].go = enemy;
 			auto enemySize = enemy->GetComponent<Texture>()->GetSize();
 
-			object->GetComponent<Collider>()->AddTrigger(Collider::Trigger{enemy.get(), event, enemySize, {0.f, 0.f}, false});
+			object->GetComponent<Collider>()->AddTrigger(Collider::Trigger{enemy, event, enemySize, {0.f, 0.f}, false});
 		}
 	}
 
