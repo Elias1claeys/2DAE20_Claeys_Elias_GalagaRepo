@@ -10,22 +10,26 @@ namespace dae
 			comp->Update();
 		}
 
-		//Safely remove components that are marked for deletion
-		m_pComponents.erase(
-			std::remove_if(
-				m_pComponents.begin(),
-				m_pComponents.end(),
-				[](const auto& comp)
-				{
-					return comp->IsMarkedForDelete();
-				}
-			),
-			m_pComponents.end()
-		);
+		if (!m_pComponents.empty())
+		{
+			//Safely remove components that are marked for deletion
+			m_pComponents.erase(
+				std::remove_if(
+					m_pComponents.begin(),
+					m_pComponents.end(),
+					[](const auto& comp)
+					{
+						return comp->IsMarkedForDelete();
+					}
+				),
+				m_pComponents.end()
+			);
+		}
 
 		for (auto& child : m_pChildren)
 		{
-			child->Update();
+			if(child != nullptr)
+				child->Update();
 		}
 	}
 

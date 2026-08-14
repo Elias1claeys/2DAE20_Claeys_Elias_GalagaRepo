@@ -12,6 +12,7 @@
 #include "LevelObserver.h"
 #include "Health/HealthObserver.h"
 #include "Collider/collider.h"
+#include "Input/InputManager.h"
 #include <fstream>
 
 
@@ -19,8 +20,11 @@ namespace dae
 {
 	void Level::OnEnter()
 	{
-		m_pState->GetOwner()->AddComponent<EnemiesController>();
-		m_pState->GetOwner()->AddComponent<HealthDisplay>();
+		m_Parent = std::make_unique<GameObject>();
+		m_Parent->SetParent(m_pState->GetOwner(), false);
+
+		m_Parent->AddComponent<EnemiesController>();
+		m_Parent->AddComponent<HealthDisplay>();
 
 		auto soundObserver = std::make_unique<SoundObserver>();
 		auto levelObserver = std::make_unique<LevelObserver>(this);
@@ -37,7 +41,7 @@ namespace dae
 		player->GetComponent<Player>()->Notify(e, m_pState->GetOwner());
 
 		m_GameObjects.push_back(std::move(player));
-		m_pState->GetOwner()->GetComponent<EnemiesController>()->GetPlayer(m_GameObjects[0].get());
+		m_Parent->GetComponent<EnemiesController>()->GetPlayer(m_GameObjects[0].get());
 
 		LoadLevel(1);
 	}
@@ -45,7 +49,7 @@ namespace dae
 	void Level::LoadLevel(int number)
 	{
 		m_GameObjects[0]->GetComponent<Collider>()->ResetAllTriggers();
-		m_pState->GetOwner()->GetComponent<EnemiesController>()->ResetAllEnemies();
+		m_Parent->GetComponent<EnemiesController>()->ResetAllEnemies();
 
 		m_FormationPosBees = ReadPositionsFromFile("Data/Formations/Formation" + std::to_string(number) + "Bees.txt");
 		m_FormationPosBosses = ReadPositionsFromFile("Data/Formations/Formation" + std::to_string(number) + "Boss.txt");
@@ -88,7 +92,7 @@ namespace dae
 
 	void Level::SpawnEnemies()
 	{
-		auto enemySpawner = m_pState->GetOwner()->GetComponent<EnemiesController>();
+		auto enemySpawner = m_Parent->GetComponent<EnemiesController>();
 		std::vector<EnemiesController::EnemyInfo> enemies;
 
 		for (int i = 0; i < 4; i++) { 
@@ -125,18 +129,22 @@ namespace dae
 
 	void Level::Update(float)
 	{
-
+		if (m_LevelEnded)
+		{
+			m_pState->GoToNextStage();
+		}
 	}
 
 	void Level::OnExit()
 	{
-		m_pState->GetOwner()->RemoveAllComponents();
 		m_pState->GetOwner()->RemoveAllChilderen();
+
+		InputManager::GetInstance().ResetCommands();
 	}
 
 	void Level::LevelEnded()
 	{
-		m_pState->GoToNextStage();
+		m_LevelEnded = true;
 	}
 
 	std::unique_ptr<GameState> Level::GoToNextState()
