@@ -73,6 +73,9 @@ namespace dae
 			hitEvent.args[0].go = GetOwner();
 			m_EnemiesController->AddEnemyCollisions(bullet.get(), hitEvent);
 
+			Event playerShoot{ PLAYER_SHOOT };
+			Notify(playerShoot, GetOwner());
+
 			bullet->SetParent(GetOwner()->GetParent(), false);
 			m_Bullets.push_back(std::move(bullet));
 		}
@@ -87,6 +90,9 @@ namespace dae
 					Event hitEvent{ ENEMY_HIT };
 					hitEvent.args[0].go = GetOwner();
 					m_EnemiesController->AddEnemyCollisions(bullet.get(), hitEvent);
+
+					Event playerShoot{ PLAYER_SHOOT };
+					Notify(playerShoot, GetOwner());
 
 					glm::vec2 playerPos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
 					bullet->GetComponent<Transform>()->SetLocalPosition(playerPos + glm::vec2{ 0.f, -40.f });

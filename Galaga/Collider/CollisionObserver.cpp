@@ -31,8 +31,17 @@ namespace dae
 				{
 					event.args[1].go->GetComponent<Enemy>()->EnemyDied();
 					enemyState->EnemyHit();
-					Event e{ ENEMY_DIED };
-					event.args[0].go->GetComponent<Player>()->Notify(e, event.args[0].go);
+
+					if (event.args[1].go->GetComponent<Enemy>()->GetType() == EnemyType::Boss)
+					{
+						Event e{ BOSS_DIED };
+						event.args[0].go->GetComponent<Player>()->Notify(e, event.args[0].go);
+					}
+					else
+					{
+						Event e{ ENEMY_DIED };
+						event.args[0].go->GetComponent<Player>()->Notify(e, event.args[0].go);
+					}
 				}
 			}
 

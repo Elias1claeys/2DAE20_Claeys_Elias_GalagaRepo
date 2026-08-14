@@ -11,18 +11,24 @@ namespace dae
 
 	void LevelObserver::OnNotify(GameObject* , const Event& event)
 	{
-		if (event.id == ENEMY_DIED)
+		if (event.id == ENEMY_DIED || event.id == BOSS_DIED)
+		{
 			m_DeadEnemies++;
 
-		if (m_DeadEnemies == 40)
+			if (m_DeadEnemies == 40)
+			{
+				m_DeadEnemies = 0;
+				m_LevelIndex++;
+
+				if (m_LevelIndex > 3)
+					m_LevelIndex = 1;
+
+				m_Level->LoadLevel(m_LevelIndex);
+			}
+		}
+		if (event.id == PLAYER_DIED)
 		{
-			m_DeadEnemies = 0;
-			m_LevelIndex++;
-
-			if (m_LevelIndex > 3)
-				m_LevelIndex = 1;
-
-			m_Level->LoadLevel(m_LevelIndex);
+			m_Level->GoToNextState();
 		}
 	}
 }

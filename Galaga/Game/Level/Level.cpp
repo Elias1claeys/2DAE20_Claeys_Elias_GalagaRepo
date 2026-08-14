@@ -125,7 +125,8 @@ namespace dae
 
 	void Level::OnExit()
 	{
-
+		m_pState->GetOwner()->RemoveAllComponents();
+		m_pState->GetOwner()->RemoveAllChilderen();
 	}
 
 	std::unique_ptr<GameState> Level::GoToNextState()
