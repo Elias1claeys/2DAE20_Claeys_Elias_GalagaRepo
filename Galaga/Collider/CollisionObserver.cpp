@@ -12,7 +12,7 @@
 
 namespace dae
 {
-	void Collision::OnNotify(GameObject* bullet, const Event& event)
+	void Collision::OnNotify(GameObject* gameObject, const Event& event)
 	{
 		if (event.id == ENEMY_HIT)
 		{
@@ -21,7 +21,7 @@ namespace dae
 
 			if (!event.args[1].go->GetComponent<Enemy>()->IsBossKilled())
 			{
-				bullet->GetComponent<Transform>()->SetLocalPosition({ -100, 0 });
+				gameObject->GetComponent<Transform>()->SetLocalPosition({ -100, 0 });
 				return;
 			}
 
@@ -45,13 +45,17 @@ namespace dae
 				}
 			}
 
-			bullet->GetComponent<Transform>()->SetLocalPosition({ -100, 0 });
+			gameObject->GetComponent<Transform>()->SetLocalPosition({ -100, 0 });
 			event.args[1].go->RemoveAllChilderen();
 			event.args[1].go->RemoveComponent<Enemy>();
 			event.args[1].go->RemoveComponent<State>();
 			event.args[1].go->RemoveComponent<BezierPath>();
 
 			event.args[1].go->AddComponent<ExplosionAnimation>();
+		}
+		if (event.id == PLAYER_HIT)
+		{
+			gameObject->GetComponent<Player>()->Notify(event, gameObject);
 		}
 	}
 }

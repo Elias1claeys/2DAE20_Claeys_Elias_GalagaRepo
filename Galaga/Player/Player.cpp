@@ -14,6 +14,7 @@ namespace dae
 	Player::Player(GameObject* owner, EnemiesController* enemiesController) 
 		: Component(owner), m_EnemiesController(enemiesController)
 	{
+		GetOwner()->AddComponent<Collider>(glm::vec2(0, 0), glm::vec2(30, 30));
 		GetOwner()->AddComponent<Texture>()->SetTexture("Galaga2.png");
 		GetOwner()->GetComponent<Texture>()->SetSize({ 30, 30 });
 		GetOwner()->GetComponent<Texture>()->SetSourceRect(109.5f, 1.5f, 15.f, 15.f);

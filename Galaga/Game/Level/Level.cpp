@@ -10,6 +10,7 @@
 #include "Health/HealthDisplay.h"
 #include "GameEvents.h"
 #include "LevelObserver.h"
+#include "Health/HealthObserver.h"
 #include <fstream>
 
 
@@ -22,12 +23,14 @@ namespace dae
 
 		auto soundObserver = std::make_unique<SoundObserver>();
 		auto levelObserver = std::make_unique<LevelObserver>(this);
+		auto healthObserver = std::make_unique<HealthObserver>(m_pState->GetOwner()->GetComponent<HealthDisplay>());
 
 		auto player = std::make_unique<GameObject>();
 		player->AddComponent<Player>(m_pState->GetOwner()->GetComponent<EnemiesController>());
 		player->SetParent(m_pState->GetOwner(), false);
 		player->GetComponent<Player>()->AddObserver(std::move(levelObserver));
 		player->GetComponent<Player>()->AddObserver(std::move(soundObserver));
+		player->GetComponent<Player>()->AddObserver(std::move(healthObserver));
 
 		Event e{ GAME_STARTED };
 		player->GetComponent<Player>()->Notify(e, m_pState->GetOwner());
@@ -127,6 +130,11 @@ namespace dae
 	{
 		m_pState->GetOwner()->RemoveAllComponents();
 		m_pState->GetOwner()->RemoveAllChilderen();
+	}
+
+	void Level::LevelEnded()
+	{
+		m_pState->GoToNextStage();
 	}
 
 	std::unique_ptr<GameState> Level::GoToNextState()

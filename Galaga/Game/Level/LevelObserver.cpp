@@ -1,6 +1,7 @@
 #include "LevelObserver.h"
 #include "GameEvents.h"
 #include "Level.h"
+#include "StateMachine/State.h"
 
 namespace dae
 {
@@ -9,7 +10,7 @@ namespace dae
 	{
 	}
 
-	void LevelObserver::OnNotify(GameObject* , const Event& event)
+	void LevelObserver::OnNotify(GameObject*, const Event& event)
 	{
 		if (event.id == ENEMY_DIED || event.id == BOSS_DIED)
 		{
@@ -28,7 +29,7 @@ namespace dae
 		}
 		if (event.id == PLAYER_DIED)
 		{
-			m_Level->GoToNextState();
+			m_Level->LevelEnded();
 		}
 	}
 }

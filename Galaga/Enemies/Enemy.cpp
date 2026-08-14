@@ -3,6 +3,8 @@
 #include "Components/Transform.h"
 #include <glm/gtc/constants.hpp>
 #include "Core/DeltaTime.h"
+#include "GameEvents.h"
+#include "Collider/Collider.h"
 
 namespace dae
 {
@@ -18,6 +20,9 @@ namespace dae
 
 		GetOwner()->GetComponent<Texture>()->SetSize({ 30, 30 });
 		GetOwner()->GetComponent<Texture>()->SetSourceRect(m_SourceRectX, m_SourceRectY, m_Size, m_Size);
+
+		Event e{ PLAYER_HIT };
+		m_Player->GetComponent<Collider>()->AddTrigger(Collider::Trigger{ GetOwner(), e, glm::vec2(30, 30), glm::vec2(0, 0), true });
 	}
 
 	void Enemy::Update()

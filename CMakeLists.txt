@@ -223,6 +223,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Galaga/Enemies/Path/BezierPath.cpp
   Galaga/Enemies/Enemy.cpp
   Galaga/Enemies/EnemyObserver.cpp
+  Galaga/Health/HealthObserver.cpp
   Galaga/Game/Start/Start.cpp 
   Galaga/Game/Start/StartControls.cpp
   Galaga/Game/Level/Level.cpp

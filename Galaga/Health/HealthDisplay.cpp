@@ -22,7 +22,8 @@ namespace dae
 
 	void HealthDisplay::DoDamage()
 	{
-		m_HealthDisplay.erase(m_HealthDisplay.end() - 1);
+		m_Health--;
+		m_HealthDisplay[m_Health]->RemoveAllComponents();
 	}
 }
 

@@ -24,6 +24,7 @@ namespace dae
 		std::unique_ptr<GameState> GoToNextState() override;
 
 		void LoadLevel(int number);
+		void LevelEnded();
 
 	private:
 
