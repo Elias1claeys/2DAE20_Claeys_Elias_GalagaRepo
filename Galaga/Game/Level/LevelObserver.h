@@ -20,8 +20,8 @@ namespace dae
 		void OnNotify(GameObject* gameObject, const Event& event) override;
 
 	private:
-		Level* m_Level;
-		int m_DeadEnemies;
-		int m_LevelIndex;
+		Level* m_Level{};
+		int m_DeadEnemies{0};
+		int m_LevelIndex{1};
 	};
 }

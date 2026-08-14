@@ -40,6 +40,8 @@ namespace dae
 
 	void Level::LoadLevel(int number)
 	{
+		m_pState->GetOwner()->GetComponent<EnemiesController>()->ResetAllEnemies();
+
 		m_FormationPosBees = ReadPositionsFromFile("Data/Formations/Formation" + std::to_string(number) + "Bees.txt");
 		m_FormationPosBosses = ReadPositionsFromFile("Data/Formations/Formation" + std::to_string(number) + "Boss.txt");
 		m_FormationPosFlies = ReadPositionsFromFile("Data/Formations/Formation" + std::to_string(number) + "Butterflies.txt");

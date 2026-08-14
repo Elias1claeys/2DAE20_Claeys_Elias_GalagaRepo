@@ -16,6 +16,7 @@ namespace dae
 
 		if (m_DeadEnemies == 40)
 		{
+			m_DeadEnemies = 0;
 			m_LevelIndex++;
 
 			if (m_LevelIndex > 3)

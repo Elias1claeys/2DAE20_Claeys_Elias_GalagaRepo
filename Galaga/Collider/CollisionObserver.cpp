@@ -16,31 +16,33 @@ namespace dae
 	{
 		if (event.id == ENEMY_HIT)
 		{
-			if (!event.args[0].go->HasComponent<Enemy>())
+			if (!event.args[1].go->HasComponent<Enemy>())
 				return;
 
-			if (!event.args[0].go->GetComponent<Enemy>()->IsBossKilled())
+			if (!event.args[1].go->GetComponent<Enemy>()->IsBossKilled())
 			{
 				bullet->GetComponent<Transform>()->SetLocalPosition({ -100, 0 });
 				return;
 			}
 
-			if (auto stateComp = event.args[0].go->GetComponent<State>())
+			if (auto stateComp = event.args[1].go->GetComponent<State>())
 			{
 				if (auto enemyState = dynamic_cast<EnemyState*>(stateComp->GetGameState()))
 				{
-					event.args[0].go->GetComponent<Enemy>()->EnemyDied();
+					event.args[1].go->GetComponent<Enemy>()->EnemyDied();
 					enemyState->EnemyHit();
+					Event e{ ENEMY_DIED };
+					event.args[0].go->GetComponent<Player>()->Notify(e, event.args[0].go);
 				}
 			}
 
 			bullet->GetComponent<Transform>()->SetLocalPosition({ -100, 0 });
-			event.args[0].go->RemoveAllChilderen();
-			event.args[0].go->RemoveComponent<Enemy>();
-			event.args[0].go->RemoveComponent<State>();
-			event.args[0].go->RemoveComponent<BezierPath>();
+			event.args[1].go->RemoveAllChilderen();
+			event.args[1].go->RemoveComponent<Enemy>();
+			event.args[1].go->RemoveComponent<State>();
+			event.args[1].go->RemoveComponent<BezierPath>();
 
-			event.args[0].go->AddComponent<ExplosionAnimation>();
+			event.args[1].go->AddComponent<ExplosionAnimation>();
 		}
 	}
 }

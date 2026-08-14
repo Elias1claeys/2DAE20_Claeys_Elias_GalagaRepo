@@ -66,6 +66,7 @@ namespace dae
 			bullet->AddComponent<Collider>(glm::vec2{ 17.f, 7.f }, glm::vec2{ 5.f, 25.f });
 
 			Event hitEvent{ ENEMY_HIT };
+			hitEvent.args[0].go = GetOwner();
 			m_EnemiesController->AddEnemyCollisions(bullet.get(), hitEvent);
 
 			bullet->SetParent(GetOwner()->GetParent(), false);
@@ -80,7 +81,7 @@ namespace dae
 					bullet->GetComponent<Transform>()->GetWorldPosition().y >= 512.f)
 				{
 					Event hitEvent{ ENEMY_HIT };
-					hitEvent.args->go[0] = GetOwner();
+					hitEvent.args[0].go = GetOwner();
 					m_EnemiesController->AddEnemyCollisions(bullet.get(), hitEvent);
 
 					glm::vec2 playerPos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();

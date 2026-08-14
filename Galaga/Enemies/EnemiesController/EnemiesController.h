@@ -44,6 +44,7 @@ namespace dae
 		void AddEnemyCollisions(GameObject* object, Event event);
 		void EnemyKilled();
 		void GetPlayer(GameObject* player) { m_Player = player; }
+		void ResetAllEnemies();
 		
 	private:
 		void SpawnEnemy(int waveIndex, int enemieIndex);

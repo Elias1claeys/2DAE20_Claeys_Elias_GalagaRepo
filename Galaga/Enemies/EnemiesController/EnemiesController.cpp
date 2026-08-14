@@ -149,6 +149,9 @@ namespace dae
 
 	void EnemiesController::ChooseAttack(std::vector<GameObject*> bees, std::vector<GameObject*> flies, std::vector<GameObject*> bosses, int attack)
 	{
+		if (bees.empty() && flies.empty() && bosses.empty())
+			return;
+
 		int randomBee = 0;
 		int randomFlie = 0;
 		int randomBoss = 0;
@@ -280,5 +283,19 @@ namespace dae
 
 			object->GetComponent<Collider>()->AddTrigger(Collider::Trigger{enemy.get(), event, enemySize, {0.f, 0.f}, false});
 		}
+	}
+
+	void EnemiesController::ResetAllEnemies()
+	{
+		m_EnemiesParent->RemoveAllChilderen();
+		//m_Enemies.clear();
+		m_Waves.clear();
+		m_Time = 1.f;
+		m_EnemyIndex = 0;
+		m_WaveIndex = 0;
+		m_RemainingEnemies = 8;
+		m_AllEnemiesSpawned = false;
+		m_Direction = { -1, 0 };
+
 	}
 }
