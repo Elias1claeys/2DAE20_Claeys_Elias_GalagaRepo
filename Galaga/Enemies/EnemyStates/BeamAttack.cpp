@@ -34,6 +34,9 @@ namespace dae
 				m_Beam = std::make_unique<GameObject>();
 				m_Beam->AddComponent<Beam>();
 				m_Beam->SetParent(m_pState->GetOwner(), false);
+
+				Event e{ BEAM_SHOT };
+				m_pState->GetOwner()->GetComponent<Enemy>()->Notify(e);
 				return;
 			}
 
@@ -51,6 +54,21 @@ namespace dae
 			if (!m_Beam->HasComponent<Beam>())
 			{
 				m_pState->GoToNextStage();
+			}
+			else if(m_Beam->GetComponent<Beam>()->CanPickPlayer() && !m_PlayerInBeam)
+			{
+				glm::vec2 playerPos = m_pState->GetOwner()->GetComponent<Enemy>()->GetPlayerPos();
+				glm::vec2 enemyPos = m_pState->GetOwner()->GetComponent<Transform>()->GetWorldPosition();
+				glm::vec2 beamPos = { enemyPos.x - 5.f, enemyPos.y + 50.f };
+
+				if (playerPos.x > beamPos.x && playerPos.x < beamPos.x + 40)
+				{
+					Event e{ PLAYER_IN_BEAM };
+					e.args[0].v2 = beamPos;
+
+					m_pState->GetOwner()->GetComponent<Enemy>()->Notify(e);
+					m_PlayerInBeam = true;
+				}
 			}
 		}
 	}

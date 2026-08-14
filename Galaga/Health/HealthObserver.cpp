@@ -34,7 +34,7 @@ namespace dae
 				else
 					newPlayerPosX = 0.f;
 
-				gameObject->GetComponent<Transform>()->SetLocalPosition({ newPlayerPosX, playerPos.y });
+				gameObject->GetComponent<Transform>()->SetLocalPosition({ newPlayerPosX, 442.f});
 			}
 		}
 	}

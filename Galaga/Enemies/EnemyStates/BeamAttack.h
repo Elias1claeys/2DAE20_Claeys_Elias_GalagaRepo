@@ -24,6 +24,7 @@ namespace dae
 		std::unique_ptr<GameState> GoToNextState() override;
 	
 	private:
+		bool m_PlayerInBeam = false;
 		bool m_EndReached = false;
 		std::unique_ptr<GameObject> m_Beam;
 	};

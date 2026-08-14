@@ -14,4 +14,6 @@ namespace dae {
 	constexpr EventId PLAYER_HIT = make_sdbm_hash("PlayerHit");
 	constexpr EventId PLAYER_DIED = make_sdbm_hash("PlayerDied");
 	constexpr EventId PLAYER_SHOOT = make_sdbm_hash("PlayerShoot");
+	constexpr EventId PLAYER_IN_BEAM = make_sdbm_hash("PlayerInBeam");
+	constexpr EventId BEAM_SHOT = make_sdbm_hash("BeamShot");
 }

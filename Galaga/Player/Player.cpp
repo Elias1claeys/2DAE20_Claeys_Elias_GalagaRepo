@@ -34,23 +34,52 @@ namespace dae
 		auto transform = GetOwner()->GetComponent<Transform>();
 		glm::vec2 pos = transform->GetWorldPosition();
 
-		pos += m_Direction * m_Speed * Time::GetInstance().GetDeltaTime();
-
-		if (pos.x <= 0 || pos.x >= 472)
+		if (!m_StuckInBeam)
 		{
-			m_Direction = glm::vec2{ 0.0f, 0.0f };
+			pos += m_Direction * m_Speed * Time::GetInstance().GetDeltaTime();
+
+			if (pos.x <= 0 || pos.x >= 472)
+			{
+				m_Direction = glm::vec2{ 0.0f, 0.0f };
+			}
+			else
+			{
+				transform->SetLocalPosition(pos);
+			}
+
+			m_Time += Time::GetInstance().GetDeltaTime();
+			if (m_Time > 0.75f)
+			{
+				m_Time = 0.f;
+				m_CanShoot = true;
+			}
 		}
 		else
 		{
+			glm::vec2 dir = m_FlyPoint - pos;
+
+			float distance = glm::length(dir);
+
+			if (distance <= 2.f)
+			{
+				Event e{ PLAYER_HIT };
+				Notify(e, GetOwner());
+				m_StuckInBeam = false;
+				return;
+			}
+
+			dir = glm::normalize(dir);
+
+			pos += dir * 100.f * Time::GetInstance().GetDeltaTime();
+
 			transform->SetLocalPosition(pos);
 		}
+	}
 
-		m_Time += Time::GetInstance().GetDeltaTime();
-		if (m_Time > 0.75f)
-		{
-			m_Time = 0.f;
-			m_CanShoot = true;
-		}
+	void Player::StuckInBeam(glm::vec2 flyPoint)
+	{
+		m_FlyPoint = flyPoint;
+		m_StuckInBeam = true;
 	}
 
 	void Player::SetDirection(const glm::vec2& direction)
@@ -60,6 +89,9 @@ namespace dae
 
 	void Player::Shoot()
 	{
+		if (m_StuckInBeam)
+			return;
+
 		if (m_Bullets.size() < 2 && m_CanShoot)
 		{
 			auto bullet = std::make_unique<GameObject>();

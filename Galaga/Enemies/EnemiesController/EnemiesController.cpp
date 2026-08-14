@@ -250,7 +250,7 @@ namespace dae
 				break;
 		}
 		
-		auto enemyObserver = std::make_unique<EnemyObserver>(this);
+		auto enemyObserver = std::make_unique<EnemyObserver>(this, m_Player->GetComponent<Player>());
 		enemy->GetComponent<Enemy>()->AddObserver(std::move(enemyObserver));
 
 		Event event{ ENEMY_SPAWNED };

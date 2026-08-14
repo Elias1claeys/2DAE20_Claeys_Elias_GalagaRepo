@@ -2,6 +2,7 @@
 
 #include "Core/GameObject.h"
 #include "Event/Observer.h"
+#include "Player/Player.h"
 
 namespace dae
 {
@@ -11,7 +12,7 @@ namespace dae
 	{
 	public:
 
-		EnemyObserver(EnemiesController* enemySpawner);
+		EnemyObserver(EnemiesController* enemySpawner, Player* player);
 		virtual ~EnemyObserver() = default;
 		EnemyObserver(const EnemyObserver& other) = delete;
 		EnemyObserver(EnemyObserver&& other) = delete;
@@ -22,5 +23,6 @@ namespace dae
 
 	private:
 		EnemiesController* m_EnemySpawner;
+		Player* m_Player;
 	};
 }

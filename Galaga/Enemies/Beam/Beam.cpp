@@ -39,4 +39,11 @@ namespace dae
 			GetOwner()->RemoveAllComponents();
 		}
 	}
+
+	bool Beam::CanPickPlayer()
+	{
+		if (m_Index >= 3 && m_Index <= 6)
+			return true;
+		return false;
+	}
 }

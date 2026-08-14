@@ -13,6 +13,7 @@ namespace dae
 		Beam& operator=(Beam&& other) = delete;
 
 		void Update() override;
+		bool CanPickPlayer();
 
 	private:
 		float m_Time = 0.5f;
