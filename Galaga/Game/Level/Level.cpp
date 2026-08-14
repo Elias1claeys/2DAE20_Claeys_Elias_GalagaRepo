@@ -14,6 +14,9 @@
 #include "Collider/collider.h"
 #include "Input/InputManager.h"
 #include <fstream>
+#include "Components/Text.h"
+#include "Resources/ResourceManager.h"
+#include "Score/ScoreObserver.h"
 
 
 namespace dae
@@ -26,9 +29,15 @@ namespace dae
 		m_Parent->AddComponent<EnemiesController>();
 		m_Parent->AddComponent<HealthDisplay>();
 
+		auto score = std::make_unique<GameObject>();
+		auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+		score->AddComponent<Text>("0", font);
+		score->SetParent(m_Parent.get(), false);
+
 		auto soundObserver = std::make_unique<SoundObserver>();
 		auto levelObserver = std::make_unique<LevelObserver>(this);
 		auto healthObserver = std::make_unique<HealthObserver>(m_Parent->GetComponent<HealthDisplay>());
+		auto scoreObserver = std::make_unique<ScoreObserver>(score->GetComponent<Text>());
 
 		auto player = std::make_unique<GameObject>();
 		player->AddComponent<Player>(m_Parent->GetComponent<EnemiesController>());
@@ -36,19 +45,21 @@ namespace dae
 		player->GetComponent<Player>()->AddObserver(std::move(levelObserver));
 		player->GetComponent<Player>()->AddObserver(std::move(soundObserver));
 		player->GetComponent<Player>()->AddObserver(std::move(healthObserver));
+		player->GetComponent<Player>()->AddObserver(std::move(scoreObserver));
 
 		Event e{ GAME_STARTED };
 		player->GetComponent<Player>()->Notify(e, m_Parent.get());
 
+		m_GameObjects.push_back(std::move(score));
 		m_GameObjects.push_back(std::move(player));
-		m_Parent->GetComponent<EnemiesController>()->GetPlayer(m_GameObjects[0].get());
+		m_Parent->GetComponent<EnemiesController>()->GetPlayer(m_GameObjects[1].get());
 
 		LoadLevel(1);
 	}
 
 	void Level::LoadLevel(int number)
 	{
-		m_GameObjects[0]->GetComponent<Collider>()->ResetAllTriggers();
+		m_GameObjects[1]->GetComponent<Collider>()->ResetAllTriggers();
 		m_Parent->GetComponent<EnemiesController>()->ResetAllEnemies();
 
 		m_FormationPosBees = ReadPositionsFromFile("Data/Formations/Formation" + std::to_string(number) + "Bees.txt");

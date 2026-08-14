@@ -231,6 +231,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Galaga/Health/HealthDisplay.cpp
   Galaga/Player/Player.cpp
   Galaga/Player/PlayerControls.cpp
+  Galaga/Score/ScoreObserver.cpp
 )
 
 target_include_directories(${TARGET_NAME} PUBLIC

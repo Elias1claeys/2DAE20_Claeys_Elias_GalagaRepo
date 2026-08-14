@@ -20,7 +20,7 @@ namespace dae
 			m_Player->StuckInBeam(event.args[0].v2);
 			m_Player->Notify(event, gameObject);
 		}
-		if (event.id == BEAM_SHOT)
+		if (event.id == BEAM_SHOT || event.id == POINTS_GAINED)
 		{
 			m_Player->Notify(event, gameObject);
 		}

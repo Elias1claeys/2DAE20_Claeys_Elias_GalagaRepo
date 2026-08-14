@@ -289,7 +289,6 @@ namespace dae
 	void EnemiesController::ResetAllEnemies()
 	{
 		m_EnemiesParent->RemoveAllChilderen();
-		//m_Enemies.clear();
 		m_Waves.clear();
 		m_Time = 1.f;
 		m_EnemyIndex = 0;
