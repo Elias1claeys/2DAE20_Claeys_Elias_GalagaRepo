@@ -86,12 +86,12 @@ namespace dae
 
 	std::unique_ptr<GameState> Start::GoToNextState()
 	{
-		//if(m_SelectedButton == 0)
-		//	return std::make_unique<Level>(m_pGame, Level::SinglePlayer);
-		//if (m_SelectedButton == 1)
-		//	return std::make_unique<Level>(m_pGame, Level::MultiPlayer);
-		//else
-		//	return std::make_unique<Level>(m_pGame, Level::Versus);
+		if(m_SelectedButton == 0)
+			return std::make_unique<Level>(m_pState, Level::GameType::single);
+		if (m_SelectedButton == 1)		   
+			return std::make_unique<Level>(m_pState, Level::GameType::multi);
+		else							   
+			return std::make_unique<Level>(m_pState, Level::GameType::versus);
 
 		return std::make_unique<Level>(m_pState);
 	}

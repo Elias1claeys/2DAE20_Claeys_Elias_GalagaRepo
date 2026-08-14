@@ -10,7 +10,14 @@ namespace dae
 	{
 	public:
 
-		explicit Level(State* state) : GameState(state) {}
+		enum GameType
+		{
+			single,
+			multi,
+			versus
+		};
+
+		explicit Level(State* state, GameType type) : GameState(state), m_GameType(type) {}
 		virtual ~Level() = default;
 		Level(const Level& other) = delete;
 		Level(Level&& other) = delete;
@@ -31,6 +38,7 @@ namespace dae
 		std::vector<glm::vec2> ReadPositionsFromFile(const std::string& filePath);
 		void SpawnEnemies();
 		
+		GameType m_GameType;
 		std::unique_ptr<GameObject> m_Parent;
 		std::vector<glm::vec2> m_FormationPosBees;
 		std::vector<glm::vec2> m_FormationPosFlies;

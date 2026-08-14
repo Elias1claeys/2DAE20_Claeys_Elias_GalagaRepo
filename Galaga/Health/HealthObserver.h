@@ -19,6 +19,6 @@ namespace dae
 
 	private:
 		HealthDisplay* m_HealthDisplay{};
-		int m_Health{ 3 };
+		int m_Health{ 4 };
 	};
 }
