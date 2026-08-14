@@ -275,7 +275,7 @@ namespace dae
 			if (!enemy->GetComponent<Enemy>())
 				continue;
 
-			event.args[0].go = enemy.get();
+			event.args[1].go = enemy.get();
 			auto enemySize = enemy->GetComponent<Texture>()->GetSize();
 
 			object->GetComponent<Collider>()->AddTrigger(Collider::Trigger{enemy.get(), event, enemySize, {0.f, 0.f}, false});

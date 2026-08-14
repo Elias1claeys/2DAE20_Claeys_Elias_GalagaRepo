@@ -1,9 +1,10 @@
 #include "Core/GameObject.h"
 #include "Enemies/EnemiesController/EnemiesController.h"
+#include "Event/Subject.h"
 
 namespace dae
 {
-	class Player : public Component
+	class Player : public Component, public Subject
 	{
 	public:
 		Player(GameObject* owner, EnemiesController* enemiesController);

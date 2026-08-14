@@ -20,19 +20,20 @@ namespace dae
 		m_pState->GetOwner()->AddComponent<EnemiesController>();
 		m_pState->GetOwner()->AddComponent<HealthDisplay>();
 
-		auto player = std::make_unique<GameObject>();
-		player->AddComponent<Player>(m_pState->GetOwner()->GetComponent<EnemiesController>());
-		player->SetParent(m_pState->GetOwner(), false);
-		m_GameObjects.push_back(std::move(player));
-		m_pState->GetOwner()->GetComponent<EnemiesController>()->GetPlayer(m_GameObjects[0].get());
-
 		auto soundObserver = std::make_unique<SoundObserver>();
 		auto levelObserver = std::make_unique<LevelObserver>(this);
 
-		m_pState->AddObserver(std::move(levelObserver));
-		m_pState->AddObserver(std::move(soundObserver));
+		auto player = std::make_unique<GameObject>();
+		player->AddComponent<Player>(m_pState->GetOwner()->GetComponent<EnemiesController>());
+		player->SetParent(m_pState->GetOwner(), false);
+		player->GetComponent<Player>()->AddObserver(std::move(levelObserver));
+		player->GetComponent<Player>()->AddObserver(std::move(soundObserver));
+
 		Event e{ GAME_STARTED };
-		m_pState->Notify(e, m_pState->GetOwner());
+		player->GetComponent<Player>()->Notify(e, m_pState->GetOwner());
+
+		m_GameObjects.push_back(std::move(player));
+		m_pState->GetOwner()->GetComponent<EnemiesController>()->GetPlayer(m_GameObjects[0].get());
 
 		LoadLevel(1);
 	}

@@ -80,6 +80,7 @@ namespace dae
 					bullet->GetComponent<Transform>()->GetWorldPosition().y >= 512.f)
 				{
 					Event hitEvent{ ENEMY_HIT };
+					hitEvent.args->go[0] = GetOwner();
 					m_EnemiesController->AddEnemyCollisions(bullet.get(), hitEvent);
 
 					glm::vec2 playerPos = GetOwner()->GetComponent<Transform>()->GetWorldPosition();
